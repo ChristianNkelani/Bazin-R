@@ -19,6 +19,7 @@ private _environement: Environement;
 constructor(
 private canvas:HTMLCanvasElement,
 private setLoaded: () => void,
+private voirCard:()=> void,
 ){
 
 this.engine = new Engine(this.canvas);
@@ -27,7 +28,7 @@ this.engine = new Engine(this.canvas);
 this.scene = this.CreateScene();
 
 //on charge l environnement
-this._environement = new Environement(this.scene, this.engine, this.setLoaded);
+this._environement = new Environement(this.scene, this.engine, this.setLoaded,this.voirCard);
 
 this.engine.runRenderLoop(()=>{
   this.scene.render();

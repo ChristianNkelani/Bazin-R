@@ -3,7 +3,7 @@
         <div>
             <div class="px-32 py-16 flex justify-between">
                 <h1 class=" text-blue-500 font-bold text-3xl  uppercase">Categories</h1>
-                <p><RouterLink to="/">Retour</RouterLink></p>
+                <p class="text-blue-500 font-bold"><RouterLink to="/">Retour</RouterLink></p>
             </div>
             <div class="grid grid-cols-3 gap-3">
                 <RouterLink :to="{name : 'catDetail', params : {cat : 2, tit:'Dynamique'}}">
@@ -11,7 +11,6 @@
                     class="" 
                     titre="Dynamique" 
                     description="La dynamique est la branche de la mécanique qui étudie les forces et leur effet sur le mouvement des objets. Notre simulation interactive vous permet..." 
-                    photo="architecture2"
                     />
                 </RouterLink>
 
@@ -20,7 +19,6 @@
                     class="" 
                     titre="Cinematique" 
                     description="La chute libre est un phénomène fondamental en physique, où un objet tombe sous l'influence de la gravité seule, sans résistance de l'air ou autres forces..." 
-                    photo="@/assets/architecture2.jpg"
                     />
                 </RouterLink>
 
@@ -29,7 +27,6 @@
                     class="" 
                     titre="Energie Mecanique" 
                     description="La chute libre est un phénomène fondamental en physique, où un objet tombe sous l'influence de la gravité seule, sans résistance de l'air ou autres forces..." 
-                    photo="@/assets/architecture2.jpg"
                     />
                 </RouterLink>
             </div>

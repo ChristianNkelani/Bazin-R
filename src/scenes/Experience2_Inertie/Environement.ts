@@ -23,6 +23,7 @@ private _ui:UI;
 constructor(
 scene:Scene, engine:Engine,
 private setLoaded: () => void,
+private voirCard:()=>void,
 
 ){
 //la scene
@@ -55,6 +56,7 @@ for (let index = 1; index < 10 ; index++) {
 }
 // this.engine.hideLoadingUI();
 this.setLoaded();
+this.voirCard()
 
 // afficher ou pas un mateirel au click
 for(let i = 0 ; i < this._ui._images.length; i++){
