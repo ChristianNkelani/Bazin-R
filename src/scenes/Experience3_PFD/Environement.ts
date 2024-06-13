@@ -78,6 +78,8 @@ createBalle(a:string, b:string){
     this._ui._play.onPointerUpObservable.add(()=>{
         this.deplacer();
         this.deplacer2();
+        this.lancerChrono(0,0,this._ui._text4,this.ball2);
+        this.lancerChrono(0,0,this._ui._text2,this.ball1);
     })
 
     this._ui._restart.onPointerUpObservable.add(()=>{
@@ -129,6 +131,27 @@ public changeMaterialColor(x,y,z):StandardMaterial{
     const ballMat = new StandardMaterial("ballMat", this.scene);
     ballMat.diffuseColor = new Color3(x,y,z)
     return ballMat;
+}
+public lancerChrono(ms,sec,texte,ball){
+    if (ball.position.z < -0.3){
+        setTimeout(()=>{
+            this._ui._milsec = ms;
+            this._ui._sec = sec;
+            texte.text = `${this._ui._sec} : ${this._ui._milsec}`;
+            this._ui._milsec ++;
+            if(this._ui._milsec < 60){
+                console.log(this._ui._milsec);
+                this.lancerChrono(this._ui._milsec, this._ui._sec,texte,ball);
+            } else {
+                if(this._ui._sec < 2){
+                    this._ui._sec++;
+                    this._ui._milsec = 0
+                    this.lancerChrono(this._ui._milsec, this._ui._sec,texte,ball)
+                }
+            }
+        },1)
+    }
+
 }
 
 

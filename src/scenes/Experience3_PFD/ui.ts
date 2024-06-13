@@ -1,6 +1,7 @@
-import { MeshBuilder, Scene } from "@babylonjs/core";
+import { Scene } from "@babylonjs/core";
 import * as GUI from '@babylonjs/gui/2D';
 import { Environement } from "./Environement";
+import { int } from "babylonjs";
 // import { PlanePanel } from "babylonjs-gui";
 
 
@@ -11,6 +12,12 @@ export class UI {
     public advencedTexture : any;
     public _play : any;
     public _restart : any;
+    public _text2 : any;
+    public _text4 : any
+
+    // gestion des chrono
+    public _sec : int;
+    public _milsec : int;
 
     constructor(scene:Scene){
         this._scene = scene;
@@ -21,7 +28,8 @@ export class UI {
 
     public createChrono(){
         //les variables 
-
+        this._sec = 0;
+        this._milsec = 0;
 
         const advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI('UI');
         const container1 = new GUI.Rectangle();
@@ -39,9 +47,9 @@ export class UI {
             text1.fontSize = "10px";
             text1.height = "20px";
             text1.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP
-        const text2 = new GUI.TextBlock("","00:00");
-            text2.fontSize = "45px";
-        container1.addControl(text2);
+        this._text2 = new GUI.TextBlock("",`${this._sec} : ${this._milsec}`);
+        this._text2.fontSize = "45px";
+        container1.addControl(this._text2);
         container1.addControl(text1);
 
 
@@ -59,12 +67,12 @@ export class UI {
             text3.height = "20px";
             text3.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP
 
-        const text4 = new GUI.TextBlock("","00:00");
-            text4.fontSize = "45px";
+        this._text4 = new GUI.TextBlock("", `${this._sec} : ${this._milsec}`);
+        this._text4.fontSize = "45px";
 
                 
         container2.addControl(text3);
-        container2.addControl(text4);            
+        container2.addControl(this._text4);            
 
         advancedTexture.addControl(container2);
     }
@@ -93,4 +101,6 @@ export class UI {
         panel.addControl(this._restart);
         this.advencedTexture.addControl(panel);
     }
+
+    
 }
