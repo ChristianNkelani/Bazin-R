@@ -95,6 +95,7 @@ export class Environement {
     return labo;
   }
 
+
   createMateriels(){
 
   //on dit que c'est un tableau
@@ -297,6 +298,9 @@ export class Environement {
   }
 
   actionGroupSlider(){
+    //valeur de p1
+    this._ui._textMasse[4].text = "P1 = "+(this._ui._sliders[0].value)+"x"+(-this.physicEngine.gravity.y)+" kg";
+
     const displayValue = function(value){
       return Math.floor(value*100)/100;
     }
@@ -304,26 +308,41 @@ export class Environement {
     const ball1 = this.boitiers[0];
     const ball2 = this.boitiers[1];
 
-    const setBall1 = function(this: any,value){
+    var t=1;
+    const setBall1 = (value) => {
       ball1.scaling.x = value;
       ball1.scaling.y = value;
       ball1.scaling.z = value;
+      this._ui._textMasse[0].text = "m1 = "+ value.toFixed(2)+"Kg";
+      this._ui._textMasse[3].text = "m12 = "+(((value.toFixed(2))))+ "Kg"
+      this._ui._textMasse[3].text = "m12 = "+((value.toFixed(2)+(t.toFixed(2))))+ "Kg"
+      this._ui._textMasse[4].text = "P1 = "+(value.toFixed(2))+"x"+(-this.physicEngine.gravity.y).toFixed(2)+" kg";
+
+
     }
 
-    const setBall2 = function(this: any,value){
+    const setBall2 = (value) => {
       ball2.scaling.x = value;
       ball2.scaling.y = value;
       ball2.scaling.z = value;
+      t=value;
+      this._ui._textMasse[1].text = "m2 = "+ value.toFixed(2)+"Kg";
+      this._ui._textMasse[3].text = "m12 = "+(value.toFixed(2)+parseInt(t.toFixed(2)))+ "Kg"
+
+
     }
 
 
     const physicEngine = this.physicEngine;
-    const setGravitaion = function(value){
+    const setGravitaion = (value) => { 
       physicEngine.setGravity(new Vector3(0,-(value),0))
+      this._ui._textMasse[4].text = "P1 = "+(this._ui._textMasse[0].value)+"x"+(value.toFixed(2))+" kg";
+
+
     }
     this._ui.groupSliders[0].addSlider("Gravitation",setGravitaion,"m/s2",0,15,9.81,displayValue);
-    this._ui.groupSliders[0].addSlider("Masse balle jaune",setBall1,"Kg",1,2,1,displayValue);
-    this._ui.groupSliders[0].addSlider("Masse balle rouge",setBall2,"Kg",1,2,1,displayValue);
+    this._ui.groupSliders[0].addSlider("Masse boîtier jaune",setBall1,"Kg",1,2,1,displayValue);
+    this._ui.groupSliders[0].addSlider("Masse boîtier rouge",setBall2,"Kg",1,2,1,displayValue);
 
     this._ui.groupSliders[1].addCheckbox("Chambre à vide")
 

@@ -171,14 +171,14 @@ export class Interaction{
         advancedTexture.addControl(container);
 
         //image personnage
-        const image = new GUI.Image("personnage","./images/personnage/personnage.png");
-        image.width = "80px";
-        image.height = "80px";
-        image.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-        image.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
-        image.top = "5px";
-        image.left = "5px";
-        container.addControl(image);
+        // const image = new GUI.Image("personnage","./images/personnage/personnage.png");
+        // image.width = "80px";
+        // image.height = "80px";
+        // image.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+        // image.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        // image.top = "5px";
+        // image.left = "5px";
+        // container.addControl(image);
 
         const start = new Sound("startSong", audio, scene, function () {}, {
             volume: 1,
@@ -187,14 +187,15 @@ export class Interaction{
         });
 
         //text presentation environnement
-        const textenv = new GUI.TextBlock("textenv", "1. Au menu paramètres, ajustez la taille et la masse des deux balles, de sorte que l'une d'entre elles soit plus grande que l'autre.")
+        const textenv = new GUI.TextBlock("textenv", "ETAPES A SUIVRE        1. Au menu paramètres, ajustez la taille et la masse des deux balles, de sorte que l'une d'entre elles soit plus grande que l'autre.")
         textenv.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
         textenv.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_CENTER;
-        textenv.top = "20px";
-        textenv.color = "red";
+        textenv.top = "-30px";
+        textenv.color = "white";
+        textenv.fontSize = "20px";
         textenv.textWrapping = GUI.TextWrapping.WordWrap;
         textenv.setPadding("10%","10%","10%","10%");
-        textenv.left = "23px";
+        // textenv.left = "23px";
         container.addControl(textenv);
 
         //creation button suivant
@@ -211,7 +212,7 @@ export class Interaction{
 
         this.suivant[2].onPointerUpObservable.add(()=>{
             container.isVisible = false;
-            this.questionForm("./sounds/experience1/etape1.mp3", "du texte",scene,advancedTexture)
+            this.questionForm("./sounds/experience1/question1.mp3", "du texte",scene,advancedTexture)
         })
 
     }
@@ -231,14 +232,14 @@ export class Interaction{
         advancedTexture.addControl(container);
 
         //image personnage
-        const image = new GUI.Image("personnage","./images/personnage/personnage.png");
-        image.width = "80px";
-        image.height = "80px";
-        image.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-        image.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
-        image.top = "5px";
-        image.left = "5px";
-        container.addControl(image);
+        // const image = new GUI.Image("personnage","./images/personnage/personnage.png");
+        // image.width = "80px";
+        // image.height = "80px";
+        // image.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+        // image.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        // image.top = "5px";
+        // image.left = "5px";
+        // container.addControl(image);
 
         const start = new Sound("startSong", audio, scene, function () {}, {
             volume: 1,
@@ -247,14 +248,15 @@ export class Interaction{
         });
 
         //text presentation environnement
-        const textenv = new GUI.TextBlock("textenv", "1. Au menu paramètres, ajustez la taille et la masse des deux balles, de sorte que l'une d'entre elles soit plus grande que l'autre.")
+        const textenv = new GUI.TextBlock("textenv", "Question: Si on laisse tomber les deux balles simultannement, selon vous laquelle atteindra la table en première position?")
         textenv.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-        textenv.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_CENTER;
-        textenv.top = "20px";
-        textenv.color = "red";
+        textenv.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        textenv.top = "-50px";
+        textenv.color = "white";
+        textenv.fontSize = "20px";
         textenv.textWrapping = GUI.TextWrapping.WordWrap;
-        textenv.setPadding("10%","10%","10%","10%");
-        textenv.left = "23px";
+        textenv.setPadding("5%","5%","10%","5%");
+        // textenv.left = "23px";
         container.addControl(textenv);
 
         //creation button suivant
@@ -272,23 +274,46 @@ export class Interaction{
 
         const selectbox= new GUI.SelectionPanel("sp");
         selectbox.width=1;
-        selectbox.height = 0.5;
+        selectbox.height = 0.45;
         selectbox.left = "0px";
         selectbox.paddingLeft = "15px"
         selectbox.background = "white";
-        selectbox.top = "20px";
+        selectbox.top = "0px";
         selectbox.setPadding("5px","5px","10px","5px");
 
         selectbox.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-        selectbox.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        selectbox.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
         container.addControl(selectbox);
 
         this.groupCheck = [];
     
-        this.groupCheck[0] = new GUI.CheckboxGroup("");
+        this.groupCheck[0] = new GUI.CheckboxGroup("Choix:");
         this.groupCheck[0].top = "10px";
-        this.groupCheck[0].addCheckbox("Balle rouge")
-        this.groupCheck[0].addCheckbox("Balle jaune")
+        this.groupCheck[0].addCheckbox("Balle rouge", (value) => {
+            const simuler = new Sound("startSong", "./sounds/experience1/simulerq1.mp3", scene, function () {
+            }, {
+                volume: 1,
+                loop: false,
+                autoplay: true
+            });
+        },null )
+        this.groupCheck[0].addCheckbox("Balle jaune",(value) => {
+            const simuler = new Sound("startSong", "./sounds/experience1/simulerq1.mp3", scene, function () {
+            }, {
+                volume: 1,
+                loop: false,
+                autoplay: true
+            });
+        }, null)
+
+        this.groupCheck[0].addCheckbox("Les deux",(value) => {
+            const simuler = new Sound("startSong", "./sounds/experience1/simulerq1.mp3", scene, function () {
+            }, {
+                volume: 1,
+                loop: false,
+                autoplay: true
+            });
+        }, null)
 
 
         selectbox.addGroup(this.groupCheck[0])
