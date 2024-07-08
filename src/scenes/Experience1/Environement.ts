@@ -245,8 +245,9 @@ export class Environement {
     this._ui.groupSliders[0].addSlider("Masse balle jaune",setBall1,"Kg",1,2,1,displayValue);
     this._ui.groupSliders[0].addSlider("Masse balle rouge",setBall2,"Kg",1,2,1,displayValue);
 
-    this._ui.groupSliders[1].addCheckbox("Chambre à vide")
+    this._ui.groupSliders[1].addCheckbox("Chambre à vide",()=>{    this._ui.box.isVisible = !this._ui.box.isVisible.valueOf()
+    })
 
     
   }
-} 
+}  

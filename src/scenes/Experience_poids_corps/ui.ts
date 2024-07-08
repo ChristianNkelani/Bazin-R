@@ -355,7 +355,6 @@ export class UI {
         text[4].horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
         text[4].left = "45px";
 
-        this._textMasse[4].text = "P1 = "+(this._sliders[0].value)+"x9.81"+" kg";
         this._textMasse[4].top = 190;
 
     }
