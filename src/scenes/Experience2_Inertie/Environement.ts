@@ -91,9 +91,16 @@ for(let i = 0 ; i < this._ui._images.length; i++){
 
 }
 
+labo.meshes[1].isVisible = true
+labo.meshes[2].isVisible = true
+labo.meshes[3].isVisible = true
 
 return labo;
 }
+
+// createAnimation(){
+
+// }
 
 // createMateriels(){
 

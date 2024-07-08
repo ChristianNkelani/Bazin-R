@@ -69,7 +69,7 @@
     margin: 0;
     }
     p:nth-child(1) {
-    color: rgb(0, 129, 70);
+    color: rgb(34, 148, 242);
     animation: pulse 0.5s alternate infinite ease-in-out;
     font-weight: 400;
     justify-content: flex-end;
@@ -80,7 +80,7 @@
     }
     
     p:nth-child(3) {
-    color: rgb(0, 129, 70);
+    color: rgb(34, 148, 242);
     justify-content: flex-start;
     animation: pulse 0.5s alternate infinite ease-in-out 0.5s;
     }

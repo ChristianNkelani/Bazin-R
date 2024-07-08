@@ -143,7 +143,7 @@ public lancerChrono(ms,sec,texte,ball){
                 console.log(this._ui._milsec);
                 this.lancerChrono(this._ui._milsec, this._ui._sec,texte,ball);
             } else {
-                if(this._ui._sec < 2){
+                if(this._ui._sec < 10){
                     this._ui._sec++;
                     this._ui._milsec = 0
                     this.lancerChrono(this._ui._milsec, this._ui._sec,texte,ball)

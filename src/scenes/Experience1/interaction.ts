@@ -8,15 +8,13 @@ export class Interaction{
     
     Accueil(scene){
         //--SOUNDS--
-        const start = new Sound("startSong", "./sounds/experience1/start.mp3", scene, function () {
-        }, {
+        const start = new Sound("startSong", "./sounds/experience1/start.mp3", scene, function (){}, {
             volume: 1,
             loop: false,
             autoplay: true
         });
 
-        const presentation = new Sound("presentation", "./sounds/experience1/presentation.mp3", scene, function () {
-        }, {
+        const presentation = new Sound("presentation", "./sounds/experience1/presentation.mp3", scene, function () {}, {
             volume: 1,
             loop: false,
             autoplay: false
@@ -94,8 +92,7 @@ export class Interaction{
     }
 
     presentationAudio(scene){
-        const start = new Sound("startSong", "./sounds/experience1/presentation.mp3", scene, function () {
-        }, {
+        const start = new Sound("startSong", "./sounds/experience1/presentation.mp3", scene, function () {}, {
             volume: 1,
             loop: false,
             autoplay: true
@@ -183,8 +180,7 @@ export class Interaction{
         image.left = "5px";
         container.addControl(image);
 
-        const start = new Sound("startSong", audio, scene, function () {
-        }, {
+        const start = new Sound("startSong", audio, scene, function () {}, {
             volume: 1,
             loop: false,
             autoplay: true
@@ -244,8 +240,7 @@ export class Interaction{
         image.left = "5px";
         container.addControl(image);
 
-        const start = new Sound("startSong", audio, scene, function () {
-        }, {
+        const start = new Sound("startSong", audio, scene, function () {}, {
             volume: 1,
             loop: false,
             autoplay: true
