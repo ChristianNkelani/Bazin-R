@@ -29,7 +29,6 @@ export class Environement {
   public _ui:UI;
   physicEngine:any;
   wheelFI:any;
-  bouger=true;
 
   constructor(
   scene:Scene, engine:Engine,
@@ -168,14 +167,15 @@ export class Environement {
   }
 
   actionButtonMenu(){
-    this._ui._buttonAction[0].onPointerUpObservable.add(()=>{
-      if(this.cliquer == true){
-            
-        this.createImpulse();
-        this._ui._stopTimer = false;
+  this._ui._buttonAction[0].onPointerUpObservable.add(()=>{
+    if(this.cliquer == true){
+           
+      this.createImpulse();
+      this._ui._stopTimer = false;
 
-        this._ui.startTimer();
-        this.cliquer = false;
+      this._ui.startTimer();
+      this.cliquer = false;
+    
     }
 
     
@@ -234,28 +234,25 @@ export class Environement {
 
 
     const bouger = () =>{
+      var bouger = true;
       var vitesse1 = this.physicEngine.gravity.y/(6*this.boitiers[0].scaling._x);
       var vitesse2 = this.physicEngine.gravity.y/(6*this.boitiers[1].scaling._x);
 
-      if(this.bouger == true){
+      if(bouger){
         this.boitiers[0].physicsImpostor.setLinearVelocity(new Vector3(0,0,vitesse1));
         this.boitiers[1].physicsImpostor.setLinearVelocity(new Vector3(0,0,vitesse2));
         console.log(this.boitiers[0].position._z)
 
       }
-  
+      if(this.boitiers[0].position._z == 3){
+        bouger = false;
+      }
 
     }
 
-    this._ui._buttonAction[0].onPointerUpObservable.add(()=>{
-      if(this.bouger == true){
-        this.scene.registerBeforeRender(bouger);
+    this.scene.registerBeforeRender(bouger);
 
-    }
-    }
-
-
-  )}
+  }
 
 
 

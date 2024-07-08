@@ -9,6 +9,7 @@ export class UI {
     public _scene:Scene;
     public _environement : Environement
     public _images :  GUI.Image[]
+    public buttonAction : any;
 
     constructor(scene:Scene){
         this._scene = scene
@@ -43,6 +44,21 @@ export class UI {
 
         // const mat1 = GUI.Button.CreateImageButton('mybtn','klkl','dynamometre.png');
         // panel.addControl(mat1)
+
+        // Creation du bouton Play
+        this.buttonAction = [];
+
+        this.buttonAction[0] = GUI.Button.CreateSimpleButton("Bouger", "Bouger");
+        this.buttonAction[0].width = "200px";
+        this.buttonAction[0].height = "39px";
+        this.buttonAction[0].background = 'white';
+        this.buttonAction[0].color = "deepskyblue";
+
+        const panel2 = new GUI.StackPanel();
+        panel2.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        panel2.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT
+        advancedTexture.addControl(panel2);
+        panel2.addControl(this.buttonAction[0]);
     }
     public createImage(tableau_image:string[],advancedTexture:GUI.AdvancedDynamicTexture){
         const panel = new GUI.StackPanel();
@@ -63,4 +79,5 @@ export class UI {
         panel.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
         advancedTexture.addControl(panel);
     }
+
 }

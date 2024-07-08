@@ -37,8 +37,8 @@
             </div>
         </div>
     </div>
-    <RouterLink to="/categorie" class="absolute z-40 right-0 bottom-5 w-32 h-32">
-        <img class="w-24 h-24 bg-blue-500 rounded-full" src="../assets/retour.png" alt="">
+    <RouterLink to="/categorie" class="absolute z-40 right-0 bottom-5 w-16 h-16">
+        <img class="w-16 h-16 bg-blue-500 rounded-full" src="../assets/retour.png" alt="">
     </RouterLink>
     <main :class="{'blur-sm': flou == true}">
         <LoadingScreen :isLoaded="loaded"/>

@@ -6,6 +6,7 @@ export class UI {
     public _sliders:any;
     public _buttonAction:any;
     public groupSliders:any;
+    public selectbox : any ;
 
     //Game Timer
     public time: number; //keep track to signal end game REAL TIME
@@ -164,25 +165,28 @@ export class UI {
         advancedTexture.addControl(container)
         // creation chronr
 
-        const selectbox= new GUI.SelectionPanel("sp");
-        selectbox.width=0.20;
-        selectbox.height = 0.5;
-        selectbox.left = "20px";
-        selectbox.paddingLeft = "15px"
-        selectbox.background = "white";
-        selectbox.top = "20px";
-        selectbox.setPadding("5px","5px","10px","5px");
+        this.selectbox= new GUI.SelectionPanel("sp");
+        this.selectbox.width=0.20;
+        this.selectbox.height = 0.5;
+        this.selectbox.left = "50px";
+        this.selectbox.paddingLeft = "15px"
+        this.selectbox.background = "white";
+        this.selectbox.top = "20px";
+        this.selectbox.setPadding("5px","5px","10px","5px");
 
-        selectbox.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-        selectbox.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
-        advancedTexture.addControl(selectbox);
+        this.selectbox.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+        this.selectbox.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        advancedTexture.addControl(this.selectbox);
 
         this.groupSliders = [];
         this.groupSliders[0] = new GUI.SliderGroup("Menu Paramètres");
-        selectbox.addGroup(this.groupSliders[0]);
+        this.selectbox.addGroup(this.groupSliders[0]);
         this.groupSliders[1] = new GUI.CheckboxGroup("");
         this.groupSliders[1].top = "10px";
-        selectbox.addGroup(this.groupSliders[1])
+        this.selectbox.addGroup(this.groupSliders[1])
+        this.selectbox.isVisible = false;
+        
+
      
     }
 
@@ -209,6 +213,15 @@ export class UI {
         
       
         panel.addControl(this._buttonAction[1]);
+
+        this._buttonAction[2] = GUI.Button.CreateSimpleButton("Terminer", "Terminer");
+        this._buttonAction[2].width = "200px";
+        this._buttonAction[2].height = "39px";
+        this._buttonAction[2].background = 'white';
+        this._buttonAction[2].color = "deepskyblue"
+
+        panel.addControl(this._buttonAction[2]);
+
 
         panel.isVertical = false;
         panel.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
@@ -299,7 +312,14 @@ export class UI {
     glass.albedoColor = new Color3(0.95, 0.95, 0.95);
     this.box.material = glass
     this.box.isVisible = false;
-  } 
+  }
+  affichageParametre(){
+    if(this.selectbox.isVisible == false ){
+        this.selectbox.isVisible = true;
+    } else {
+        this.selectbox.isVisible = false;
+    }
+  }
 
 
   
