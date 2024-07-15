@@ -28,6 +28,8 @@
         </div>
     </div>
     <main :class="{'blur-sm': flou == true}">
+
+        
         <LoadingScreen :isLoaded="loaded"/>
         <canvas></canvas>
     </main>
