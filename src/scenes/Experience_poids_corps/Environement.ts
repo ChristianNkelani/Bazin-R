@@ -72,7 +72,7 @@ export class Environement {
   this.actionGroupSlider();
 
   //verification de la position des boitiers
-  this.verifier();
+  this.creqteFil();
 
 
   }
@@ -378,8 +378,16 @@ export class Environement {
 
   }
 
-  verifier(){
-    
+  creqteFil(){
+    // Création d'un fil (cylindre)
+    var wireLength = 5; // Longueur du fil
+    var wire = MeshBuilder.CreateCylinder("wire", { height: wireLength, diameter: 0.1 }, this.scene);
+    wire.position.y = wireLength / 2; // Position initiale du fil
+    wire.rotation.x = Math.PI/2;
+
+
+
+
   }
 
 

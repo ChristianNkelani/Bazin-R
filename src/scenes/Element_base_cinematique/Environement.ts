@@ -72,7 +72,9 @@ public createBalle(){
     this.ball1.material = this.changeMaterialColor(255,0,0);
 
     this._ui._play.onPointerUpObservable.add(()=>{
-        this.deplacer();
+        // this.deplacer();
+        this.parabolic();
+
     })
 
     this._ui._restart.onPointerUpObservable.add(()=>{
@@ -91,31 +93,7 @@ public deplacer(){
         this.inkDrop[i].isVisible = false;
         
         
-    }
-    // const startPosition = new Vector3(7,0.7 ,-0.8);
-    // const endPosition = new Vector3(7,0.9,-4);
-
-    // Animation.CreateAndStartAnimation(
-    //     "anim", 
-    //     this.ball1, 
-    //     "position", 
-    //     30,
-    //     200,
-    //     startPosition,
-    //     endPosition,
-    //     Animation.ANIMATIONLOOPMODE_CONSTANT
-    // )
-
-    // const points = [
-    //     new Vector3(7, 0.7, -0.8),
-    //     new Vector3(7.5, 1, -2),
-    //     new Vector3(7, 0.9, -4),
-    //     new Vector3(6, 0.9, -4),
-    //     new Vector3(6, 0.9, -4),
-    //     new Vector3(6, 0.9, -4),
-    
-    // ];
-    
+    }    
     // Définir les points de la courbe
     const points = [
         new Vector3(6.5, 0.7, -0.8),
@@ -218,5 +196,76 @@ public deplacer(){
         });
     
     }
+
+
+    public parabolic(){
+        // this.inkDrop = [];
+        for (let i = 0; i < this.inkDrop.length; i++) {
+            this.inkDrop[i].isVisible = false;
+            
+            
+        }    
+        // Définir les points de la courbe
+        const points = [
+            new Vector3(6.5, 0.7, -0.8),
+            new Vector3(6.5, 1, -1),
+            new Vector3(6.5, 1.2, -1.2),
+            new Vector3(6.5, 1.4, -1.4),
+            new Vector3(6.5, 1.6, -1.3),
+            new Vector3(6.5, 1.8, -1.6),
+            new Vector3(6.5, 2, -1.8),
+            new Vector3(6.5, 2.2, -2),
+            new Vector3(6.5, 2.4, -2.2),
+            new Vector3(6.5, 2.6, -2.4),
+            new Vector3(6.5, 2.8, -2.6),
+            new Vector3(6.5, 3, -2.8),
+            new Vector3(6.5, 3.2, -3),
+            new Vector3(6.5, 3.4, -3.2),
+            new Vector3(6.5 , 3.6, -3.4),
+            new Vector3(6.5 , 0.7, -3.6),
+            new Vector3(6.5 , 0.7, -3.8),
+            new Vector3(6.5 , 0.7, -3.8),
+            new Vector3(6.5 , 0.7, -4.1),
+            new Vector3(6.5 , 0.7, -4.3),
+    
+        ];
+    
+        // Créer une spline Catmull-Rom à partir des points
+        // const path = Curve3.CreateCatmullRomSpline(points, 20);
+        const path = Curve3.CreateCatmullRomSpline(points,20)
+    
+        // Obtenir les points de la courbe
+        const pathPoints = path.getPoints();
+    
+        // Créer une animation
+        const animation = new Animation(
+            "anim",
+            "position",
+            20,
+            Animation.ANIMATIONTYPE_VECTOR3,
+            Animation.ANIMATIONLOOPMODE_CONSTANT
+        );
+    
+        // Clés pour l'animation (les étapes de l'animation le long de la courbe)
+        const keys = [];
+        for (let i = 0; i < pathPoints.length; i++) {
+            keys.push({
+                frame: i * (200 / (pathPoints.length - 1)), // Distribue les frames uniformément
+                value: pathPoints[i]
+            });
+        }
+    
+        // Affecter les clés à l'animation
+        animation.setKeys(keys);
+    
+        // Ajouter l'animation à la balle
+        this.ball1.animations = [];
+        this.ball1.animations.push(animation);
+    
+        // Commencer l'animation
+        this.scene.beginAnimation(this.ball1, 0, 200, false);
+    
+        }
+    
 }
 

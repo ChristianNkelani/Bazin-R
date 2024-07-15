@@ -253,8 +253,6 @@ this._ui.groupSliders[0].addSlider("Gravitation",setGravitaion,"m/s2",0,15,9.81,
 this._ui.groupSliders[0].addSlider("Masse balle jaune",setBall1,"Kg",1,2,1,displayValue);
 this._ui.groupSliders[0].addSlider("Masse balle rouge",setBall2,"Kg",1,2,1,displayValue);
 
-this._ui.groupSliders[1].addCheckbox("Chambre à vide")
-
 
 }
 tofiniched(){
