@@ -75,6 +75,8 @@ export class Environement {
   //action slider
   this.actionGroupSlider();
 
+  //verification de la position des boitiers
+  this.verifier();
 
 
   }
@@ -201,23 +203,30 @@ export class Environement {
   })
   }
   toRestart(){
-  this.boitiers[1].position.y = 0.7;
-  this.boitiers[1].position.x = 7.7;
-  this.boitiers[1].position.z = -0.7
-  this.boitiers[0].physicsImpostor.dispose();
+    //repositionate boitier
+    this.boitiers[1].position.y = 0.7;
+    this.boitiers[1].position.x = 7.7;
+    this.boitiers[1].position.z = -0.7
+    this.boitiers[0].physicsImpostor.dispose();
 
 
-  this.boitiers[0].position.y = 0.7;
-  this.boitiers[0].position.x = 6.5;
-  this.boitiers[0].position.z = -0.7
-  this.boitiers[1].physicsImpostor.dispose();
-  this.cliquer=true;
-  this._ui._sString = "00";
-  this._ui._mString = 0;
-  this._ui.time = 0;
-  // this._ui._stopTimer = false;
-  this._ui._clockTime.text = "00:00";
+    this.boitiers[0].position.y = 0.7;
+    this.boitiers[0].position.x = 6.5;
+    this.boitiers[0].position.z = -0.7
 
+
+    this.boitiers[0].rotation.x = 0;
+    this.boitiers[0].rotation.y = 0;
+    this.boitiers[0].rotation.z = 0;
+    this.boitiers[1].physicsImpostor.dispose();
+
+    
+    //reset clocktime
+    this.cliquer=true;
+    this._ui._sString = "00";
+    this._ui._mString = 0;
+    this._ui.time = 0;
+    this._ui._clockTime.text = "00:00";
   }
 
   createImpulse(){
@@ -235,8 +244,20 @@ export class Environement {
 
 
     const bouger = () =>{
-      this.boitiers[0].physicsImpostor.setLinearVelocity(new Vector3(0,0,-1));
-      this.boitiers[1].physicsImpostor.setLinearVelocity(new Vector3(0,0,-1));
+      var bouger = true;
+      var vitesse1 = this.physicEngine.gravity.y/(6*this.boitiers[0].scaling._x);
+      var vitesse2 = this.physicEngine.gravity.y/(6*this.boitiers[1].scaling._x);
+
+      if(bouger){
+        this.boitiers[0].physicsImpostor.setLinearVelocity(new Vector3(0,0,vitesse1));
+        this.boitiers[1].physicsImpostor.setLinearVelocity(new Vector3(0,0,vitesse2));
+        console.log(this.boitiers[0].position._z)
+
+      }
+      if(this.boitiers[0].position._z == 3){
+        bouger = false;
+      }
+
     }
 
     this.scene.registerBeforeRender(bouger);
@@ -365,6 +386,10 @@ export class Environement {
     this.scene.enablePhysics(null, new CannonJSPlugin(true,10,CANNON));
     this.physicEngine = this.scene.getPhysicsEngine();
 
+  }
+
+  verifier(){
+    
   }
 
 

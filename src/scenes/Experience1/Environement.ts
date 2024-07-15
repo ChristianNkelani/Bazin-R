@@ -178,7 +178,8 @@ if(this.cliquer == true){
  
 }
 })
-
+this._ui.groupSliders[1].addCheckbox("Chambre à vide",()=>{    this._ui.box.isVisible = !this._ui.box.isVisible.valueOf()
+})
 this._ui._sliders[2].onPointerUpObservable.add(() => {
 this.physicEngine.setGravity(new Vector3(0,-(this._ui._sliders[2].value),0))
 });
