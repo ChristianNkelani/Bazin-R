@@ -22,13 +22,13 @@
               </h3>
               <div class="py-2 text-gray-400 text-sm">
                 <div class="flex flex-col items-center justify-center" v-bind:key="answer" v-for="answer in questions[numquestion-1].answers">
-                  <button @click="choisir(answer)"  class="w-96 bg-gray-200 py-3 my-2" :class="{'border-red-500 border' : answer == choix}">{{ answer }}</button>
+                  <button @click="choix = answer"  class="w-96 bg-gray-200 py-3 my-2" :class="{'border-red-500 border' : answer == choix}">{{ answer }}</button>
                 </div>
               </div>
             </div>
             
-            <button v-if="numquestion < questions.length" @click="numquestion++;console.log(reponses)"  class="bg-blue-500 w-64 text-md py-2 px-3 text-white">Suivant</button>
-            <button v-show="numquestion == questions.length" @click="cacherCard"  class="bg-blue-500 w-64 text-md py-2 px-3 text-white">Continuer</button>
+            <button v-if="numquestion < questions.length" @click="numquestion++;choisir(choix)"  class="bg-blue-500 w-64 text-md py-2 px-3 text-white">Suivant</button>
+            <button v-show="numquestion == questions.length" @click="finalQuestion(choix)"  class="bg-blue-500 w-64 text-md py-2 px-3 text-white">Continuer</button>
         </div>
   </div>
 
@@ -70,7 +70,7 @@ export default defineComponent({
       flou : false,
       card : 1,
       numquestion : 1,
-      reponses : {},
+      reponses : [],
       choix : '',
 
       // La liste de toutes les questions 
@@ -130,18 +130,35 @@ export default defineComponent({
       this.numquestion = 1;
       console.log(this.card)
     },
-    choisir(answer){
-      this.choix = answer
-      
+    choisir(answer:string){
+      this.reponses.push(answer)
+      console.log(this.reponses);
     },
+    // la derniere question
+    finalQuestion(choix){
+      this.cacherCard();
+      this.choisir(choix);
+    }
   },
 });
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  canvas{
-    width: 100%;
-    height: 100%;
-  }
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+canvas {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+main {
+  width: 100%;
+  height: 100%;
+  background-color: red
+}
 </style>
