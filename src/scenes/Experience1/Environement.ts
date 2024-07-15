@@ -29,7 +29,7 @@ ball2 : any;
 physicEngine:any;
 private _Interaction: Interaction;
 
-
+// 
 gravZ:any;
 cliquer=true;//variable pour activer impostor ou non
 public _ui:UI;

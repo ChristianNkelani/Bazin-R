@@ -32,7 +32,11 @@ export class Environement {
 
   constructor(
   scene:Scene, engine:Engine,
+  // Lagestion du loader 
   private setLoaded: () => void,
+
+  // gestion des cards
+  private voirCard :()=>void,
 
   ){
   //la scene
@@ -79,7 +83,13 @@ export class Environement {
 
   async importLaboratoire(){
     const labo = await SceneLoader.ImportMeshAsync("","./models/","laboratoire.glb", this.scene);
+    // Apparution du loader
     this.setLoaded();
+
+    // Juste apres ça montrer le card avec cette methode
+
+    this.voirCard();
+
     console.log(labo.meshes)
     labo.meshes[10].isVisible = false;
     labo.meshes[11].isVisible = false;

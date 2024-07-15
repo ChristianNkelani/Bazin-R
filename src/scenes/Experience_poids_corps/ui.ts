@@ -48,7 +48,7 @@ export class UI {
        text.fontFamily="Montserrat Black"
        text.color ="deepskyblue"
        text.height="25px"
-       text.top = "5px"
+       text.top = "50px"
        text.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP
        container.addControl(text);
     }
@@ -184,6 +184,9 @@ export class UI {
         this.createMenuCalculs(container2);
         this.textMassses(container2);
         this.createNewMenuMat(advancedTexture);
+
+        // Code de japhet
+        // container2.isVisible = false
     }
 
     createButtonActionMenu(){
