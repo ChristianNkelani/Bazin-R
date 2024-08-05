@@ -1,0 +1,33 @@
+Q1 : Qu'est-ce qu'une trajectoire ?
+R1 : Une trajectoire est le chemin suivi par un objet en mouvement dans l'espace au cours du temps. Elle peut être représentée par une ligne ou une courbe dans un espace à deux ou trois dimensions.
+
+Q2 : Quelle est la différence entre une trajectoire rectiligne et une trajectoire curviligne ?
+R2 : Une trajectoire rectiligne est une ligne droite, tandis qu'une trajectoire curviligne est une courbe. Dans une trajectoire rectiligne, l'objet se déplace en ligne droite, alors que dans une trajectoire curviligne, il se déplace suivant une courbe.
+
+Q3 : Comment peut-on représenter une trajectoire en physique ?
+R3 : Une trajectoire peut être représentée par une équation mathématique qui décrit la position de l'objet en fonction du temps, ou graphiquement par un diagramme montrant le chemin parcouru par l'objet.
+
+
+Q4 : Qu'est-ce qu'une trajectoire parabolique ?
+R4 : Une trajectoire parabolique est une courbe en forme de parabole. C'est typiquement le type de trajectoire suivi par un projectile en mouvement sous l'influence de la gravité, sans autres forces agissant sur lui (comme la résistance de l'air).
+
+
+Q1 : Qu'est-ce qu'un trajet ?
+R1 : Un trajet est le chemin ou la route suivie par un objet ou une personne pour aller d'un point A à un point B. Cela inclut toutes les étapes intermédiaires du déplacement.
+
+
+Q2 : Quelle est la différence entre un trajet et une trajectoire ?
+R2 : Un trajet se réfère au chemin suivi pour aller d'un point à un autre, souvent en considérant les points intermédiaires et le contexte de déplacement. Une trajectoire, quant à elle, est plus spécifiquement le chemin suivi par un objet en mouvement, souvent étudiée en termes de physique ou de géométrie.
+
+
+
+Q3 : Comment peut-on mesurer un trajet ?
+R3 : Un trajet peut être mesuré en termes de distance parcourue, temps de parcours, ou même en termes de direction et de changements de cap. Les outils de mesure peuvent inclure des odomètres, des GPS, et des cartes.
+
+
+Q4 : Qu'est-ce qu'un trajet optimal ?
+R4 : Un trajet optimal est le chemin le plus efficace pour aller d'un point à un autre. Cela peut signifier le plus court en distance, le plus rapide en temps, ou le moins coûteux en termes de ressources (comme le carburant).
+
+
+Q5 : Pourquoi est-il important de planifier un trajet ?
+R5 : Planifier un trajet est important pour optimiser le temps de voyage, minimiser les coûts, éviter les obstacles et dangers, et assurer que les objectifs du déplacement sont atteints de manière efficace et sûre.

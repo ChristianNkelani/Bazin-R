@@ -8,7 +8,7 @@ import "@babylonjs/loaders";
 import { UI } from "./ui";
 import { Environement } from "./Environement";
 
-export class Experience3 {
+export class  Experience4{
 
     scene: Scene;
     engine: Engine;
@@ -20,6 +20,7 @@ export class Experience3 {
     private canvas:HTMLCanvasElement,
     private setLoaded: () => void,
     private voirCard: () => void
+    
 ){
 
     this.engine = new Engine(this.canvas);

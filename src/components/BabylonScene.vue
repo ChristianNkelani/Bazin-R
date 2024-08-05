@@ -84,6 +84,22 @@ export default defineComponent({
             "La bille bleu", 
           ]
         ),
+
+        new Question(
+          'comment appelle-t-on g',
+          [
+            "La pesanteur",
+            "La gravité",
+            "L\'accélération de la pesanteur"
+          ]
+        ),
+        new Question(
+          'g reste constante dans n\'importe que milieu.',
+          [
+            "Vrai",
+            "Faux",
+          ]
+        ),
         new Question(
           'Le corps tombe en chutte libre parce qu\'ils possedent une masse',
           [
@@ -92,10 +108,24 @@ export default defineComponent({
           ]
         ),
         new Question(
-          'Je m\'appel japhet bazungula ?',
+          'La gravité n\'agit que sur des corps en mouvement',
           [
             "Vrai",
             "Faux",
+          ]
+        ),
+        new Question(
+          'La gravité n\'existe pas dans le vide.',
+          [
+            "Vrai",
+            "Faux",
+          ]
+        ),
+        new Question(
+          'Que se passe-t-il lorsqu\'on diminue g la constante de gravitation',
+          [
+            "Les corps tombent plus vite",
+            "Les corps tombent moins vite",
           ]
         ),
         

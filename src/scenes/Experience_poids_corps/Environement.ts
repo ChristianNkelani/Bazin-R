@@ -331,6 +331,9 @@ export class Environement {
   actionGroupSlider(){
     //valeur de p1
     this._ui._textMasse[4].text = "P1 = "+(this._ui._sliders[0].value)+"x"+(-this.physicEngine.gravity.y)+" kg";
+    var masse1=1;
+    var masse2=1;
+
 
     const displayValue = function(value){
       return Math.floor(value*100)/100;
@@ -341,6 +344,8 @@ export class Environement {
 
     var t=1;
     const setBall1 = (value) => {
+      masse1 = value;
+
       ball1.scaling.x = value;
       ball1.scaling.y = value;
       ball1.scaling.z = value;
@@ -357,6 +362,8 @@ export class Environement {
       ball2.scaling.y = value;
       ball2.scaling.z = value;
       t=value;
+      masse2 = value;
+
       this._ui._textMasse[1].text = "m2 = "+ value.toFixed(2)+"Kg";
       this._ui._textMasse[3].text = "m12 = "+(value.toFixed(2)+parseInt(t.toFixed(2)))+ "Kg"
 
@@ -367,11 +374,11 @@ export class Environement {
     const physicEngine = this.physicEngine;
     const setGravitaion = (value) => { 
       physicEngine.setGravity(new Vector3(0,-(value),0))
-      this._ui._textMasse[4].text = "P1 = "+(this._ui._textMasse[0].value)+"x"+(value.toFixed(2))+" kg";
+      this._ui._textMasse[4].text = "P1 = "+(masse1.toFixed(2))+"x"+(value.toFixed(2))+" kg";
 
 
     }
-    this._ui.groupSliders[0].addSlider("Gravitation",setGravitaion,"m/s2",0,15,9.81,displayValue);
+    this._ui.groupSliders[0].addSlider("g = ",setGravitaion,"m/s2",0,15,9.81,displayValue);
     this._ui.groupSliders[0].addSlider("Masse boîtier jaune",setBall1,"Kg",1,2,1,displayValue);
     this._ui.groupSliders[0].addSlider("Masse boîtier rouge",setBall2,"Kg",1,2,1,displayValue);
 

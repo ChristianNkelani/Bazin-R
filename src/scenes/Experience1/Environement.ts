@@ -14,68 +14,60 @@ import {
   AmmoJSPlugin
 } from "@babylonjs/core";
 
-import "@babylonjs/loaders";
-import * as CANNON from "cannon";
-import { UI } from "./ui";
-import { Interaction } from "./interaction";
+  import "@babylonjs/loaders";
+  import * as CANNON from "cannon";
+  import { UI } from "./ui";
+  import { Interaction } from "./interaction";
 
 
 export class Environement {
 
-scene: Scene;
-engine : Engine;
-ball1 : any;
-ball2 : any;
-physicEngine:any;
-private _Interaction: Interaction;
-
-// 
-gravZ:any;
-cliquer=true;//variable pour activer impostor ou non
-public _ui:UI;
+  scene: Scene;
+  engine : Engine;
+  ball1 : any;
+  ball2 : any;
+  physicEngine:any;
+  
+  cliquer=true;//variable pour activer impostor ou non
+  public _ui:UI;
 
 constructor(
-scene:Scene, engine:Engine,
-private setLoaded: () => void,
-private voidCard : () => void,
-private voirQuestion : ()=> void,
+  scene:Scene, engine:Engine,
+  private setLoaded: () => void,
+  private voirCard : () => void,
+  private voirQuestion : ()=> void,
 
 ){
-//la scene
-this.scene = scene;
+  //la scene
+  this.scene = scene;
 
-//on charge les autres interfaces
-this._ui = new UI(this.scene);  
+  //on charge les autres interfaces
+  this._ui = new UI(this.scene);  
 
-this.scene.onBeforeRenderObservable.add(() => {
-// when the game isn't paused, update the timer
-this._ui.updateHud();
-});
+  this.scene.onBeforeRenderObservable.add(() => {
+    // when the game isn't paused, update the timer
+    this._ui.updateHud();
+  });
 
-//enable physics
-this.createGravity();
-
-
-//create  
-// this._Interaction = new Interaction();
-// this._Interaction.Accueil(this.scene);
+  //enable physics
+  this.createGravity();
 
 
-//creation des materiels
-this.importLaboratoire();
-this.createMateriels();
-this.createground()
-this.createground2()
+  //creation des materiels
+  this.importLaboratoire();
+  this.createMateriels();
+  this.createground()
+  this.createground2()
 
-//action des sliders
-this.actionButtonMenu();    
+  //action des sliders
+  this.actionButtonMenu();    
 
 }
 
 async importLaboratoire(){
 const labo = await SceneLoader.ImportMeshAsync("","./models/","laboratoire.glb", this.scene);
 this.setLoaded();
-this.voidCard();
+this.voirCard();
 return labo;
 }
 
@@ -217,16 +209,14 @@ this._ui._clockTime.text = "00:00";
 }
 
 async createGravity(){
-// const ammo = await Ammo()
-// let physics: AmmoJSPlugin = new AmmoJSPlugin(true, ammo)
-this.scene.enablePhysics(null, new CannonJSPlugin(true,10,CANNON));
-this.physicEngine = this.scene.getPhysicsEngine();
+  this.scene.enablePhysics(null, new CannonJSPlugin(true,10,CANNON));
+  this.physicEngine = this.scene.getPhysicsEngine();
 
 }
 
 actionGroupSlider(){
-const displayValue = function(value){
-return Math.floor(value*100)/100;
+  const displayValue = function(value){
+  return Math.floor(value*100)/100;
 }
 
 const ball1 = this.ball1;
@@ -249,7 +239,7 @@ const physicEngine = this.physicEngine;
 const setGravitaion = function(value){
 physicEngine.setGravity(new Vector3(0,-(value),0))
 }
-this._ui.groupSliders[0].addSlider("Gravitation",setGravitaion,"m/s2",0,15,9.81,displayValue);
+this._ui.groupSliders[0].addSlider("g = ",setGravitaion,"m/s2",0,15,9.81,displayValue);
 this._ui.groupSliders[0].addSlider("Masse balle jaune",setBall1,"Kg",1,2,1,displayValue);
 this._ui.groupSliders[0].addSlider("Masse balle rouge",setBall2,"Kg",1,2,1,displayValue);
 

@@ -44,12 +44,54 @@ export default defineComponent({
             titre: 'Détermination du poids d\'un corps',
             questions: [
                 new Question(
-                    'dsdssdsadsad',
+                    '<<Loi>> de Newton et <<Principe>> de Newton signifien la même chose',
                     [
-                        'sasasasa',
-                        'assasaassa',
+                        'Vrai',
+                        'Faux',
                     ]
-                )
+                ),
+                new Question(
+                    'La dynamique est l\'étude de la persévérance d\'un corpso',
+                    [
+                        'Vrai',
+                        'Faux',
+                    ]
+                ),
+                new Question(
+                    'La masse seule d\'un corps peut déterminer la force à exercer par un objet.',
+                    [
+                        'Vrai',
+                        'Faux',
+                    ]
+                ),
+                new Question(
+                    'Lors d\'un mouvement, la masse s\'oppose au mouvement',
+                    [
+                        'Vrai',
+                        'Faux',
+                    ]
+                ),
+                new Question(
+                    'Le poids et la masse sont deux grandeurs physiquement identiques.',
+                    [
+                        'Vrai',
+                        'Faux',
+                    ]
+                ),
+                new Question(
+                    'La dynamique est l\'étude de la persévérance d\'un corpso',
+                    [
+                        'Vrai',
+                        'Faux',
+                    ]
+                ),
+                new Question(
+                    'Comment se calcul le poid d\'un corps?',
+                    [
+                        'Poids = (masse pesée sur la balance) x (accélération de la pesanteur)',
+                        'Poids = masse pesée sur la balance',
+                    ]
+                ),
             ] 
         };
     },
