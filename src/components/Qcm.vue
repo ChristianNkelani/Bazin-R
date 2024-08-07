@@ -1,35 +1,67 @@
 <template>
   <div class="p-4" style="width: 600px">
     <h1 class="text-3xl font-bold mb-6 text-center">Questionnaire</h1>
-    <div v-if="store.currentPage < questions.length">
-      <h2 class="text-xl font-semibold mb-4">
-        {{ questions[store.currentPage].question }}
-      </h2>
-      <div
-        v-for="(option, index) in questions[store.currentPage].options"
-        :key="index"
-        class="mb-2"
+    <div class="relative w-full h-96 overflow-hidden">
+      <transition-group
+        name="slide"
+        tag="div"
+        class="absolute inset-0 flex transition-transform duration-300"
+        :style="`transform: translateX(-${store.currentPage * 100}%);`"
       >
-        <input
-          type="radio"
-          :id="'option' + index"
-          :value="option"
-          v-model="selectedOption"
-          class="mr-2"
-        />
-        <label :for="'option' + index" class="text-gray-700">{{
-          option
-        }}</label>
-      </div>
-      <button
-        @click="nextPage"
-        class="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
-      >
-        Suivant
-      </button>
+        <div
+          v-for="(question, index) in questions"
+          :key="index"
+          class="w-full h-full flex-shrink-0 px-4"
+        >
+          <div v-if="store.currentPage === index">
+            <h2 class="text-xl font-semibold mb-2">{{ question.question }}</h2>
+            <div
+              v-for="(option, optionIndex) in question.options"
+              :key="optionIndex"
+              class="mb-2"
+            >
+              <input
+                type="radio"
+                :id="'option' + optionIndex"
+                :value="option"
+                v-model="selectedOption"
+                class="mr-2"
+              />
+              <label :for="'option' + optionIndex" class="text-gray-700">{{
+                option
+              }}</label>
+            </div>
+            <button
+              @click="nextPage"
+              class="mt-3 bg-blue-500 text-white py-2 px-4 rounded"
+            >
+              Suivant
+            </button>
+            <!-- Indicateurs de page -->
+
+            <div
+              class="flex gap-2 justify-center"
+              v-if="store.currentPage < questions.length"
+            >
+              <div
+                v-for="(question, index) in questions"
+                :key="index"
+                class="w-3 h-3 rounded-full"
+                :class="{
+                  'bg-blue-500': store.currentPage === index,
+                  'bg-gray-300': store.currentPage !== index,
+                }"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </transition-group>
     </div>
 
-    <div v-else>
+    <div
+      v-if="store.currentPage >= questions.length"
+      class="mt-2 flex flex-col justify-center items-center"
+    >
       <h2 class="text-xl font-semibold mb-4">Quiz terminé !</h2>
       <p class="text-gray-700">Votre score : {{ score }} / {{ totalPoints }}</p>
       <div class="mt-4">
@@ -65,9 +97,8 @@
                     selectedOptions[index] === option,
                   'text-gray-700': option !== selectedOptions[index],
                 }"
+                >{{ option }}</label
               >
-                {{ option }}
-              </label>
             </div>
           </div>
         </div>
@@ -78,7 +109,6 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from "vue";
-import { defineStore } from "pinia";
 import { QcmStore } from "@/stores/store";
 
 interface Question {
@@ -142,7 +172,6 @@ export default defineComponent({
 
     // Gestion de l'état avec Pinia
     const etat = ref(store.etat);
-    // const currentPage = ref(store.currentPage);
 
     const cliquer = () => {
       store.cliquer();
@@ -155,7 +184,6 @@ export default defineComponent({
 
     return {
       questions,
-
       selectedOption,
       score,
       totalPoints,
@@ -170,5 +198,12 @@ export default defineComponent({
 </script>
 
 <style scoped>
-/* Ajoutez des styles personnalisés ici */
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.3s ease;
+}
+.slide-enter,
+.slide-leave-to {
+  transform: translateX(100%);
+}
 </style>
