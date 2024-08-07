@@ -1,11 +1,13 @@
 import { Scene, MeshBuilder, Color3, PBRMaterial, Sound } from "@babylonjs/core";
 import * as GUI from '@babylonjs/gui/2D';
+import { Vector3 } from "babylonjs";
 
 export class UI {
     public _scene:Scene;
     public _sliders:any;
     public _buttonAction:any;
     public groupSliders:any;
+    public texts:any;
     public selectbox : any ;
 
     //Game Timer
@@ -29,16 +31,11 @@ export class UI {
         //menu action
         this.createButtonActionMenu();
 
-        // creation de la chambre vide
-        this.chambreVide()
-
         //create the texture 
         const advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI('UI', undefined);        
         this.Chrono(advancedTexture);
-    
 
-        
-        
+        this.calculs(3,4)
     }
    
     
@@ -176,37 +173,74 @@ export class UI {
     }
     
 
-      // creation de la chambre a vide
-
-  chambreVide(){
-    this.box = MeshBuilder.CreateBox(
-      "box", {
-        width : 2.8,
-        height : 5.9,
-        size:5.5
-      }, 
-      this._scene
-    );
-    this.box.position.x = 6.5;
-    this.box.position.z = -2.5;
-    const glass = new PBRMaterial("glass", this._scene);
-    glass.alpha = 0.5;
-    glass.directIntensity = 0.0;
-    glass.environmentIntensity = 0.7;
-    glass.cameraExposure = 0.66;
-    glass.cameraContrast = 1.66;
-    glass.microSurface = 1;
-    glass.reflectivityColor = new Color3(0.2, 0.2, 0.2);
-    glass.albedoColor = new Color3(0.95, 0.95, 0.95);
-    this.box.material = glass
-    this.box.isVisible = false;
-  }
+  
   affichageParametre(){
     if(this.selectbox.isVisible == false ){
         this.selectbox.isVisible = true;
     } else {
         this.selectbox.isVisible = false;
     }
+  }
+
+
+  calculs(potentiel=0,cinetique=0){
+    this.texts = [];
+     // Création de la GUI
+     const advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+
+     // Création d'un texte pour afficher l'énergie cinétique
+     const kineticEnergyText = new GUI.TextBlock();
+     kineticEnergyText.text = "Énergie Cinétique: "+cinetique;
+     kineticEnergyText.color = "white";
+     kineticEnergyText.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+     kineticEnergyText.left = '-250px';
+     kineticEnergyText.top = -230;
+     kineticEnergyText.fontSize = 24;
+     advancedTexture.addControl(kineticEnergyText);
+
+     this.texts[0] = kineticEnergyText;
+
+     const potentialEnergy = new GUI.TextBlock();
+     potentialEnergy.text = "Énergie Potentielle: "+potentiel;
+     potentialEnergy.color = "white";
+     potentialEnergy.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+     potentialEnergy.top = -200;
+     potentialEnergy.left = '-250px';
+     potentialEnergy.fontSize = 24;
+     advancedTexture.addControl(potentialEnergy);
+
+     this.texts[1] = potentialEnergy;
+
+     
+
+     // Variables pour la physique
+     let velocity = new Vector3(0, 0, 0);
+     const gravity = new Vector3(0, -0.1, 0);
+     const mass = 1; // masse de la balle\
+
+
+     // Création d'un texte pour afficher l'énergie cinétique
+     const text3 = new GUI.TextBlock();
+     text3.text = "Énergie Cinétique: "+cinetique;
+     text3.color = "white";
+     text3.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+     text3.left = '250px';
+     text3.top = -230;
+     text3.fontSize = 24;
+     advancedTexture.addControl(text3);
+
+     this.texts[2] = text3;
+
+     const text4 = new GUI.TextBlock();
+     text4.text = "Énergie Potentielle: "+potentiel;
+     text4.color = "white";
+     text4.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+     text4.top = -200;
+     text4.left = '250px';
+     text4.fontSize = 24;
+     advancedTexture.addControl(text4);
+
+     this.texts[3] = text4;
   }
 
 

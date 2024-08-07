@@ -16,6 +16,8 @@ import {
     import * as CANNON from "cannon";
     import "@babylonjs/loaders";
     import { UI } from "./ui";
+    import * as GUI from '@babylonjs/gui/2D';
+
 
 
 export class Environement {
@@ -47,14 +49,14 @@ constructor(
     //creation du moteur
     this.engine = engine;
     
+    //ajout de la physique(gravité, collision)
+    this.Physics();
+    
     //importation du laboratoire
     this.importLaboratoire();
 
     //creation des balles et aimants
     this.createMateriels();
-
-    //ajout de la physique(gravité, collision)
-    this.Physics();
 
     //creeer les sliSders
     this.createSliders();
@@ -62,7 +64,21 @@ constructor(
     this.actions()
 
 
+     // Fonction d'animation
+     scene.onBeforeRenderObservable.add(() => {
+
+        // this._ui.texts[0].text =  "Énergie Potentielle: "+this.ball1.position._y;
+        
+        // const kineticEnergy = 0.5 * mass * speed * speed;
+        // kineticEnergyText.text = `Énergie Cinétique: ${kineticEnergy.toFixed(2)}`;
+    
+    });
+
+
 }
+
+
+
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -77,18 +93,45 @@ constructor(
         return labo;
     }
 
+//-----------------------------------------------------------------------------------------------------------------------
+
+    createground(){
+        const ground = MeshBuilder.CreateGround('ground', {})
+        ground.position.y = 0.7
+        ground.position.x = 7
+        ground.position.z = -0.6
+        
+        ground.physicsImpostor = new PhysicsImpostor(
+        ground,
+        PhysicsImpostor.BoxImpostor,
+        { mass: 0, restitution: 0}
+        )
+        ground.isVisible = false
+    }
+
+    createground2(){
+        const ground = MeshBuilder.CreateGround('ground', {})
+        ground.position.y = 0.7
+        ground.position.x = 7
+        ground.position.z = -4.5
+        
+        ground.physicsImpostor = new PhysicsImpostor(
+        ground,
+        PhysicsImpostor.BoxImpostor,
+        { mass: 0, restitution: 0}
+        )
+        ground.isVisible = false
+    }
+//-----------------------------------------------------------------------------------------------------------------
+
 //-------------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    /**
+     * @cette_fonction_permet_d_activer_la_physique_dans_l_environnement
+     */
     async Physics(){
-
         this.scene.enablePhysics(null, new CannonJSPlugin(true,10,CANNON));
-
-        // Création du sol
-        var ground = MeshBuilder.CreateGround("ground", {width: 2, height: 5}, this.scene);
-        ground.position = new Vector3(5,1,3)
-        ground.physicsImpostor = new PhysicsImpostor(ground, PhysicsImpostor.BoxImpostor, {mass: 0, restitution: 0.9}, this.scene);
-
-        // Création de la balle
-        this.ball1.physicsImpostor = new PhysicsImpostor(this.ball1, PhysicsImpostor.SphereImpostor, {mass: 0, restitution: 0.9}, this.scene);
+        this.physicEngine = this.scene.getPhysicsEngine();
 
     }
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -130,50 +173,78 @@ constructor(
         this.ball2.position.z = -4.4
         this.ball2.material = this.changeMaterialColor(255,0,0)
         
+        this.createground();
+        this.createground2();
+        
         return [aimant1,aimant2,this.ball1,this.ball2];
     }
 //-------------------------------------------------------------------------------------------------------------------------------------------------------
 
     createSliders(){
-        const displayValue = function(value){
+        var hauteur=3;
+        var hauteur1=3;
+
+        var g = 9.81;
+        var masse = 1;
+        var masse1 = 1;
+
+        // this._ui.texts[0].text = this.ball1.position._y;
+
+        const displayValue = (value) => {
             return Math.floor(value*100)/100;
-            }
+        }
             
             const ball1 = this.ball1;
             const ball2 = this.ball2;
             
-            const setBall1 = function(value){
+            const setBall1 = (value) => {
             ball1.scaling.x = value;
             ball1.scaling.y = value;
             ball1.scaling.z = value;
+            masse = value;
+            this._ui.texts[0].text =  "Énergie Potentielle: "+(value*hauteur*g).toFixed(2);
             }
             
             const setHauteur1 = (value) => {
                 this.aimants[0].position.y = value;
                 this.ball1.position.y = value;
+                this._ui.texts[0].text =  "Énergie Potentielle: "+masse*value*-this.physicEngine.gravity._y;
+
+                hauteur = value;
             }
 
             const setHauteur2 = (value) => {
                 this.aimants[1].position.y = value;
                 this.ball2.position.y = value;
+
+                this._ui.texts[2].text =  "Énergie Potentielle: "+(masse1*value*-this.physicEngine.gravity._y).toFixed(2);
+                hauteur = value;
+
             }
-            const setBall2 = function(value){
+            const setBall2 = (value) => {
             ball2.scaling.x = value;
             ball2.scaling.y = value;
             ball2.scaling.z = value;
+            masse1 = value;
+            this._ui.texts[2].text =  "Énergie Potentielle: "+(value*hauteur1*g).toFixed(2);
+
             }
             
             
             const physicEngine = this.physicEngine;
-            const setGravitaion = function(value){
+            const setGravitaion = (value) =>{
             physicEngine.setGravity(new Vector3(0,-(value),0))
+            this._ui.texts[0].text =  "Énergie Potentielle: "+(masse*hauteur*value).toFixed(2);
+            this._ui.texts[2].text =  "Énergie Potentielle: "+(masse1*hauteur1*value).toFixed(2);
+
             }
             this._ui.groupSliders[0].addSlider("Gravitation",setGravitaion,"m/s2",0,15,9.81,displayValue);
             this._ui.groupSliders[0].addSlider("Masse balle jaune",setBall1,"Kg",1,2,1,displayValue);
             this._ui.groupSliders[0].addSlider("Masse balle rouge",setBall2,"Kg",1,2,1,displayValue);
             this._ui.groupSliders[0].addSlider("Hauteur de la balle jaune",setHauteur1,"m",1,3,3,displayValue);
             this._ui.groupSliders[0].addSlider("Hauteur de la balle rouge",setHauteur2,"m",1,3,2.5,displayValue);
-    }
+
+        }
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
     actions(){
         
@@ -187,7 +258,14 @@ constructor(
             }
         
         })
+
+
+        this._ui._buttonAction[1].onPointerUpObservable.add(()=>{
+            this.toRestart();
+        })
     }
+
+
 
     // Animation
     public createImpostor():void{
@@ -202,11 +280,32 @@ constructor(
         PhysicsImpostor.BoxImpostor,
         {mass : 1 , restitution : 0.75}
         )
+    }
 
-        this._ui._buttonAction[0].onPointerUpObservable.add(() => {
-           
-        })
+
+toRestart(){
+    this.ball2.position.y = this.aimants[1].position._y;
+    this.ball2.position.x = 7.2;
+    this.ball2.position.z = -4.4
+    this.ball2.diameter = 0.25
+    this.ball1.physicsImpostor.dispose();
+    
+    
+    this.ball1.position.y = this.aimants[0].position._y;
+    this.ball1.position.x = 7.2;
+    this.ball1.position.z = -0.7
+    this.ball2.diameter = 0.25
+    this.ball2.physicsImpostor.dispose();
+    this.cliquer=true;
+    this._ui._sString = "00";
+    this._ui._mString = 0;
+    this._ui.time = 0;
+    // this._ui._stopTimer = false;
+    this._ui._clockTime.text = "00:00";
+    
     }
     
 }
+
+
 

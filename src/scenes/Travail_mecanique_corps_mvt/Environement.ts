@@ -379,7 +379,7 @@ export class Environement {
 
     }
     this._ui.groupSliders[0].addSlider("g = ",setGravitaion,"m/s2",0,15,9.81,displayValue);
-    this._ui.groupSliders[0].addSlider("Masse boîtier jaune",setBall1,"Kg",1,2,1,displayValue);
+    this._ui.groupSliders[0].addSlider("Distance à parcourir OO'",setBall1,"m",1,10,1,displayValue);
     this._ui.groupSliders[0].addSlider("Masse boîtier rouge",setBall2,"Kg",1,2,1,displayValue);
 
     this._ui.groupSliders[1].addCheckbox("Chambre à vide")

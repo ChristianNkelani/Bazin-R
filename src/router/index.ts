@@ -10,6 +10,7 @@ import PFD from '@/components/PFD.vue';
 import action_reaction from "@/components/action_reaction.vue";
 import element_base_cinematique from '@/components/element_base_cinematique.vue';
 import energie_cinetique_potentielle from '@/components/energie_cinetique_potentielle.vue';
+import Travail_mecanique_corps_mvt from '@/components/Travail_mecanique_corps_mvt.vue';
 
 const routes = [
   { path: '/', component: Home },
@@ -23,6 +24,7 @@ const routes = [
   {path : '/7', component : action_reaction},
   {path : '/4', component : poids_corps},
   {path : '/1', component : element_base_cinematique},
+  {path : '/8', component : Travail_mecanique_corps_mvt},
   {path : '/9', component : energie_cinetique_potentielle},
 
 ]
