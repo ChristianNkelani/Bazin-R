@@ -1,0 +1,32 @@
+[
+  {
+    "question": "Quel est le résultat de 5 + 3 ?",
+    "options": ["6", "7", "8", "9"],
+    "correctAnswer": "8",
+    "points": 1
+  },
+  {
+    "question": "Quel est le résultat de 12 - 4 ?",
+    "options": ["6", "7", "8", "9"],
+    "correctAnswer": "8",
+    "points": 1
+  },
+  {
+    "question": "Quel est le résultat de 7 × 6 ?",
+    "options": ["42", "36", "48", "54"],
+    "correctAnswer": "42",
+    "points": 1
+  },
+  {
+    "question": "Quel est le résultat de 56 ÷ 8 ?",
+    "options": ["6", "7", "8", "9"],
+    "correctAnswer": "7",
+    "points": 1
+  },
+  {
+    "question": "Quel est le résultat de 9 + 15 ?",
+    "options": ["23", "24", "25", "26"],
+    "correctAnswer": "24",
+    "points": 1
+  }
+]
