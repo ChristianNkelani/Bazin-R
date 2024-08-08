@@ -1,8 +1,8 @@
 [
     {
-      "question": "<<Loi>> de Newton et <<Principe>> de Newton signifient la même chose.",
+      "question": "<<Loi>> de Newton et <<Principe>> de Newton signifient ne signifient pas la même chose.",
       "options": ["Vrai", "Faux"],
-      "correctAnswer": "Faux",
+      "correctAnswer": "Vrai",
       "points": 1
     },
     {
@@ -18,9 +18,9 @@
       "points": 1
     },
     {
-        "question": "Lors d'un mouvement, la masse s'oppose au mouvement.",
+        "question": "Lors d'un mouvement, la masse ne s'oppose pas au mouvement.",
         "options": ["Vrai", "Faux"],
-        "correctAnswer": "Faux",
+        "correctAnswer": "Vrai",
         "points": 1
       },
       {
@@ -30,10 +30,11 @@
         "points": 1
       },
       {
-        "question": "La masse seule d'un corps peut déterminer la force à exercer par un objet.",
-        "options": ["Vrai", "Faux"],
-        "correctAnswer": "Faux",
+        "question": "Comment peut-on calculer le poids(P) d'un corps de masse= 10kg?.",
+        "options": ["Poids = (masse du corps) X g", "Poids = masse x vitesse","Poids = masse du corps"],
+        "correctAnswer": "Poids = (masse du corps) X g",
         "points": 1
       }
+   
   ]
   

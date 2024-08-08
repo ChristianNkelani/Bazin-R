@@ -12,9 +12,21 @@
       "points": 1
     },
     {
+      "question": "comment appelle t-on g=9.81 ou g=10 en physique?.",
+      "options": ["la pesanteur", "la gravité","L'accélération de la pesanteur"],
+      "correctAnswer": "L'accélération de la pesanteur",
+      "points": 1
+    },
+    {
       "question": "La gravité n'agit que sur les corps possédant une masse mais en mouvement.",
       "options": ["Vrai", "Faux"],
       "correctAnswer": "Faux",
+      "points": 1
+    },
+    {
+      "question": "Pourquoi les astronautes semblent flotter sur la lune?.",
+      "options": ["Parceque g est très grand sur la lune", "Parceque g est très petit sur la lune","Parcequ'il n y a pas d'air sur la lune."],
+      "correctAnswer": "Parceque g est très petit sur la lune",
       "points": 1
     },
     {

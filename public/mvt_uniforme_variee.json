@@ -4,5 +4,23 @@
     "options": ["Vrai", "Faux"],
     "correctAnswer": "Faux",
     "points": 1
+  },
+  {
+    "question": "Un mouvement est dit rectiligne lorsque sa trajectoire est une courbe.",
+    "options": ["Vrai", "Faux"],
+    "correctAnswer": "Faux",
+    "points": 1
+  },
+  {
+    "question": "La route nationale N°1 de mbanza-ngungu jusqu'à kisantu décrit une trajectoire curviligne.",
+    "options": ["Vrai", "Faux"],
+    "correctAnswer": "Vrai",
+    "points": 1
+  },
+  {
+    "question": "Un mouvement est dit rectiligne uniforme si sa trajectoire est une ligne droite et sa vitesse variable.",
+    "options": ["Vrai", "Faux"],
+    "correctAnswer": "Faux",
+    "points": 1
   }
 ]
