@@ -6,6 +6,7 @@
       titre="Le Mouvement rectiligne"
       :cacherCard="cacherCard"
       :questions="questions"
+      fichier="mvt_uniforme_variee"
     />
 
     <main :class="{ 'blur-sm': flou == true }">

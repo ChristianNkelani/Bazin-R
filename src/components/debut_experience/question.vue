@@ -31,7 +31,7 @@
         Continuer
       </button>
     </div>
-    <Qcm :cacherCard="cacherCard" v-show="store.card == 3" />
+    <Qcm :cacherCard="cacherCard" :fichier="fichier" v-show="store.card == 3" />
   </div>
 </template>
 
@@ -46,6 +46,7 @@ export default {
     Presentation: String,
     questions: Array,
     cacherCard: Function,
+    fichier: String,
   },
   components: { Qcm },
   setup(props) {

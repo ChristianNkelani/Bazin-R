@@ -46,12 +46,14 @@
               <div
                 v-for="(question, index) in questions"
                 :key="index"
-                class="w-3 h-3 rounded-full"
+                class="w-6 h-6 flex items-center justify-center rounded-full text-white"
                 :class="{
                   'bg-blue-500': store.currentPage === index,
                   'bg-gray-300': store.currentPage !== index,
                 }"
-              ></div>
+              >
+                {{ index + 1 }}
+              </div>
             </div>
           </div>
         </div>
@@ -123,6 +125,10 @@ export default defineComponent({
       type: Function,
       required: true,
     },
+    fichier: {
+      type: String,
+      required: true,
+    },
   },
   setup(props) {
     const questions = ref<Question[]>([]);
@@ -133,7 +139,7 @@ export default defineComponent({
     const selectedOptions = ref<string[]>(new Array(5).fill(null));
 
     const loadQuestions = async () => {
-      const response = await fetch("/Questions.json");
+      const response = await fetch(`/${props.fichier}.json`);
       questions.value = await response.json();
       totalPoints.value = questions.value.reduce(
         (acc, question) => acc + question.points,
