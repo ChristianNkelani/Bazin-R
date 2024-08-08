@@ -1,0 +1,15 @@
+[
+    {
+      "question": "L'énergie est une substance qui se transmet d'un corps vers un autre.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    },
+    {
+      "question": "Lors d'une interaction, l'énergie mécanique ne se conserve pas.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    }
+  ]
+  

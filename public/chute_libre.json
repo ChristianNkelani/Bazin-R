@@ -1,0 +1,27 @@
+[
+    {
+      "question": "Un objet plus lourd tombe plus vite que celui moins lourd.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    },
+    {
+      "question": "g est appelée pesanteur ou gravité.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    },
+    {
+      "question": "La gravité n'agit que sur les corps possédant une masse mais en mouvement.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    },
+    {
+      "question": "La gravité n'existe pas dans le vide.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    }
+  ]
+  

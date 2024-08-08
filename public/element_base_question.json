@@ -1,0 +1,21 @@
+[
+    {
+      "question": "La trajectoire est un trajet qui est toujours rectiligne.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    },
+    {
+      "question": "Le temps et la durée expriment la même chose.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    },
+    {
+      "question": "La vitesse rime avec la précipitation ou à un excès d'accélération.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    }
+  ]
+  

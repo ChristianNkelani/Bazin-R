@@ -1,0 +1,21 @@
+[
+    {
+      "question": "Sans intervention d'une force externe, un objet doit rester au repos ou en mouvement. Raison pour laquelle le mot <<inertie>> ne fait allusion qu'au repos mais pas au mouvement.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    },
+    {
+      "question": "Un corps est en équilibre seulement lorsqu'il ne bouge absolument pas.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    },
+    {
+      "question": "Tout objet en mouvement possède sa propre force.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    }
+  ]
+  

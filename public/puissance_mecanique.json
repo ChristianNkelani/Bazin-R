@@ -1,0 +1,10 @@
+[
+    {
+      "question": "La puissance est aussi une force. Dieu est puissant, cela signifie ausi qu'il est strictement fort!.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "explication": "Faux, la puissance est la quantité d'énergie transférée ou convertie par unité de temps. C’est une mesure de la vitesse à laquelle le travail est effectué ou de la quantité d’énergie transférée ou convertie par unité de temps. Elle exprime donc la capacité à accomplir du travail rapidement.",
+      "points": 1
+    }
+  ]
+  

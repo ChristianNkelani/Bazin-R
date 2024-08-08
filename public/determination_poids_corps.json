@@ -1,0 +1,39 @@
+[
+    {
+      "question": "<<Loi>> de Newton et <<Principe>> de Newton signifient la même chose.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    },
+    {
+      "question": "La dynamique est l'étude de la persévérance d'un corps.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    },
+    {
+      "question": "La masse seule d'un corps peut déterminer la force à exercer par un objet.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    },
+    {
+        "question": "Lors d'un mouvement, la masse s'oppose au mouvement.",
+        "options": ["Vrai", "Faux"],
+        "correctAnswer": "Faux",
+        "points": 1
+      },
+      {
+        "question": "Le poids et la masse sont deux grandeurs physiquement identiques.",
+        "options": ["Vrai", "Faux"],
+        "correctAnswer": "Faux",
+        "points": 1
+      },
+      {
+        "question": "La masse seule d'un corps peut déterminer la force à exercer par un objet.",
+        "options": ["Vrai", "Faux"],
+        "correctAnswer": "Faux",
+        "points": 1
+      }
+  ]
+  

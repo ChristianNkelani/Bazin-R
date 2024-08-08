@@ -1,0 +1,27 @@
+[
+    {
+      "question": "Un objet qui se déplace rapidement est nécessairement plus fort que celui qui se déplace lentement.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    },
+    {
+      "question": "La force est une grandeur d'état ou une quantité vectorielle qui se conserve et qui ne peut se transférer.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    },
+    {
+      "question": "La force est équilibrée lorsqu'elle produit un mouvement.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    },
+    {
+      "question": "Il faut moins de force pour déplacer ou accélérer un objet plus lourd que pour le faire avec un objet léger.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    }
+  ]
+  

@@ -1,0 +1,15 @@
+[
+    {
+      "question": "L'action et la réaction sont deux forces égales mais opposées qui agissent toujours sur un même et seul objet.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    },
+    {
+      "question": "Dans une lutte entre deux personnes, sûrement le plus fort exercera une force plus grande que le moins fort et l'emportera.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    }
+  ]
+  
