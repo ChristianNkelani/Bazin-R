@@ -5,6 +5,7 @@ export const QcmStore = defineStore("qcms", {
     etat: "un",
     currentPage: 0,
     card: 1,
+    score1: 0,
   }),
   actions: {
     cliquer() {

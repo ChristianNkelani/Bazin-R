@@ -56,51 +56,49 @@
           </div>
         </div>
       </transition-group>
-    </div>
-
-    <div
-      v-if="store.currentPage >= questions.length"
-      class="mt-2 flex flex-col justify-center items-center"
-    >
-      <h2 class="text-xl font-semibold mb-4">Quiz terminé !</h2>
-      <p class="text-gray-700">Votre score : {{ score }} / {{ totalPoints }}</p>
-      <div class="mt-4">
-        <h3 class="text-lg font-semibold mb-2">Correction :</h3>
-        <div class="grid grid-cols-3 gap-2">
-          <div
-            v-for="(question, index) in questions"
-            :key="index"
-            class="mb-4 p-2 bg-gray-100"
-          >
-            <p class="font-semibold">{{ question.question }}</p>
-            <div
-              v-for="(option, optionIndex) in question.options"
-              :key="optionIndex"
-              class="mb-2"
+      <div v-show="store.currentPage >= questions.length" class="w-full h-full">
+        <div class="grid grid-cols-2">
+          <p class="text-blue-500 text-lg font-semibold">
+            Votre score Avant :
+            <span class="text-blue-500 text-lg font-semibold">
+              {{ store.score1 }}
+            </span>
+            / {{ totalPoints }}
+          </p>
+          <p class="text-gray-700">
+            <span class="text-blue-500 text-lg font-semibold"
+              >Votre score Apres :</span
             >
-              <input
-                type="radio"
-                :id="'corr-option' + optionIndex + '-' + index"
-                :value="option"
-                disabled
-                :checked="selectedOptions[index] === option"
-                class="mr-2"
+            {{ score }} / {{ totalPoints }}
+          </p>
+        </div>
+        <h2 class="pt-16">Liste des bonnes reponse</h2>
+        <ul
+          class="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400"
+          v-for="(question, index) in questions"
+          :key="index"
+        >
+          <li class="flex items-center">
+            <svg
+              class="w-3.5 h-3.5 me-2 text-green-500 dark:text-green-400 flex-shrink-0"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"
               />
-              <label
-                :for="'corr-option' + optionIndex + '-' + index"
-                :class="{
-                  'text-green-500':
-                    option === question.correctAnswer &&
-                    selectedOptions[index] === option,
-                  'text-red-500':
-                    option !== question.correctAnswer &&
-                    selectedOptions[index] === option,
-                  'text-gray-700': option !== selectedOptions[index],
-                }"
-                >{{ option }}</label
-              >
-            </div>
-          </div>
+            </svg>
+            {{ question.correctAnswer }}
+          </li>
+        </ul>
+        <div class="flex justify-center">
+          <RouterLink to="/categorie">
+            <button class="bg-blue-600 text-white py-2 px-3 rounded-md">
+              Fermer l'experience
+            </button>
+          </RouterLink>
         </div>
       </div>
     </div>
@@ -163,6 +161,8 @@ export default defineComponent({
           store.currentPage === questions.value.length &&
           store.etat == "un"
         ) {
+          store.score1 = score.value;
+          score.value = 0;
           props.cacherCard("card");
         }
       } else {
