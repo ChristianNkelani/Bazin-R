@@ -1,110 +1,153 @@
 import {
-    Scene, 
-    Engine, 
-    SceneLoader, 
-    Vector3,
-    CannonJSPlugin,
+  Scene,
+  Engine,
+  SceneLoader,
+  CannonJSPlugin,
+  ArcRotateCamera,
+  HemisphericLight,
+  MeshBuilder,
+  TransformNode,
+  Animation,
+  Vector3,
+  QuadraticEase,
 } from "@babylonjs/core";
 
 import "@babylonjs/loaders";
 import * as CANNON from "cannon";
 import { UI } from "./ui";
 
-
 export class Environement {
+  scene: Scene;
+  engine: Engine;
+  // ball1 : any;
+  // ball2 : any;
+  cliquer = true; //variable pour activer impostor ou non
+  private _ui: UI;
 
-scene: Scene;
-engine : Engine;
-// ball1 : any;
-// ball2 : any;
-cliquer=true;//variable pour activer impostor ou non
-private _ui:UI;
+  constructor(
+    scene: Scene,
+    engine: Engine,
+    private setLoaded: () => void,
+    private voirCard: () => void
+  ) {
+    //la scene
+    this.scene = scene;
 
-constructor(
-scene:Scene, engine:Engine,
-private setLoaded: () => void,
-private voirCard:()=>void,
+    //on charge les autres interfaces
+    this._ui = new UI(this.scene);
 
-){
-//la scene
-this.scene = scene;
+    this.scene.enablePhysics(
+      new Vector3(0, -9.81, 0),
+      new CannonJSPlugin(true, 10, CANNON)
+    );
 
-//on charge les autres interfaces
-this._ui = new UI(this.scene);  
+    //the engine
+    this.engine = engine;
 
-this.scene.enablePhysics(
-  new Vector3(0,-9.81, 0), 
-  new CannonJSPlugin(true,10,CANNON)
-);
+    //creation des materiels
+    this.importLaboratoire();
+    this.createMateriels();
 
-//the engine
-this.engine = engine;
-
-//creation des materiels
-this.importLaboratoire();
-// this.createMateriels();
-
-//action des sliders
-
-}
-
-async importLaboratoire(){
-// this.engine.displayLoadingUI();
-const labo = await SceneLoader.ImportMeshAsync("","./experience2_Inertie/","studio.glb", this.scene);
-for (let index = 1; index < 10 ; index++) {
-  labo.meshes[index].isVisible = false ;
-}
-// this.engine.hideLoadingUI();
-this.setLoaded();
-this.voirCard()
-
-// afficher ou pas un mateirel au click
-for(let i = 0 ; i < this._ui._images.length; i++){
-  if(i == 0){
-    this._ui._images[i].onPointerUpObservable.add(function(){
-      labo.meshes[1].isVisible = labo.meshes[1].isVisible == false ? true : false; 
-      labo.meshes[2].isVisible = labo.meshes[2].isVisible == false ? true : false; 
-      labo.meshes[3].isVisible = labo.meshes[3].isVisible == false ? true : false; 
-
-    })
- 
-  }
-  if (i == 1){
-    this._ui._images[i].onPointerUpObservable.add(function(){
-      labo.meshes[8].isVisible = labo.meshes[8].isVisible == false ? true : false; 
-      labo.meshes[9].isVisible = labo.meshes[9].isVisible == false ? true : false; 
-    })
-  }
-  if(i==2){
-    this._ui._images[i].onPointerUpObservable.add(function(){
-      labo.meshes[6].isVisible = labo.meshes[6].isVisible == false ? true : false; 
-      labo.meshes[7].isVisible = labo.meshes[7].isVisible == false ? true : false;
-    })
-  }
-  if(i==3){
-    this._ui._images[i].onPointerUpObservable.add(function(){
-      labo.meshes[4].isVisible = labo.meshes[4].isVisible == false ? true : false; 
-      labo.meshes[5].isVisible = labo.meshes[5].isVisible == false ? true : false; 
-    });
-
+    //action des sliders
   }
 
+  async importLaboratoire() {
+    // this.engine.displayLoadingUI();
+    const labo = await SceneLoader.ImportMeshAsync(
+      "",
+      "./experience2_Inertie/",
+      "studio.glb",
+      this.scene
+    );
+    for (let index = 1; index < 10; index++) {
+      labo.meshes[index].isVisible = false;
+    }
+    // this.engine.hideLoadingUI();
+    this.setLoaded();
+    this.voirCard();
+
+    return labo;
+  }
+
+  createMateriels() {
+    // Créer le cube
+    const box = MeshBuilder.CreateBox("box", { size: 0.2 }, this.scene);
+    box.position.y = -0.3;
+
+    // Créer le fil (cylindre fin)
+    const rope = MeshBuilder.CreateCylinder(
+      "rope",
+      { diameter: 0.02, height: 1 },
+      this.scene
+    );
+    rope.position.y = 0.5; // Ajuster la position du fil pour qu'il soit collé à la barre horizontale
+
+    // Grouper le cube et le fil pour les animer ensemble
+    const pendulum = new TransformNode("pendulum", this.scene);
+    box.parent = pendulum;
+    rope.parent = pendulum;
+
+    // Attacher le pendule à la barre horizontale
+    pendulum.position.y = 1.5; // Positionner le pendule sous la barre
+
+    // Animation du pendule (balancement de gauche à droite)
+    const frameRate = 60;
+    const totalFrames = 120;
+
+    const swingAnimation = new Animation(
+      "swing",
+      "rotation.z",
+      frameRate,
+      Animation.ANIMATIONTYPE_FLOAT,
+      Animation.ANIMATIONLOOPMODE_CYCLE
+    );
+
+    const easingFunction = new QuadraticEase();
+    easingFunction.setEasingMode(QuadraticEase.EASINGMODE_EASEINOUT);
+
+    swingAnimation.setEasingFunction(easingFunction);
+
+    const keyFrames = [
+      { frame: 0, value: -Math.PI / 6 }, // Inclinaison à gauche (30 degrés)
+      { frame: totalFrames / 2, value: Math.PI / 6 }, // Inclinaison à droite (30 degrés)
+      { frame: totalFrames, value: -Math.PI / 6 }, // Retour à gauche
+    ];
+
+    swingAnimation.setKeys(keyFrames);
+
+    pendulum.animations.push(swingAnimation);
+    this.scene.beginAnimation(pendulum, 0, totalFrames, true);
+
+    // Création de la barre en forme de poteau de football
+    const postHeight = 2;
+    const postDiameter = 0.05;
+
+    // Créer les poteaux verticaux
+    const leftPost = MeshBuilder.CreateCylinder(
+      "leftPost",
+      { diameter: postDiameter, height: postHeight },
+      this.scene
+    );
+    leftPost.position = new Vector3(8, 1, 0);
+
+    const rightPost = MeshBuilder.CreateCylinder(
+      "rightPost",
+      { diameter: postDiameter, height: postHeight },
+      this.scene
+    );
+    rightPost.position = new Vector3(8, postHeight / 2, -5);
+
+    // Créer la barre supérieure horizontale avec une largeur légèrement augmentée
+    const crossbar = MeshBuilder.CreateCylinder(
+      "crossbar",
+      { diameter: postDiameter, height: 1.4, tessellation: 32 },
+      this.scene
+    );
+    crossbar.rotation.z = Math.PI / 2;
+    crossbar.position.y = 2; // Positionner la barre en haut des poteaux
+
+    // window.addEventListener("resize", () => {
+    //   engine.resize();
+    // });
+  }
 }
-
-labo.meshes[1].isVisible = true
-labo.meshes[2].isVisible = true
-labo.meshes[3].isVisible = true
-
-return labo;
-}
-
-// createAnimation(){
-
-// }
-
-// createMateriels(){
-
-// }
-
-}
-

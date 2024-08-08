@@ -86,7 +86,7 @@ export default defineComponent({
       mru: null,
       loaded: false,
       flou: false,
-      questions: [new Question("dsdssdsadsad", ["sasasasa", "assasaassa"])],
+      questions: [],
     };
   },
   components: { LoadingScreen, Questions, Qcm },
