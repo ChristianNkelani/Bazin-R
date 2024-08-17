@@ -6,7 +6,7 @@ export class UI {
   public _scene: Scene;
   public _environement: Environement;
   public _images: GUI.Image[];
-  public buttonAction: any;
+  public _buttonAction: any;
 
   constructor(scene: Scene) {
     this._scene = scene;
@@ -26,36 +26,32 @@ export class UI {
     texte.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
     advancedTexture.addControl(texte);
 
-    // images for materials
-    // const tableau_image = [
-    //     "dynamometre.png",
-    //     "barre_statif.png",
-    //     "pied_statif.png",
-    //     "masse.png"
-    // ];
-    // this.createImage(tableau_image,advancedTexture);
-
-    // advancedTexture.addControl(container);
     const panel = new GUI.StackPanel();
     advancedTexture.addControl(panel);
 
-    // const mat1 = GUI.Button.CreateImageButton('mybtn','klkl','dynamometre.png');
-    // panel.addControl(mat1)
-
     // Creation du bouton Play
-    this.buttonAction = [];
+    this._buttonAction = [];
 
-    this.buttonAction[0] = GUI.Button.CreateSimpleButton("Bouger", "Bouger");
-    this.buttonAction[0].width = "200px";
-    this.buttonAction[0].height = "39px";
-    this.buttonAction[0].background = "white";
-    this.buttonAction[0].color = "deepskyblue";
+    this._buttonAction[0] = GUI.Button.CreateSimpleButton("Stopper", "Stopper");
+    this._buttonAction[0].width = "200px";
+    this._buttonAction[0].height = "39px";
+    this._buttonAction[0].background = "white";
+    this._buttonAction[0].color = "deepskyblue";
+
+    this._buttonAction[1] = GUI.Button.CreateSimpleButton("Bouger", "Bouger");
+    this._buttonAction[1].width = "200px";
+    this._buttonAction[1].height = "39px";
+    this._buttonAction[1].background = "white";
+    this._buttonAction[1].color = "deepskyblue";
 
     const panel2 = new GUI.StackPanel();
-    panel2.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
-    panel2.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+    panel2.height = "50px";
+    panel2.isVertical = false;
+    panel2.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+    panel2.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
     advancedTexture.addControl(panel2);
-    panel2.addControl(this.buttonAction[0]);
+    panel2.addControl(this._buttonAction[0]);
+    panel2.addControl(this._buttonAction[1]);
   }
   public createImage(
     tableau_image: string[],

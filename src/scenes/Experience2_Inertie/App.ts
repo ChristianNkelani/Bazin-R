@@ -1,55 +1,73 @@
 import {
-    Scene, 
-    Engine, 
-    Vector3, 
-    HemisphericLight, 
-    UniversalCamera} from "@babylonjs/core";
+  Scene,
+  Engine,
+  Vector3,
+  HemisphericLight,
+  UniversalCamera,
+} from "@babylonjs/core";
 import "@babylonjs/loaders";
 import { UI } from "./ui";
 import { Environement } from "./Environement";
 
 export class Experience2 {
+  scene: Scene;
+  engine: Engine;
 
-scene: Scene;
-engine: Engine;
+  private _ui: UI;
+  private _environement: Environement;
 
-private _ui: UI;
-private _environement: Environement;
+  constructor(
+    private canvas: HTMLCanvasElement,
+    private setLoaded: () => void,
+    private voirCard: (card: String) => void
+  ) {
+    this.engine = new Engine(this.canvas);
 
-constructor(
-private canvas:HTMLCanvasElement,
-private setLoaded: () => void,
-private voirCard:()=> void,
-){
+    //on cree la scene de base
+    this.scene = this.CreateScene();
 
-this.engine = new Engine(this.canvas);
+    //on charge l environnement
+    this._environement = new Environement(
+      this.scene,
+      this.engine,
+      this.setLoaded,
+      this.voirCard
+    );
 
-//on cree la scene de base
-this.scene = this.CreateScene();
+    this.engine.runRenderLoop(() => {
+      this.scene.render();
+    });
+  }
 
-//on charge l environnement
-this._environement = new Environement(this.scene, this.engine, this.setLoaded,this.voirCard);
+  CreateScene(): Scene {
+    const scene = new Scene(this.engine);
 
-this.engine.runRenderLoop(()=>{
-  this.scene.render();
-})
-}
+    const camera = new UniversalCamera(
+      "camera",
+      new Vector3(0, 3, -2.5),
+      this.scene
+    );
+    camera.speed = 0.5;
+    camera.rotation._y = Math.PI / 2;
+    camera.rotation._x = Math.PI / 14;
+    camera.setTarget(new Vector3(8, 1, -2.5)); // Cibler le centre du poteau de football
 
-CreateScene():Scene {
-const scene = new Scene(this.engine);
+    console.log(
+      camera.position.x,
+      camera.position.y,
+      camera.position.z,
+      camera.rotation.x,
+      camera.rotation.y,
+      camera.rotation.z
+    );
+    camera.attachControl();
+    const hemiLight = new HemisphericLight(
+      "hemiLight",
+      new Vector3(0, 1, 0),
+      this.scene
+    );
+    hemiLight.intensity = 1;
 
-const camera = new UniversalCamera("camera", new Vector3(0,3,-2.5), this.scene );
-camera.speed = 0.5;
-camera.rotation._y = Math.PI/2;
-camera.rotation._x= Math.PI/14;
-
-
-console.log(camera.position.x, camera.position.y, camera.position.z, camera.rotation.x, camera.rotation.y, camera.rotation.z)
-camera.attachControl();
-const hemiLight = new HemisphericLight("hemiLight", new Vector3(0,1,0), this.scene);
-hemiLight.intensity = 1;
-
-
-return scene;
-}
+    return scene;
+  }
 }
