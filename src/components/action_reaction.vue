@@ -13,7 +13,7 @@
   
   <script lang="ts">
   import { defineComponent } from 'vue';
-  import { Experience5 } from '../scenes/Experience_action_reaction/App';
+  import { Experience1 } from '../scenes/Experience_action_reaction/App';
   import  LoadingScreen  from "@/components/LoadingScreen.vue";
   
   export default defineComponent({
@@ -26,7 +26,7 @@
     components : { LoadingScreen },
     mounted(){
       const canvas= document.querySelector('canvas') as HTMLCanvasElement;
-      new Experience5(canvas, this.setLoaded, this.voirCard );
+      new Experience1(canvas, this.setLoaded, this.voirCard );
   
     },
     methods: {

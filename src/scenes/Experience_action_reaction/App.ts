@@ -1,60 +1,87 @@
 import {
-    Scene, 
-    Engine, 
-    Vector3, 
-    HemisphericLight, 
-    MeshBuilder, 
-    PBRMaterial,
-    Color3,
-    UniversalCamera} from "@babylonjs/core";
+  Scene,
+  Engine,
+  Vector3,
+  HemisphericLight,
+  MeshBuilder,
+  PBRMaterial,
+  Color3,
+  UniversalCamera,
+} from "@babylonjs/core";
 import "@babylonjs/loaders";
 import { UI } from "./ui";
 import { Environement } from "./Environement";
-// import { Player } from "./Player";
+import { Sound, StandardMaterial } from "babylonjs";
+import { Interaction } from "./interaction";
+import * as GUI from '@babylonjs/gui/2D';
 
-export class Experience5 {
+export class Experience1 {
+  scene: Scene;
+  engine: Engine;
 
-scene: Scene;
-engine: Engine;
+  private _ui: UI;
+  private _Interaction: Interaction;
+  private _environement: Environement;
 
-private _ui: UI;
-private _environement: Environement;
+  constructor(
+    private canvas: HTMLCanvasElement,
+    private setLoaded: () => void,
+    private voirCard: (card: string) => void
+  ) {
+    this.engine = new Engine(this.canvas);
 
-constructor(
-private canvas:HTMLCanvasElement,
-private setLoaded: () => void,
-private voircard: () => void,
-){
+    //on cree la scene de base
+    this.scene = this.CreateScene();
 
-this.engine = new Engine(this.canvas);
+    //on charge l environnement
+    this._environement = new Environement(
+      this.scene,
+      this.engine,
+      this.setLoaded,
+      voirCard
+    );
 
-//on cree la scene de base
-this.scene = this.CreateScene();
 
-//on charge l environnement
-this._environement = new Environement(this.scene, this.engine, this.setLoaded,this.voircard);
+    // chargement de l'UI
+    // this._ui = new UI(this.scene);
 
-this.engine.runRenderLoop(()=>{
-  this.scene.render();
-})
-}
+    this.engine.runRenderLoop(() => {
+      this.scene.render();
+      if (this._environement.ball1.position._y <= 0.82) {
+        this._environement._ui.stopTimer();
+      }
+    });
+  }
 
-    CreateScene():Scene {
+  CreateScene(): Scene {
     const scene = new Scene(this.engine);
 
-    const camera = new UniversalCamera("camera", new Vector3(2,2,-1.5), this.scene );
+    const camera = new UniversalCamera(
+      "camera",
+      new Vector3(0, 3, -2.5),
+      this.scene
+    );
     camera.speed = 0.5;
-    camera.rotation._y = -Math.PI/2;
-    camera.rotation._x= Math.PI/8;
+    camera.rotation._y = Math.PI / 2;
+    camera.rotation._x = Math.PI / 14;
 
-
-
-    console.log(camera.position.x, camera.position.y, camera.position.z, camera.rotation.x, camera.rotation.y, camera.rotation.z)
+    console.log(
+      camera.position.x,
+      camera.position.y,
+      camera.position.z,
+      camera.rotation.x,
+      camera.rotation.y,
+      camera.rotation.z
+    );
     camera.attachControl();
-    const hemiLight = new HemisphericLight("hemiLight", new Vector3(0,1,0), this.scene);
+    const hemiLight = new HemisphericLight(
+      "hemiLight",
+      new Vector3(0, 1, 0),
+      this.scene
+    );
     hemiLight.intensity = 1;
 
-
     return scene;
-    }
+  }
+
 }
