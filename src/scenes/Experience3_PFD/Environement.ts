@@ -69,9 +69,9 @@ export class Environement {
     };
 
     this.ball1 = MeshBuilder.CreateSphere("ball1", { diameter: taille[a] });
-    this.ball1.position.y = 0.38;
-    this.ball1.position.x = -1.3;
-    this.ball1.position.z = -2.15;
+    this.ball1.position.y = 0;
+    this.ball1.position.x = -0.5;
+    this.ball1.position.z = -3;
     this.ball1.material = this.changeMaterialColor(0, 0, 255);
     console.log(`la taille est ${taille[a]}`);
 
@@ -83,32 +83,69 @@ export class Environement {
     });
 
     this._ui._restart.onPointerUpObservable.add(() => {
-      this.ball1.position.z = -2.15;
-      this.ball2.position.z = -2.15;
+      this.ball1.position.z = -3;
+      this.ball2.position.z = -3;
     });
 
     this.ball2 = MeshBuilder.CreateSphere("ball2", { diameter: taille[b] });
     this.ball2.position.y = 0.38;
-    this.ball2.position.x = -1.9;
-    this.ball2.position.z = -2.15;
+    this.ball2.position.x = -1.4;
+    this.ball2.position.z = -3;
     this.ball2.diameter = taille[this.tailleR];
     this.ball2.material = this.changeMaterialColor(255, 0, 0);
   }
 
   public deplacer() {
-    const startPosition = new Vector3(-1.3, 0.38, -2.15);
-    const endPosition = new Vector3(-1.3, 0.38, -0.3);
+    const startPosition = new Vector3(-0.5, 0, -3);
+    const endPosition = new Vector3(-0.5, 0, -0.3);
 
-    Animation.CreateAndStartAnimation(
-      "anim",
-      this.ball1,
-      "position",
-      this.vitesse[this.tailleB],
-      100,
-      startPosition,
-      endPosition,
+    const amplitude = 0.2; // Amplitude des ondulations
+    const frequency = 3; // Fréquence des ondulations
+
+    const frames = 100; // Nombre de frames pour l'animation
+    const zKeys = [];
+    const yKeys = [];
+
+    for (let i = 0; i <= frames; i++) {
+      const frame = i;
+
+      // Position en z pour avancer vers endPosition
+      const zValue =
+        startPosition.z + (endPosition.z - startPosition.z) * (i / frames);
+
+      // Mouvement sinusoïdal sur l'axe y pour les ondulations
+      const yValue =
+        startPosition.y + amplitude * Math.sin((frequency * i * Math.PI) / 50);
+
+      zKeys.push({ frame: frame, value: zValue });
+      yKeys.push({ frame: frame, value: yValue });
+    }
+
+    // Créer l'animation pour l'axe Z
+    const zAnimation = new Animation(
+      "zAnimation",
+      "position.z",
+      this.vitesse[this.tailleB] || 30,
+      Animation.ANIMATIONTYPE_FLOAT,
       Animation.ANIMATIONLOOPMODE_CONSTANT
     );
+    zAnimation.setKeys(zKeys);
+
+    // Créer l'animation pour l'axe Y (mouvement de haut en bas)
+    const yAnimation = new Animation(
+      "yAnimation",
+      "position.y",
+      this.vitesse[this.tailleB] || 30,
+      Animation.ANIMATIONTYPE_FLOAT,
+      Animation.ANIMATIONLOOPMODE_CONSTANT
+    );
+    yAnimation.setKeys(yKeys);
+
+    // Associer les animations à la balle
+    this.ball1.animations = [zAnimation, yAnimation];
+
+    // Démarrer l'animation
+    this.scene.beginAnimation(this.ball1, 0, frames, false);
   }
 
   public deplacer2() {
