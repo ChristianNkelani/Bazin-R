@@ -19,7 +19,7 @@ export class Experience2 {
   constructor(
     private canvas: HTMLCanvasElement,
     private setLoaded: () => void,
-    private voirCard: (card: String) => void
+    private voirCard: (card: string) => void
   ) {
     this.engine = new Engine(this.canvas);
 

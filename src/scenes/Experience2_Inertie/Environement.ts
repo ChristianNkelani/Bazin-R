@@ -24,7 +24,7 @@ export class Environement {
     scene: Scene,
     engine: Engine,
     private setLoaded: () => void,
-    private voirCard: (card: String) => void
+    private voirCard: (card: string) => void
   ) {
     this.scene = scene;
     this.engine = engine;
