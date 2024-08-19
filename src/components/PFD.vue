@@ -1,27 +1,10 @@
 <template>
-  <!-- <div
-    id="card"
+  <!-- ! Les options lie a la taille -->
+  <div
+    id="opt"
     class="w-1/3 h-96 bg-white absolute z-40 top-1/3 left-1/3 hidden"
   >
-    <div
-      class="h-full w-full flex flex-col justify-around items-center border"
-      v-if="card == 1"
-    >
-      <h2 class="text-blue-500 text-2xl font-bold text-center">
-        PRINCIPE FONDAMENTALE DE LA DYNAMIQUE
-      </h2>
-      <p class="text-gray-500 w-96">
-        Cette experience est une exploration captivante des lois fondamentales
-        qui gouvernent le mouvement des objets dans notre univers.
-      </p>
-      <button
-        @click="card++"
-        class="bg-blue-500 w-64 text-md py-2 px-3 text-white"
-      >
-        Commencer
-      </button>
-    </div>
-    <div v-if="card == 2" class="flex flex-col">
+    <div class="flex flex-col">
       <div class="grid grid-cols-2 pt-16">
         <div class="flex flex-col items-center h-64">
           <div class="h-16">
@@ -72,16 +55,29 @@
           </div>
         </div>
       </div>
-      <div class="flex justify-center">
+      <div class="flex gap-3 justify-center">
         <button
-          @click="continueExperience"
+          @click="
+            changerTaille(tailleB, tailleR);
+            cacherCard('opt');
+            flou = false;
+          "
           class="bg-blue-500 w-64 text-md py-2 px-3 text-white"
         >
-          Continuer
+          Changer Taille
         </button>
-      </div> -->
-  <!-- </div> -->
-  <!-- </div> -->
+        <button
+          @click="
+            cacherCard('opt');
+            flou = false;
+          "
+          class="bg-red-500 w-64 text-md py-2 px-3 text-white"
+        >
+          Annuler
+        </button>
+      </div>
+    </div>
+  </div>
   <Questions
     id="card"
     Presentation=" Cette experience est une exploration captivante des lois fondamentales
@@ -109,7 +105,10 @@
     <!-- Le bouton des parametres -->
     <div
       class="absolute bottom-2 left-2 bg-white w-16 h-16 rounded-full flex justify-center items-center"
-      @click=""
+      @click="
+        voirCard('opt');
+        flou = true;
+      "
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -181,12 +180,9 @@ export default defineComponent({
       document.querySelector(`#${id}`).classList.add("hidden");
       this.flou = false;
     },
-    // continueExperience() {
-    //   this.cacherCard();
-    //   if (this.experience3) {
-    //     this.experience3._environement.createBalle(this.tailleB, this.tailleR);
-    //   }
-    // },
+    changerTaille(a: string, b: string) {
+      this.experience3._environement.changerTaille(a, b);
+    },
     testfinal() {
       const store = QcmStore();
       this.voirCard("card");

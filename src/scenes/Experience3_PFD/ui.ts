@@ -26,18 +26,17 @@ export class UI {
   }
 
   public createChrono() {
-    //les variables
+    // Initialiser les valeurs du chronomètre
     this._sec = 0;
     this._milsec = 0;
 
-    const advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
     const container1 = new GUI.Rectangle();
     container1.background = "white";
     container1.width = "300px";
     container1.height = "100px";
 
     const text1 = new GUI.TextBlock();
-    text1.text = "Chrono balle blue";
+    text1.text = "Chrono balle bleue";
     text1.fontSize = "10px";
     text1.height = "20px";
     text1.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
@@ -70,7 +69,7 @@ export class UI {
     panel.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
     panel.addControl(container1);
     panel.addControl(container2);
-    advancedTexture.addControl(panel);
+    this.advencedTexture.addControl(panel);
   }
 
   public createPlayRestart() {
