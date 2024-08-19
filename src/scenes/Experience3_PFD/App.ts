@@ -53,6 +53,8 @@ export class Experience3 {
     camera.speed = 0.5;
     camera.rotation._y = -Math.PI / 2;
     camera.rotation._x = Math.PI / 8;
+    camera.fov = 1.5; // Augmenter la valeur pour un zoom-out
+
     camera.attachControl();
     const hemiLight = new HemisphericLight(
       "hemiLight",
