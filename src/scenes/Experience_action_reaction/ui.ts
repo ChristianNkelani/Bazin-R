@@ -213,7 +213,7 @@ export class UI {
 
     this._buttonAction[1] = GUI.Button.CreateSimpleButton(
       "restartButon",
-      "Restart"
+      "Replacer la balle"
     );
     this._buttonAction[1].width = "200px";
     this._buttonAction[1].height = "39px";

@@ -53,6 +53,7 @@ export class Environement {
     //creation des materiels
     this.importLaboratoire();
     this.createMateriels();
+    this.createImpostor();
     this.createground();
     this.createground2();
     // this.newc()
@@ -98,7 +99,7 @@ export class Environement {
       { diameter: 0.25 },
       this.scene
     );
-    this.ball1.position.y = 2.5;
+    this.ball1.position.y = 0.8;
     this.ball1.position.x = 7.2;
     this.ball1.position.z = -0.7;
     this.ball1.material = this.changeMaterialColor(170, 255, 0);
@@ -114,11 +115,16 @@ export class Environement {
     this.ball2.material = this.changeMaterialColor(255, 0, 0);
 
    // Créer un mur
-   const wall = MeshBuilder.CreateBox("wall", {width: 8, height: 5, depth: 0.5}, this.scene);
-   wall.position = new Vector3(4, 0, 3);
+   const wall = MeshBuilder.CreateBox("wall", {width: 10, height: 5, depth: 0.5}, this.scene);
+   wall.position = new Vector3(5, 1, 3.1);
    wall.material = new  StandardMaterial("wallMaterial",this.scene );
-   wall.physicsImpostor = new PhysicsImpostor(wall, PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 1 }, this.scene);
-
+   wall.physicsImpostor = new PhysicsImpostor(wall, PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.8 }, this.scene);
+  wall.isVisible = false;
+   const wall1 = MeshBuilder.CreateBox("wall", {width: 10, height: 5, depth: 0.5}, this.scene);
+   wall1.position = new Vector3(5, 1, -8.5);
+   wall1.material = new  StandardMaterial("wallMaterial",this.scene );
+   wall1.physicsImpostor = new PhysicsImpostor(wall1, PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.85 }, this.scene);
+   wall1.isVisible = false;
     return [aimant1, aimant2, this.ball1, this.ball2];
   }
 
@@ -133,13 +139,13 @@ export class Environement {
     this.ball1.physicsImpostor = new PhysicsImpostor(
       this.ball1,
       PhysicsImpostor.BoxImpostor,
-      { mass: 1, restitution: 1 }
+      { mass: 1, restitution: 0.85 }
     );
 
     this.ball2.physicsImpostor = new PhysicsImpostor(
       this.ball2,
       PhysicsImpostor.BoxImpostor,
-      { mass: 1, restitution: 0.75 }
+      { mass: 1, restitution: 1 }
     );
 
 
@@ -148,7 +154,7 @@ export class Environement {
 
      var slider = new GUI.Slider();
      slider.minimum = 8;
-     slider.maximum = 10;
+     slider.maximum = 16;
      slider.value = 8;
      slider.height = "20px";
      slider.width = "200px";
@@ -170,18 +176,23 @@ export class Environement {
      button.background = "green";
      button.top = "50px";
      advancedTexture.addControl(button);
-     var force = new Vector3(0,0,0);
+    //  var force = new Vector3(0,0,0);
 
-     slider.onPointerClickObservable.add((value) => {
-        force = new Vector3(0,0,slider.value);
-     })
-    //  var force = new  Vector3(0,0,force);
-     button.onPointerClickObservable.add( () => {
+     var force = new Vector3(0, 0, 0); // Déclarez la variable force en dehors
+
+     slider.onValueChangedObservable.add((value) => {
+         force = new Vector3(0, 0, value); // Mettez à jour la force en fonction de la valeur du slider
+     });
+     
+     button.onPointerClickObservable.add(() => {
          // Lancer le ballon avec la force spécifiée par le slider
- 
-         this.ball1.physicsImpostor.applyImpulse(force, this.ball1.getAbsolutePosition())    
-       
-       });
+         this.ball1.physicsImpostor = new PhysicsImpostor(
+          this.ball1,
+          PhysicsImpostor.BoxImpostor,
+          { mass: 1, restitution: 0.5 }
+        );
+         this.ball1.physicsImpostor.applyImpulse(force, this.ball1.getAbsolutePosition());
+     });
   }
 
   createground() {
@@ -250,28 +261,19 @@ export class Environement {
 
   }
   toRestart() {
-    this.ball2.position.y = 2.5;
-    this.ball2.position.x = 7.2;
-    this.ball2.position.z = -4.4;
-    this.ball2.diameter = 0.25;
+
     this.ball1.physicsImpostor.dispose();
 
-    this.ball1.position.y = 2.5;
+    this.ball1.position.y = 0.8;
     this.ball1.position.x = 7.2;
     this.ball1.position.z = -0.7;
-    this.ball2.diameter = 0.25;
-    this.ball2.physicsImpostor.dispose();
-    this.cliquer = true;
-    this._ui._sString = "00";
-    this._ui._mString = 0;
-    this._ui.time = 0;
-    // this._ui._stopTimer = false;
-    this._ui._clockTime.text = "00:00";
+
   }
 
   async createGravity() {
     this.scene.enablePhysics(new Vector3(0,-9.81,0), new CannonJSPlugin(true, 10, CANNON));
     this.physicEngine = this.scene.getPhysicsEngine();
+    // this.physicEngine.setTimeStep(1 / 120);
   }
 
 
