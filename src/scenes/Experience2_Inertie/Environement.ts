@@ -5,14 +5,19 @@ import {
   CannonJSPlugin,
   MeshBuilder,
   TransformNode,
-  Animation,
   Vector3,
-  QuadraticEase,
+  StandardMaterial,
+  Texture,
+  Color3,
+  ActionManager,
+  ExecuteCodeAction,
 } from "@babylonjs/core";
 
 import "@babylonjs/loaders";
 import * as CANNON from "cannon";
 import { UI } from "./ui";
+import * as GUI from "@babylonjs/gui/2D";
+
 
 export class Environement {
   scene: Scene;
@@ -37,121 +42,163 @@ export class Environement {
     );
 
     this.importLaboratoire();
-    this.createMateriels();
+    this.createpend1();
+    this.createpend2();
 
-    this._ui._buttonAction[0].onPointerUpObservable.add(() => {
-      this.arreterAnimation();
-    });
-
-    this._ui._buttonAction[1].onPointerUpObservable.add(() => {
-      this.recommencerAnimation();
-    });
   }
 
   async importLaboratoire() {
     const labo = await SceneLoader.ImportMeshAsync(
       "",
       "./experience2_Inertie/",
-      "studio.glb",
+      "st.glb",
       this.scene
     );
-    for (let index = 1; index < 10; index++) {
-      labo.meshes[index].isVisible = false;
-    }
+    // for (let index = 1; index < 10; index++) {
+    //   labo.meshes[index].isVisible = false;
+    // }
     this.setLoaded();
     this.voirCard("card");
   }
 
-  createMateriels() {
-    const box = MeshBuilder.CreateBox("box", { size: 0.2 }, this.scene);
+  createpend1() {
+    // Créer le support avec texture
+const support = MeshBuilder.CreateBox("support", {height: 0.2, width: 0.2, depth: 0.2}, this.scene);
+support.position.y = 4.5; // Augmenter la position du support
+const supportMaterial = new StandardMaterial("supportMaterial", this.scene);
+supportMaterial.diffuseTexture = new Texture("textures/wood.jpg", this.scene);
+support.material = supportMaterial;
 
-    const ropeHeight = 1.2;
-    const rope = MeshBuilder.CreateCylinder(
-      "rope",
-      { diameter: 0.02, height: ropeHeight },
-      this.scene
-    );
+// Créer le pendule
+const pivot = new TransformNode("root");
+const rod = MeshBuilder.CreateCylinder("rod", {height: 2, diameter: 0.05}, this.scene);
+rod.position.y = -1;
+const rodMaterial = new StandardMaterial("rodMaterial", this.scene);
+rodMaterial.diffuseTexture = new Texture("textures/metal.jpg", this.scene);
+rod.material = rodMaterial;
+rod.parent = pivot;
 
-    rope.position.y = ropeHeight / 2;
-    box.position.y = rope.position.y - ropeHeight / 2 - box.scaling.y / 2 + 0.1;
+const ball = MeshBuilder.CreateSphere("ball", {diameter: 0.5}, this.scene);
+ball.position.y = -2;
+const ballMaterial = new StandardMaterial("ballMaterial", this.scene);
+ballMaterial.diffuseTexture = new Texture("textures/metal.jpg", this.scene);
+ball.material = ballMaterial;
+ball.parent = pivot;
 
-    const pendulum = new TransformNode("pendulum", this.scene);
-    box.parent = pendulum;
-    rope.parent = pendulum;
+// Positionner le pivot au niveau du support
+pivot.position.y = 4.5; // Augmenter la position du pivot
 
-    this.pendulum = pendulum;
-
-    this.startPendulumAnimation();
-
-    const postHeight = 2;
-    const postDiameter = 0.05;
-
-    const leftPost = MeshBuilder.CreateCylinder(
-      "leftPost",
-      { diameter: postDiameter, height: postHeight },
-      this.scene
-    );
-    leftPost.position = new Vector3(8, 1, 0);
-
-    const rightPost = MeshBuilder.CreateCylinder(
-      "rightPost",
-      { diameter: postDiameter, height: postHeight },
-      this.scene
-    );
-    rightPost.position = new Vector3(8, postHeight / 2, -5);
-
-    const crossbar = MeshBuilder.CreateCylinder(
-      "crossbar",
-      { diameter: postDiameter, height: 5, tessellation: 32 },
-      this.scene
-    );
-    crossbar.rotation.x = Math.PI / 2;
-    crossbar.position.x = leftPost.position.x;
-    crossbar.position.y = leftPost.position.y + postHeight / 2;
-    crossbar.position.z = (leftPost.position.z + rightPost.position.z) / 2;
-
-    pendulum.position.x = crossbar.position.x;
-    pendulum.position.y = crossbar.position.y - ropeHeight / 2;
-    pendulum.position.z = crossbar.position.z;
-  }
-
-  startPendulumAnimation() {
-    if (!this.pendulum) return;
-
-    const frameRate = 60;
-    const totalFrames = 120;
-
-    const swingAnimation = new Animation(
-      "swing",
-      "rotation.z",
-      frameRate,
-      Animation.ANIMATIONTYPE_FLOAT,
-      Animation.ANIMATIONLOOPMODE_CYCLE
-    );
-
-    const easingFunction = new QuadraticEase();
-    easingFunction.setEasingMode(QuadraticEase.EASINGMODE_EASEINOUT);
-    swingAnimation.setEasingFunction(easingFunction);
-
-    const keyFrames = [
-      { frame: 0, value: -Math.PI / 6 },
-      { frame: totalFrames / 2, value: Math.PI / 6 },
-      { frame: totalFrames, value: -Math.PI / 6 },
-    ];
-
-    swingAnimation.setKeys(keyFrames);
-
-    this.pendulum.animations = [swingAnimation];
-    this.scene.beginAnimation(this.pendulum, 0, totalFrames, true);
-  }
-
-  arreterAnimation() {
-    if (this.pendulum) {
-      this.scene.stopAnimation(this.pendulum);
+// Animation du pendule
+let isPaused = false;
+let pausedTime = 0;
+this.scene.registerBeforeRender(() => {
+    if (!isPaused) {
+        const time = (performance.now() * 0.001) - pausedTime;
+        pivot.rotation.z = Math.sin(time) * 0.5;
     }
-  }
+});
 
-  recommencerAnimation() {
-    this.startPendulumAnimation();
-  }
+// Ajouter l'événement de clic pour la pause et la reprise
+ball.actionManager = new ActionManager(this.scene);
+ball.actionManager.registerAction(new ExecuteCodeAction(ActionManager.OnPickTrigger, () => {
+    if (isPaused) {
+        pausedTime = performance.now() * 0.001 - pausedTime;
+    } else {
+        pausedTime = performance.now() * 0.001 - pausedTime;
+    }
+    isPaused = !isPaused;
+}));
+
+// Ajouter un texte au survol de la sphère
+const advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+const textBlock = new GUI.TextBlock();
+textBlock.text = "Cliquez pour mettre en pause/reprendre";
+textBlock.color = "white";
+textBlock.fontSize = 24;
+textBlock.isVisible = false;
+advancedTexture.addControl(textBlock);
+
+ball.actionManager.registerAction(new ExecuteCodeAction(ActionManager.OnPointerOverTrigger, () => {
+    textBlock.isVisible = true;
+}));
+
+ball.actionManager.registerAction(new ExecuteCodeAction(ActionManager.OnPointerOutTrigger, () => {
+    textBlock.isVisible = false;
+}));
+
+
+  };
+
+  createpend2(){
+
+// Créer le support avec texture
+const support = MeshBuilder.CreateBox("support", {height: 0.2, width: 0.2, depth: 0.2}, this.scene);
+support.position.y = 4.5; // Augmenter la position du support
+support.position.z = 1;
+const supportMaterial = new StandardMaterial("supportMaterial", this.scene);
+supportMaterial.diffuseTexture = new Texture("textures/wood.jpg", this.scene);
+support.material = supportMaterial;
+
+// Créer le pendule fixe
+const pivot = new TransformNode("root");
+const rod = MeshBuilder.CreateCylinder("rod", {height: 2, diameter: 0.05}, this.scene);
+rod.position.y = -1;
+const rodMaterial = new StandardMaterial("rodMaterial", this.scene);
+rodMaterial.diffuseColor = new Color3(0, 0, 1); // Couleur bleue
+rod.material = rodMaterial;
+rod.parent = pivot;
+
+const ball = MeshBuilder.CreateSphere("ball", {diameter: 0.5}, this.scene);
+ball.position.y = -2;
+const ballMaterial = new StandardMaterial("ballMaterial", this.scene);
+ballMaterial.diffuseColor = new Color3(0, 0, 1); // Couleur bleue
+ball.material = ballMaterial;
+ball.parent = pivot;
+
+// Positionner le pivot au niveau du support
+pivot.position.y = 4.5; // Augmenter la position du pivot
+pivot.position.z = 1;
+
+// Animation du pendule
+let isPaused = false;
+let pausedTime = 0;
+this.scene.registerBeforeRender(() => {
+    if (!isPaused) {
+        const time = (performance.now() * 0.001) - pausedTime;
+        pivot.rotation.z = Math.sin(time) * 0.5;
+    }
+});
+
+// Ajouter l'événement de clic pour la pause et la reprise
+ball.actionManager = new ActionManager(this.scene);
+ball.actionManager.registerAction(new ExecuteCodeAction(ActionManager.OnPickTrigger, () => {
+    if (isPaused) {
+        pausedTime = performance.now() * 0.001 - pausedTime;
+    } else {
+        pausedTime = performance.now() * 0.001 - pausedTime;
+    }
+    isPaused = !isPaused;
+}));
+
+// Ajouter un texte au survol de la sphère
+const advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+const textBlock = new GUI.TextBlock();
+textBlock.text = "Cliquez pour mettre en pause/reprendre";
+textBlock.color = "white";
+textBlock.fontSize = 24;
+textBlock.isVisible = false;
+advancedTexture.addControl(textBlock);
+
+ball.actionManager.registerAction(new ExecuteCodeAction(ActionManager.OnPointerOverTrigger, () => {
+    textBlock.isVisible = true;
+}));
+
+ball.actionManager.registerAction(new ExecuteCodeAction(ActionManager.OnPointerOutTrigger, () => {
+    textBlock.isVisible = false;
+}));
+
+
+};
+
 }
+

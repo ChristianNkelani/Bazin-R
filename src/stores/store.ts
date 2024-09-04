@@ -11,5 +11,12 @@ export const QcmStore = defineStore("qcms", {
     cliquer() {
       this.etat = this.etat === "un" ? "deux" : "un";
     },
+    reinitialiser(){
+      this.etat = 'un';
+      this.currentPage = 0;
+      this.card = 1;
+      this.score1 = 0;
+    }
   },
+
 });

@@ -44,22 +44,16 @@ export class Experience2 {
 
     const camera = new UniversalCamera(
       "camera",
-      new Vector3(0, 3, -2.5),
+      new Vector3(-4, 4.5, 0.8),
       this.scene
     );
     camera.speed = 0.5;
     camera.rotation._y = Math.PI / 2;
     camera.rotation._x = Math.PI / 14;
-    camera.setTarget(new Vector3(8, 1, -2.5)); // Cibler le centre du poteau de football
+    // camera.fov = 1.5;
+    // camera.setTarget(new Vector3(8, 1, -2.5)); 
 
-    console.log(
-      camera.position.x,
-      camera.position.y,
-      camera.position.z,
-      camera.rotation.x,
-      camera.rotation.y,
-      camera.rotation.z
-    );
+    
     camera.attachControl();
     const hemiLight = new HemisphericLight(
       "hemiLight",

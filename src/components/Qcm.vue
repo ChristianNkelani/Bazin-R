@@ -97,7 +97,7 @@
         </ul>
         <div class="flex justify-center">
           <RouterLink to="/categorie">
-            <button class="bg-blue-600 text-white py-2 px-3 rounded-md">
+            <button class="bg-blue-600 text-white py-2 px-3 rounded-md" @click="store.reinitialiser">
               Fermer l'experience
             </button>
           </RouterLink>
