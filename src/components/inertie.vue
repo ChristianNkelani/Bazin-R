@@ -1,13 +1,13 @@
 <template>
-  <Questions
+  <!-- <Questions
     id="card"
     Presentation="bla bla bla bla"
     titre="Premiere loi de Newton, l'inertie"
     :cacherCard="cacherCard"
     :questions="questions"
     fichier="principe_dynamique_inertie"
-  />
-  <main :class="{ 'blur-sm': flou == true }">
+  /> -->
+  <!-- <main :class="{ 'blur-sm': flou == true }"> -->
     <!-- Boutton pour la fin de la simulation -->
     <div
       class="absolute top-2 left-2 bg-white py-3 px-4 bg-white rounded-full flex justify-center items-center cursor-pointer"
@@ -17,7 +17,7 @@
     </div>
     <LoadingScreen :isLoaded="loaded" />
     <canvas></canvas>
-  </main>
+  <!-- </main> -->
 </template>
 
 <script lang="ts">
