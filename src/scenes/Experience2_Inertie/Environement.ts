@@ -5,17 +5,19 @@ import {
   CannonJSPlugin,
   MeshBuilder,
   TransformNode,
-  Animation,
   Vector3,
-  QuadraticEase,
   StandardMaterial,
   Texture,
-  Color3
+  Color3,
+  ActionManager,
+  ExecuteCodeAction,
 } from "@babylonjs/core";
 
 import "@babylonjs/loaders";
 import * as CANNON from "cannon";
 import { UI } from "./ui";
+import * as GUI from "@babylonjs/gui/2D";
+
 
 export class Environement {
   scene: Scene;
@@ -60,38 +62,70 @@ export class Environement {
   }
 
   createpend1() {
-   
-  // Créer le support avec texture
-  const support = MeshBuilder.CreateBox("support", {height: 0.2, width: 0.2, depth: 0.2}, this.scene);
-  support.position.y = 4.5; // Augmenter la position du support
-  const supportMaterial = new StandardMaterial("supportMaterial", this.scene);
-  supportMaterial.diffuseTexture = new Texture("textures/wood.jpg", this.scene);
-  support.material = supportMaterial;
+    // Créer le support avec texture
+const support = MeshBuilder.CreateBox("support", {height: 0.2, width: 0.2, depth: 0.2}, this.scene);
+support.position.y = 4.5; // Augmenter la position du support
+const supportMaterial = new StandardMaterial("supportMaterial", this.scene);
+supportMaterial.diffuseTexture = new Texture("textures/wood.jpg", this.scene);
+support.material = supportMaterial;
 
-  // Créer le pendule
-  const pivot = new TransformNode("root");
-  const rod = MeshBuilder.CreateCylinder("rod", {height: 2, diameter: 0.05}, this.scene);
-  rod.position.y = -1;
-  const rodMaterial = new StandardMaterial("rodMaterial", this.scene);
-  rodMaterial.diffuseTexture = new Texture("textures/metal.jpg", this.scene);
-  rod.material = rodMaterial;
-  rod.parent = pivot;
+// Créer le pendule
+const pivot = new TransformNode("root");
+const rod = MeshBuilder.CreateCylinder("rod", {height: 2, diameter: 0.05}, this.scene);
+rod.position.y = -1;
+const rodMaterial = new StandardMaterial("rodMaterial", this.scene);
+rodMaterial.diffuseTexture = new Texture("textures/metal.jpg", this.scene);
+rod.material = rodMaterial;
+rod.parent = pivot;
 
-  const ball = MeshBuilder.CreateSphere("ball", {diameter: 0.5}, this.scene);
-  ball.position.y = -2;
-  const ballMaterial = new StandardMaterial("ballMaterial", this.scene);
-  ballMaterial.diffuseTexture = new Texture("textures/metal.jpg", this.scene);
-  ball.material = ballMaterial;
-  ball.parent = pivot;
+const ball = MeshBuilder.CreateSphere("ball", {diameter: 0.5}, this.scene);
+ball.position.y = -2;
+const ballMaterial = new StandardMaterial("ballMaterial", this.scene);
+ballMaterial.diffuseTexture = new Texture("textures/metal.jpg", this.scene);
+ball.material = ballMaterial;
+ball.parent = pivot;
 
-  // Positionner le pivot au niveau du support
-  pivot.position.y = 4.5; // Augmenter la position du pivot
+// Positionner le pivot au niveau du support
+pivot.position.y = 4.5; // Augmenter la position du pivot
 
-  // Animation du pendule
-  this.scene.registerBeforeRender(() => {
-      const time = performance.now() * 0.001;
-      pivot.rotation.z = Math.sin(time) * 0.5;
-  });
+// Animation du pendule
+let isPaused = false;
+let pausedTime = 0;
+this.scene.registerBeforeRender(() => {
+    if (!isPaused) {
+        const time = (performance.now() * 0.001) - pausedTime;
+        pivot.rotation.z = Math.sin(time) * 0.5;
+    }
+});
+
+// Ajouter l'événement de clic pour la pause et la reprise
+ball.actionManager = new ActionManager(this.scene);
+ball.actionManager.registerAction(new ExecuteCodeAction(ActionManager.OnPickTrigger, () => {
+    if (isPaused) {
+        pausedTime = performance.now() * 0.001 - pausedTime;
+    } else {
+        pausedTime = performance.now() * 0.001 - pausedTime;
+    }
+    isPaused = !isPaused;
+}));
+
+// Ajouter un texte au survol de la sphère
+const advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+const textBlock = new GUI.TextBlock();
+textBlock.text = "Cliquez pour mettre en pause/reprendre";
+textBlock.color = "white";
+textBlock.fontSize = 24;
+textBlock.isVisible = false;
+advancedTexture.addControl(textBlock);
+
+ball.actionManager.registerAction(new ExecuteCodeAction(ActionManager.OnPointerOverTrigger, () => {
+    textBlock.isVisible = true;
+}));
+
+ball.actionManager.registerAction(new ExecuteCodeAction(ActionManager.OnPointerOutTrigger, () => {
+    textBlock.isVisible = false;
+}));
+
 
   };
 
