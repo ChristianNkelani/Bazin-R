@@ -62,8 +62,10 @@ export class UI {
     text.fontSize = 30;
     text.fontFamily = "Montserrat Black";
     text.color = "deepskyblue";
-    text.height = "25px";
-    text.top = "5px";
+    text.height = 0.4;
+    text.width = 0.2;
+    text.paddingLeft = "15px";
+    text.top = "15px";
     text.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
     container.addControl(text);
 
@@ -173,14 +175,15 @@ export class UI {
     this._container2 = new GUI.Container();
 
     this._container2.background = "white";
-    this._container2.width = "300px";
+    this._container2.width = 0.25;
     this._container2.height = 0.4;
 
     this._container2.horizontalAlignment =
       GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
     this._container2.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
-    this._container2.top = "300px";
-    this._container2.left = "10px";
+    this._container2.top = "350px";
+    this._container2.left = -70;
+    this._container2.paddingLeft = "90px";
     this._container2.isVisible = false;
 
     advancedTexture.addControl(this._container2);
@@ -291,38 +294,14 @@ export class UI {
 
   // creation de la chambre a vide
 
-  chambreVide() {
-    this.box = MeshBuilder.CreateBox(
-      "box",
-      {
-        width: 2.8,
-        height: 5.9,
-        size: 5.5,
-      },
-      this._scene
-    );
-    this.box.position.x = 6.5;
-    this.box.position.z = -2.5;
-    const glass = new PBRMaterial("glass", this._scene);
-    glass.alpha = 0.5;
-    glass.directIntensity = 0.0;
-    glass.environmentIntensity = 0.7;
-    glass.cameraExposure = 0.66;
-    glass.cameraContrast = 1.66;
-    glass.microSurface = 1;
-    glass.reflectivityColor = new Color3(0.2, 0.2, 0.2);
-    glass.albedoColor = new Color3(0.95, 0.95, 0.95);
-    this.box.material = glass;
-  }
-
   textMassses(container) {
     this._textMasse = [];
 
     let posy = 95;
     const texts = ["m1", "m2", "Données"];
-    for (let i = 0; i <= 4; i++) {
+    for (let i = 0; i <= 6; i++) {
       this._textMasse[i] = new GUI.TextBlock("m1");
-      this._textMasse[i].width = "200px";
+      this._textMasse[i].width = "250px";
       this._textMasse[i].height = "20px";
       this._textMasse[i].top = posy;
       this._textMasse[i].horizontalAlignment =
@@ -370,9 +349,16 @@ export class UI {
     text[4].text = "AN";
     text[4].underline = true;
     text[4].horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-    text[4].left = "45px";
+    text[4].left = "120px";
 
     this._textMasse[4].top = 190;
+    this._textMasse[4].left = 50;
+    this._textMasse[5].top = 210;
+    this._textMasse[5].left = 50;
+    this._textMasse[6].top = 230;
+    this._textMasse[6].left = 50;
+
+
   }
 
   createNewMenuMat(advancedTexture) {
@@ -382,7 +368,7 @@ export class UI {
     this._selectbox.left = "20px";
     this._selectbox.paddingLeft = "15px";
     this._selectbox.background = "red";
-    this._selectbox.top = "20px";
+    this._selectbox.top = "30px";
     this._selectbox.setPadding("5px", "5px", "10px", "5px");
 
     this._selectbox.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;

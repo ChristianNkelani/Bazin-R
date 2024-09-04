@@ -337,61 +337,187 @@ export class Environement {
     /*------------Create other Wheels as Instances, Parent and Position----------*/
   }
 
+  // actionGroupSlider() {
+  //   //valeur de p1
+  //  this._ui._textMasse[4].text =
+  //     "P1 = " +
+  //     this._ui._sliders[0].value +
+  //     "x" +
+  //     -this.physicEngine.gravity.y +
+  //     " kg"; 
+
+      
+
+  //     this._ui._textMasse[5].text =
+  //     "P2 = " +
+  //     this._ui._sliders[0].value +
+  //     "x" +
+  //     -this.physicEngine.gravity.y +
+  //     " kg";
+
+
+  //     this._ui._textMasse[6].text =
+  //     "P12 = " +
+  //     this._ui._sliders[0].value +
+  //     "x" +
+  //     -this.physicEngine.gravity.y +
+  //     " kg";
+  //   var masse1 = 1;
+  //   var masse2 = 1;
+
+  //   const displayValue = function (value) {
+  //     return Math.floor(value * 100) / 100;
+  //   };
+
+  //   const ball1 = this.boitiers[0];
+  //   const ball2 = this.boitiers[1];
+
+  //   var m2 = 1;
+  //   const setBall1 = (value) => {
+  //     masse1 = value;
+
+  //     ball1.scaling.x = value;
+  //     ball1.scaling.y = value;
+  //     ball1.scaling.z = value;
+  //     this._ui._textMasse[0].text = "m1 = " + value.toFixed(2) + "Kg";
+  //     // this._ui._textMasse[3].text = "m12 = "+(((value.toFixed(2))))+ "Kg"
+  //     this._ui._textMasse[3].text =
+  //       "m12 = " + (value.toFixed(2) + m2.toFixed(2)) + "Kg";
+  //     this._ui._textMasse[4].text =
+  //       "P1 = " +
+  //       value.toFixed(2) +
+  //       "x" +
+  //       (-this.physicEngine.gravity.y).toFixed(2) +
+  //       " kg";
+  //   };
+
+  //   const setBall2 = (value) => {
+  //     ball2.scaling.x = value;
+  //     ball2.scaling.y = value;
+  //     ball2.scaling.z = value;
+  //     m2 = value;
+  //     masse2 = value;
+
+  //     this._ui._textMasse[1].text = "m2 = " + value.toFixed(2) + "Kg";
+  //     this._ui._textMasse[3].text =
+  //       "m12 = " + (value.toFixed(2) + parseInt(m2.toFixed(2))) + "Kg";
+  //   };
+
+  //   const physicEngine = this.physicEngine;
+  //   const setGravitaion = (value) => {
+  //     physicEngine.setGravity(new Vector3(0, -value, 0));
+  //     this._ui._textMasse[4].text =
+  //       "P1 = " + masse1.toFixed(2) + "x" + value.toFixed(2) + " kg";
+  //   };
+  //   this._ui.groupSliders[0].addSlider(
+  //     "g = ",
+  //     setGravitaion,
+  //     "m/s2",
+  //     0,
+  //     15,
+  //     9.81,
+  //     displayValue
+  //   );
+  //   this._ui.groupSliders[0].addSlider(
+  //     "Masse boîtier jaune",
+  //     setBall1,
+  //     "Kg",
+  //     1,
+  //     2,
+  //     1,
+  //     displayValue
+  //   );
+  //   this._ui.groupSliders[0].addSlider(
+  //     "Masse boîtier rouge",
+  //     setBall2,
+  //     "Kg",
+  //     1,
+  //     2,
+  //     1,
+  //     displayValue
+  //   );
+
+  // }
+
   actionGroupSlider() {
-    //valeur de p1
+    // Met à jour les valeurs des textes avec les masses initiales
     this._ui._textMasse[4].text =
-      "P1 = " +
-      this._ui._sliders[0].value +
-      "x" +
-      -this.physicEngine.gravity.y +
-      " kg";
-    var masse1 = 1;
-    var masse2 = 1;
+        "P1 = " +
+        this._ui._sliders[0].value +
+        " x " +
+        -this.physicEngine.gravity.y +
+        " = " +
+        (this._ui._sliders[0].value * -this.physicEngine.gravity.y).toFixed(2) +
+        " N";
+
+    this._ui._textMasse[5].text =
+        "P2 = " +
+        this._ui._sliders[1].value +
+        " x " +
+        -this.physicEngine.gravity.y +
+        " = " +
+        (this._ui._sliders[1].value * -this.physicEngine.gravity.y).toFixed(2) +
+        " N";
+
+    this._ui._textMasse[6].text =
+        "P12 = " +
+        this._ui._sliders[2].value +
+        " x " +
+        -this.physicEngine.gravity.y +
+        " = " +
+        (this._ui._sliders[2].value * -this.physicEngine.gravity.y).toFixed(2) +
+        " N";
+
+    let masse1 = this._ui._sliders[0].value;
+    let masse2 = this._ui._sliders[1].value;
 
     const displayValue = function (value) {
-      return Math.floor(value * 100) / 100;
+        return Math.floor(value * 100) / 100;
     };
 
     const ball1 = this.boitiers[0];
     const ball2 = this.boitiers[1];
 
-    var m2 = 1;
     const setBall1 = (value) => {
-      masse1 = value;
-
-      ball1.scaling.x = value;
-      ball1.scaling.y = value;
-      ball1.scaling.z = value;
-      this._ui._textMasse[0].text = "m1 = " + value.toFixed(2) + "Kg";
-      // this._ui._textMasse[3].text = "m12 = "+(((value.toFixed(2))))+ "Kg"
-      this._ui._textMasse[3].text =
-        "m12 = " + (value.toFixed(2) + m2.toFixed(2)) + "Kg";
-      this._ui._textMasse[4].text =
-        "P1 = " +
-        value.toFixed(2) +
-        "x" +
-        (-this.physicEngine.gravity.y).toFixed(2) +
-        " kg";
+        masse1 = value;
+        this._ui._textMasse[4].text =
+            "P1 = " + displayValue(value).toFixed(2) + " x " + -this.physicEngine.gravity.y.toFixed(2) +
+            " = " + (value * -this.physicEngine.gravity.y).toFixed(2) + " N";
+        ball1.scaling.x = value;
+        ball1.scaling.y = value;
+        ball1.scaling.z = value;
     };
 
     const setBall2 = (value) => {
-      ball2.scaling.x = value;
-      ball2.scaling.y = value;
-      ball2.scaling.z = value;
-      m2 = value;
-      masse2 = value;
-
-      this._ui._textMasse[1].text = "m2 = " + value.toFixed(2) + "Kg";
-      this._ui._textMasse[3].text =
-        "m12 = " + (value.toFixed(2) + parseInt(m2.toFixed(2))) + "Kg";
+        masse2 = value;
+        this._ui._textMasse[5].text =
+            "P2 = " + displayValue(value).toFixed(2) + " x " + -this.physicEngine.gravity.y.toFixed(2) +
+            " = " + (value * -this.physicEngine.gravity.y).toFixed(2) + " N";
+        ball2.scaling.x = value;
+        ball2.scaling.y = value;
+        ball2.scaling.z = value;
     };
+
+    // Associe les sliders aux fonctions qui modifient les masses et les tailles des boitiers
+    this._ui._sliders[0].onValueChangedObservable.add(setBall1);
+    this._ui._sliders[1].onValueChangedObservable.add(setBall2);
+
+    // Action supplémentaire pour slider P12
+    this._ui._sliders[2].onValueChangedObservable.add((value) => {
+        this._ui._textMasse[6].text =
+            "P12 = " + displayValue(value) + " x " + -this.physicEngine.gravity.y.toFixed(2) +
+            " = " + (value * -this.physicEngine.gravity.y).toFixed(2) + " N";
+    });
 
     const physicEngine = this.physicEngine;
+
     const setGravitaion = (value) => {
-      physicEngine.setGravity(new Vector3(0, -value, 0));
-      this._ui._textMasse[4].text =
-        "P1 = " + masse1.toFixed(2) + "x" + value.toFixed(2) + " kg";
+        physicEngine.setGravity(new Vector3(0, -value, 0));
+        this._ui._textMasse[4].text =
+            "P1 = " + masse1.toFixed(2) + " x " + value.toFixed(2) +
+            " = " + (masse1 * value).toFixed(2) + " N";
     };
+
     this._ui.groupSliders[0].addSlider(
       "g = ",
       setGravitaion,
@@ -419,9 +545,8 @@ export class Environement {
       1,
       displayValue
     );
+}
 
-    this._ui.groupSliders[1].addCheckbox("Chambre à vide");
-  }
 
   async createGravity() {
     // const ammo = await Ammo()
@@ -442,7 +567,7 @@ export class Environement {
     wire.rotation.x = Math.PI / 2;
   }
   // ! voir les parametres
-  voirParam() {
+ voirCalcul() {
     if (this._ui._container2.isVisible == true) {
       this._ui._container2.isVisible = false;
     } else {
@@ -450,7 +575,7 @@ export class Environement {
     }
   }
   // !voir les calculs
-  voirCalcul() {
+  voirParam() {
     if (this._ui._selectbox.isVisible == true) {
       this._ui._selectbox.isVisible = false;
     } else {
