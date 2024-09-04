@@ -9,7 +9,8 @@ import {
   Vector3,
   QuadraticEase,
   StandardMaterial,
-  Texture
+  Texture,
+  Color3
 } from "@babylonjs/core";
 
 import "@babylonjs/loaders";
@@ -40,12 +41,8 @@ export class Environement {
 
     this.importLaboratoire();
     this.createpend1();
+    this.createpend2();
 
-    this._ui._buttonAction[0].onPointerUpObservable.add(() => {
-    });
-
-    this._ui._buttonAction[1].onPointerUpObservable.add(() => {
-    });
   }
 
   async importLaboratoire() {
@@ -96,67 +93,39 @@ export class Environement {
       pivot.rotation.z = Math.sin(time) * 0.5;
   });
 
+  };
+
+  createpend2(){
+
+  // Créer le support avec texture
+  const support = MeshBuilder.CreateBox("support", {height: 0.2, width: 0.2, depth: 0.2}, this.scene);
+  support.position.y = 4.5; // Augmenter la position du support
+  support.position.z = 1;
+  const supportMaterial = new StandardMaterial("supportMaterial", this.scene);
+  supportMaterial.diffuseTexture = new Texture("textures/wood.jpg", this.scene);
+  support.material = supportMaterial;
+
+  // Créer le pendule fixe
+  const pivot = new TransformNode("root");
+  const rod = MeshBuilder.CreateCylinder("rod", {height: 2, diameter: 0.05}, this.scene);
+  rod.position.y = -1;
+  const rodMaterial = new StandardMaterial("rodMaterial", this.scene);
+  rodMaterial.diffuseColor = new Color3(0, 0, 1); // Couleur bleue
+  rod.material = rodMaterial;
+  rod.parent = pivot;
+
+  const ball = MeshBuilder.CreateSphere("ball", {diameter: 0.5}, this.scene);
+  ball.position.y = -2;
+  const ballMaterial = new StandardMaterial("ballMaterial", this.scene);
+  ballMaterial.diffuseColor = new Color3(0, 0, 1); // Couleur bleue
+  ball.material = ballMaterial;
+  ball.parent = pivot;
+
+  // Positionner le pivot au niveau du support
+  pivot.position.y = 4.5; // Augmenter la position du pivot
+  pivot.position.z = 1;
+
 };
- 
 
 }
 
-// // Créer la scène
-// const createScene = function () {
-//   const scene = new BABYLON.Scene(engine);
-
-//   // Ajouter une caméra
-//   const camera = new BABYLON.ArcRotateCamera("camera1", Math.PI / 2, Math.PI / 2, 4, BABYLON.Vector3.Zero(), scene);
-//   camera.attachControl(canvas, true);
-
-//   // Ajouter une lumière
-//   const light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 1, 0), scene);
-//   light.intensity = 0.7;
-
-//   // Créer le support avec texture
-//   const support = BABYLON.MeshBuilder.CreateBox("support", {height: 0.2, width: 0.2, depth: 0.2}, scene);
-//   support.position.y = 1;
-//   const supportMaterial = new BABYLON.StandardMaterial("supportMaterial", scene);
-//   supportMaterial.diffuseTexture = new BABYLON.Texture("textures/wood.jpg", scene);
-//   support.material = supportMaterial;
-
-//   // Créer le pendule
-//   const pivot = new BABYLON.TransformNode("root");
-//   const rod = BABYLON.MeshBuilder.CreateCylinder("rod", {height: 2, diameter: 0.05}, scene);
-//   rod.position.y = -1;
-//   const rodMaterial = new BABYLON.StandardMaterial("rodMaterial", scene);
-//   rodMaterial.diffuseTexture = new BABYLON.Texture("textures/metal.jpg", scene);
-//   rod.material = rodMaterial;
-//   rod.parent = pivot;
-
-//   const ball = BABYLON.MeshBuilder.CreateSphere("ball", {diameter: 0.5}, scene);
-//   ball.position.y = -2;
-//   const ballMaterial = new BABYLON.StandardMaterial("ballMaterial", scene);
-//   ballMaterial.diffuseTexture = new BABYLON.Texture("textures/metal.jpg", scene);
-//   ball.material = ballMaterial;
-//   ball.parent = pivot;
-
-//   // Positionner le pivot au niveau du support
-//   pivot.position.y = 1;
-
-//   // Animation du pendule
-//   scene.registerBeforeRender(() => {
-//       const time = performance.now() * 0.001;
-//       pivot.rotation.z = Math.sin(time) * 0.5;
-//   });
-
-//   return scene;
-// };
-
-// // Initialiser Babylon.js
-// const canvas = document.getElementById("renderCanvas");
-// const engine = new BABYLON.Engine(canvas, true);
-// const scene = createScene();
-
-// engine.runRenderLoop(() => {
-//   scene.render();
-// });
-
-// window.addEventListener("resize", () => {
-//   engine.resize();
-// });
