@@ -9,6 +9,7 @@ import "@babylonjs/loaders";
 import { UI } from "./ui";
 import { Environement } from "./Environement";
 
+
 export class Experience3 {
   scene: Scene;
   engine: Engine;
@@ -47,13 +48,12 @@ export class Experience3 {
     const scene = new Scene(this.engine);
     const camera = new UniversalCamera(
       "camera",
-      new Vector3(2, 2, -1.5),
+      new Vector3(-4, 4.5, 0.8),
       this.scene
     );
     camera.speed = 0.5;
-    camera.rotation._y = -Math.PI / 2;
-    camera.rotation._x = Math.PI / 8;
-    camera.fov = 1.5; // Augmenter la valeur pour un zoom-out
+    camera.rotation._y = Math.PI / 2;
+    camera.rotation._x = Math.PI / 14;
 
     camera.attachControl();
     const hemiLight = new HemisphericLight(

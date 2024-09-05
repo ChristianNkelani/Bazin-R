@@ -78,7 +78,7 @@
       </div>
     </div>
   </div>
-  <Questions
+  <!-- <Questions
     id="card"
     Presentation=" Cette experience est une exploration captivante des lois fondamentales
         qui gouvernent le mouvement des objets dans notre univers."
@@ -86,7 +86,7 @@
     :cacherCard="cacherCard"
     :questions="questions"
     fichier="principe_dynamique_pfd"
-  />
+  /> -->
   <RouterLink to="/categorie" class="absolute z-40 right-0 bottom-5 w-16 h-16">
     <img
       class="w-16 h-16 bg-blue-500 rounded-full"
@@ -94,7 +94,7 @@
       alt=""
     />
   </RouterLink>
-  <main :class="{ 'blur-sm': flou == true }">
+  <!-- <main :class="{ 'blur-sm': flou == true }"> -->
     <!-- Boutton pour la fin de la simulation -->
     <div
       class="absolute top-2 left-2 bg-white py-3 px-4 bg-white rounded-full flex justify-center items-center cursor-pointer"
@@ -132,7 +132,7 @@
     </div>
     <LoadingScreen :isLoaded="loaded" />
     <canvas></canvas>
-  </main>
+  <!-- </main> -->
 </template>
 
 <script lang="ts">
