@@ -372,8 +372,4 @@ export class Environement {
         chronoText2.text = "Temps pour la balle 2: 00:00";
     });
 }
-
-
-
-
   }

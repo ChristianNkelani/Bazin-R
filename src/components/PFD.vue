@@ -103,7 +103,7 @@
       Fin de la simulation
     </div>
     <!-- Le bouton des parametres -->
-    <div
+    <!-- <div
       class="absolute bottom-2 left-2 bg-white w-16 h-16 rounded-full flex justify-center items-center"
       @click="
         voirCard('opt');
@@ -129,7 +129,7 @@
           d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
         />
       </svg>
-    </div>
+    </div> -->
     <LoadingScreen :isLoaded="loaded" />
     <canvas></canvas>
   <!-- </main> -->
