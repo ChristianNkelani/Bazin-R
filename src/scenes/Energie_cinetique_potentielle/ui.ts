@@ -8,7 +8,9 @@ export class UI {
     public _buttonAction:any;
     public groupSliders:any;
     public texts:any;
+    public _textMasse:any;
     public selectbox : any ;
+    public _container2:any;
 
     //Game Timer
     public time: number; //keep track to signal end game REAL TIME
@@ -35,7 +37,6 @@ export class UI {
         const advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI('UI', undefined);        
         this.Chrono(advancedTexture);
 
-        this.calculs(3,4)
     }
    
     
@@ -52,7 +53,7 @@ export class UI {
 
         this.selectbox= new GUI.SelectionPanel("sp");
         this.selectbox.width=0.23;
-        this.selectbox.height = 0.55;
+        this.selectbox.height = 0.45;
         this.selectbox.left = "50px";
         this.selectbox.paddingLeft = "15px"
         this.selectbox.background = "white";
@@ -70,6 +71,23 @@ export class UI {
         this.groupSliders[1].top = "10px";
         this.selectbox.addGroup(this.groupSliders[1])
         this.selectbox.isVisible = false;
+
+        this._container2 = new GUI.Container();
+
+        this._container2.background = "white";
+        this._container2.width = 0.28;
+        this._container2.height = 0.4;
+    
+        this._container2.horizontalAlignment =
+          GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+        this._container2.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        this._container2.top = "430px";
+        this._container2.left = -30;
+        this._container2.paddingLeft = "90px";
+        this._container2.isVisible = true;
+    
+        advancedTexture.addControl(this._container2);
+        this.menuCalculs(this._container2);
         
 
      
@@ -183,65 +201,68 @@ export class UI {
   }
 
 
-  calculs(potentiel=0,cinetique=0){
-    this.texts = [];
-     // Création de la GUI
-     const advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
-
-     // Création d'un texte pour afficher l'énergie cinétique
-     const kineticEnergyText = new GUI.TextBlock();
-     kineticEnergyText.text = "Énergie Cinétique: "+cinetique;
-     kineticEnergyText.color = "white";
-     kineticEnergyText.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-     kineticEnergyText.left = '-250px';
-     kineticEnergyText.top = -230;
-     kineticEnergyText.fontSize = 24;
-     advancedTexture.addControl(kineticEnergyText);
-
-     this.texts[0] = kineticEnergyText;
-
-     const potentialEnergy = new GUI.TextBlock();
-     potentialEnergy.text = "Énergie Potentielle: "+potentiel;
-     potentialEnergy.color = "white";
-     potentialEnergy.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-     potentialEnergy.top = -200;
-     potentialEnergy.left = '-250px';
-     potentialEnergy.fontSize = 24;
-     advancedTexture.addControl(potentialEnergy);
-
-     this.texts[1] = potentialEnergy;
-
-     
-
-     // Variables pour la physique
-     let velocity = new Vector3(0, 0, 0);
-     const gravity = new Vector3(0, -0.1, 0);
-     const mass = 1; // masse de la balle\
 
 
-     // Création d'un texte pour afficher l'énergie cinétique
-     const text3 = new GUI.TextBlock();
-     text3.text = "Énergie Cinétique: "+cinetique;
-     text3.color = "white";
-     text3.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-     text3.left = '250px';
-     text3.top = -230;
-     text3.fontSize = 24;
-     advancedTexture.addControl(text3);
+    public menuCalculs(advancedTexture: GUI.AdvancedDynamicTexture) {
+        this._textMasse = [];
+        const container = new GUI.Container();
+        advancedTexture.addControl(container);
 
-     this.texts[2] = text3;
+        // Calcul des énergies pour les deux balles
+        const g = -this.gravitation; // Gravité
+        const masse1 = 1; // Masse de la première balle
+        const masse2 = 1; // Masse de la deuxième balle
 
-     const text4 = new GUI.TextBlock();
-     text4.text = "Énergie Potentielle: "+potentiel;
-     text4.color = "white";
-     text4.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-     text4.top = -200;
-     text4.left = '250px';
-     text4.fontSize = 24;
-     advancedTexture.addControl(text4);
+        // Position de la balle sur l'axe Y (hauteur)
+        const hauteur1 = 2;
+        const hauteur2 = 2;
 
-     this.texts[3] = text4;
-  }
+        // Vitesse fictive pour simplification (peut être ajustée pour calcul réel)
+        const vitesse1 = 2; 
+        const vitesse2 = 2;
+
+        // Calcul des énergies potentielles
+        const energiePotentielle1 = masse1 * g * hauteur1;
+        const energiePotentielle2 = masse2 * g * hauteur2;
+
+        // Calcul des énergies cinétiques
+        const energieCinetique1 = 0.5 * masse1 * Math.pow(vitesse1, 2);
+        const energieCinetique2 = 0.5 * masse2 * Math.pow(vitesse2, 2);
+
+        // Affichage des résultats dans l'interface utilisateur
+        this._textMasse[0] = new GUI.TextBlock();
+        this._textMasse[0].text = `Énergie Potentielle Balle Jaune: ${energiePotentielle1.toFixed(2)} J`;
+        this._textMasse[0].color = "red";
+        this._textMasse[0].fontSize = 18;
+        this._textMasse[0].top = "-100px";
+        container.addControl(this._textMasse[0]);
+        // this._textMasse[0] =  texteEnergiePotentielle1;
+
+
+        const texteEnergieCinetique1 = new GUI.TextBlock();
+        this._textMasse[1] = texteEnergieCinetique1;
+        texteEnergieCinetique1.text = `Énergie Cinétique Balle Jaune: ${energieCinetique1.toFixed(2)} J`;
+        texteEnergieCinetique1.color = "red";
+        texteEnergieCinetique1.fontSize = 18;
+        texteEnergieCinetique1.top = "-70px";
+        container.addControl(texteEnergieCinetique1);
+
+        const texteEnergiePotentielle2 = new GUI.TextBlock();
+        this._textMasse[2] = texteEnergiePotentielle2;
+        texteEnergiePotentielle2.text = `Énergie Potentielle Balle Rouge: ${energiePotentielle2.toFixed(2)} J`;
+        texteEnergiePotentielle2.color = "red";
+        texteEnergiePotentielle2.fontSize = 18;
+        texteEnergiePotentielle2.top = "-40px";
+        container.addControl(texteEnergiePotentielle2);
+
+        const texteEnergieCinetique2 = new GUI.TextBlock();
+        this._textMasse[3] = texteEnergieCinetique2;
+        texteEnergieCinetique2.text = `Énergie Cinétique Balle Rouge: ${energieCinetique2.toFixed(2)} J`;
+        texteEnergieCinetique2.color = "red";
+        texteEnergieCinetique2.fontSize = 18;
+        texteEnergieCinetique2.top = "-10px";
+        container.addControl(texteEnergieCinetique2);
+    }
 
 
   

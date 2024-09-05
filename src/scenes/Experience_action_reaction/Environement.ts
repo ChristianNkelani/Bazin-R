@@ -56,7 +56,7 @@ export class Environement {
     this.createImpostor();
     this.createground();
     this.createground2();
-    // this.newc()
+    this.newc();
 
     //action des sliders
     this.actionButtonMenu();
@@ -66,12 +66,16 @@ export class Environement {
   async importLaboratoire() {
     const labo = await SceneLoader.ImportMeshAsync(
       "",
-      "./models/",
-      "laboratoire.glb",
+      "./experience3_PFD/",
+      "studio.glb",
       this.scene
     );
     this.setLoaded();
     this.voirCard("card");
+
+    labo.meshes[2].isVisible = false;
+    labo.meshes[1].isVisible = false;
+    labo.meshes[8].isVisible = false;
     return labo;
   }
 
@@ -104,16 +108,7 @@ export class Environement {
     this.ball1.position.z = -0.7;
     this.ball1.material = this.changeMaterialColor(170, 255, 0);
 
-    this.ball2 = MeshBuilder.CreateSphere(
-      "ball",
-      { diameter: 0.25 },
-      this.scene
-    );
-    this.ball2.position.y = 2.5;
-    this.ball2.position.x = 7.2;
-    this.ball2.position.z = -4.4;
-    this.ball2.material = this.changeMaterialColor(255, 0, 0);
-
+   
    // Créer un mur
    const wall = MeshBuilder.CreateBox("wall", {width: 10, height: 5, depth: 0.5}, this.scene);
    wall.position = new Vector3(5, 1, 3.1);
@@ -123,9 +118,9 @@ export class Environement {
    const wall1 = MeshBuilder.CreateBox("wall", {width: 10, height: 5, depth: 0.5}, this.scene);
    wall1.position = new Vector3(5, 1, -8.5);
    wall1.material = new  StandardMaterial("wallMaterial",this.scene );
-   wall1.physicsImpostor = new PhysicsImpostor(wall1, PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.85 }, this.scene);
+   wall1.physicsImpostor = new PhysicsImpostor(wall1, PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.5 }, this.scene);
    wall1.isVisible = false;
-    return [aimant1, aimant2, this.ball1, this.ball2];
+    return [aimant1, aimant2, this.ball1];
   }
 
   changeMaterialColor(x, y, z): StandardMaterial {
@@ -139,14 +134,9 @@ export class Environement {
     this.ball1.physicsImpostor = new PhysicsImpostor(
       this.ball1,
       PhysicsImpostor.BoxImpostor,
-      { mass: 1, restitution: 0.85 }
-    );
-
-    this.ball2.physicsImpostor = new PhysicsImpostor(
-      this.ball2,
-      PhysicsImpostor.BoxImpostor,
       { mass: 1, restitution: 1 }
     );
+
 
 
      // Ajouter un GUI pour contrôler la force de la lance
@@ -163,13 +153,13 @@ export class Environement {
      advancedTexture.addControl(slider);
  
      var textBlock = new GUI.TextBlock();
-     textBlock.text = "Adjust the force of the throw";
+     textBlock.text = "Ajuster la force de frappe";
      textBlock.color = "white";
      textBlock.height = "30px";
      textBlock.top = "-40px";
      advancedTexture.addControl(textBlock);
  
-     var button = GUI.Button.CreateSimpleButton("startButton", "Launch Ball");
+     var button = GUI.Button.CreateSimpleButton("startButton", "Frapper");
      button.width = "150px";
      button.height = "40px";
      button.color = "white";
@@ -186,31 +176,21 @@ export class Environement {
      
      button.onPointerClickObservable.add(() => {
          // Lancer le ballon avec la force spécifiée par le slider
-         this.ball1.physicsImpostor = new PhysicsImpostor(
-          this.ball1,
-          PhysicsImpostor.BoxImpostor,
-          { mass: 1, restitution: 0.5 }
-        );
+        //  this.ball1.physicsImpostor = new PhysicsImpostor(
+        //   this.ball1,
+        //   PhysicsImpostor.BoxImpostor,
+        //   { mass: 1, restitution: 1 }
+        // );
          this.ball1.physicsImpostor.applyImpulse(force, this.ball1.getAbsolutePosition());
      });
   }
 
   createground() {
-    const ground = MeshBuilder.CreateGround("ground", {});
-    ground.position.y = 0.7;
-    ground.position.x = 7;
-    ground.position.z = -0.5;
 
-    ground.physicsImpostor = new PhysicsImpostor(
-      ground,
-      PhysicsImpostor.BoxImpostor,
-      { mass: 0, restitution: 0 }
-    );
-    ground.isVisible = false;
   }
   createground2() {
     const ground = MeshBuilder.CreateGround("ground", {width:20, height:20});
-    ground.position.y = 0.7;
+    ground.position.y = 0.1;
     ground.position.x = 7;
     ground.position.z = -4.5;
 
@@ -231,12 +211,7 @@ export class Environement {
       this.ball1.scaling.z = value;
     });
 
-    this._ui._sliders[1].onValueChangedObservable.add((value) => {
-      this.ball2.scaling.x = value;
-      this.ball2.scaling.y = value;
-      this.ball2.scaling.z = value;
-    });
-
+  
     this._ui._buttonAction[0].onPointerUpObservable.add(() => {
       if (this.cliquer == true) {
         this._ui._stopTimer = false;
@@ -262,7 +237,7 @@ export class Environement {
   }
   toRestart() {
 
-    this.ball1.physicsImpostor.dispose();
+    // this.ball1.physicsImpostor.dispose();
 
     this.ball1.position.y = 0.8;
     this.ball1.position.x = 7.2;
@@ -282,71 +257,33 @@ export class Environement {
     const scene = this.scene
 
     
-    // ground.physicsImpostor = new PhysicsImpostor(ball, PhysicsImpostor., { mass: 1, restitution: 0.7 }, scene);
+   // Créer le joueur (une boîte)
+const player = MeshBuilder.CreateBox('player', {height: 1, width: 0.5, depth: 0.5}, scene);
+player.position.y = 0.5;
+player.position.z = -3;
 
-    // ground.isVisible = false;
-    
-    // Créer un mur
-    const wall = MeshBuilder.CreateBox("wall", {width: 8, height: 5, depth: 0.5}, scene);
-    wall.position = new Vector3(4, 0, 3);
-    wall.material = new  StandardMaterial("wallMaterial",this.scene );
-    wall.physicsImpostor = new PhysicsImpostor(wall, PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.5 }, scene);
-    // Créer un ballon
-    const ball = MeshBuilder.CreateSphere("ball", {diameter: 0.3}, scene);
-    ball.position = new Vector3(5, 5, -5 );
-    ball.material = new StandardMaterial("ballMaterial", scene);
-    ball.physicsImpostor = new PhysicsImpostor(ball, PhysicsImpostor.BoxImpostor, { mass: 1, restitution: 0.5 }, scene);
-    // Vitesse initiale du ballon (0 au début)
-    var velocity = new Vector3(0, 0, 0);
+// Créer le mur (un plan)
+const wall = MeshBuilder.CreatePlane('wall', {height: 5, width: 5}, scene);
+wall.position.z = 3;
+wall.rotation.y = Math.PI;
 
-    const boite = MeshBuilder.CreateBox("boite",{width:2, height:2}, this.scene);
-    boite.position = new Vector3(5,5,-5);
-    boite.physicsImpostor = new PhysicsImpostor(boite,PhysicsImpostor.BoxImpostor, {mass:1, restitution:0.1}, scene);
+// Créer la balle (une sphère)
+const ball = MeshBuilder.CreateSphere('ball', {diameter: 0.2}, scene);
+ball.position = player.position.clone();
+ball.position.z += 2;
 
+// Ajouter une action pour tirer la balle
+scene.onPointerDown = function () {
+    const direction = wall.position.subtract(ball.position).normalize();
+    const speed = 5;
+    ball.physicsImpostor = new PhysicsImpostor(ball, PhysicsImpostor.SphereImpostor, {mass: 1, restitution: 1}, scene);
+    ball.physicsImpostor.setLinearVelocity(direction.scale(speed));
+};
 
-    const ground = MeshBuilder.CreateGround("ground", { width: 20, height: 20 }, scene);
-    ground.position = new Vector3(2,0,-1.5);
-    ground.physicsImpostor = new PhysicsImpostor(
-      ground,
-      PhysicsImpostor.BoxImpostor,
-      { mass: 0, restitution: 0.5 }
-    );
-
-    // Ajouter un GUI pour contrôler la force de la lance
-    var advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
-
-    var slider = new GUI.Slider();
-    slider.minimum = 0;
-    slider.maximum = 0.2;
-    slider.value = 0.05;
-    slider.height = "20px";
-    slider.width = "200px";
-    slider.color = "orange";
-    slider.background = "grey";
-    advancedTexture.addControl(slider);
-
-    var textBlock = new GUI.TextBlock();
-    textBlock.text = "Adjust the force of the throw";
-    textBlock.color = "white";
-    textBlock.height = "30px";
-    textBlock.top = "-40px";
-    advancedTexture.addControl(textBlock);
-
-    var button = GUI.Button.CreateSimpleButton("startButton", "Launch Ball");
-    button.width = "150px";
-    button.height = "40px";
-    button.color = "white";
-    button.background = "green";
-    button.top = "50px";
-    advancedTexture.addControl(button);
-    var force = new  Vector3(0,0,5);
-    button.onPointerClickObservable.add(function() {
-        // Lancer le ballon avec la force spécifiée par le slider
-
-        ball.physicsImpostor.applyImpulse(force, ball.getAbsolutePosition());    });
-  
-  
-
+// Ajouter la physique à la scène
+// const gravityVector = new Vector3(0, -9.81, 0);
+// const physicsPlugin = new CannonJSPlugin();
+// scene.enablePhysics(gravityVector, physicsPlugin);
 
             
   

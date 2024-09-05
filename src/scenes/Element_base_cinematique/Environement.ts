@@ -19,6 +19,7 @@ export class Environement {
   engine: Engine;
   ball1: any;
   ball2: any;
+  ball3:any;
   inkDrop: any;
   cliquer = true; //variable pour activer impostor ou non
   private _ui: UI;
@@ -72,17 +73,24 @@ export class Environement {
     this.ball1.position.y = 0.7;
     this.ball1.position.x = 7;
     this.ball1.position.z = -0.8;
-    this.ball1.material = this.changeMaterialColor(255, 0, 0);
+    this.ball1.material = this.changeMaterialColor(0, 0, 255);
 
     this.ball2 = MeshBuilder.CreateSphere("ball2", { diameter: 0.3 });
     this.ball2.position.y = 0.1;
     this.ball2.position.x = 7;
     this.ball2.position.z = 2.5;
-    this.ball2.material = this.changeMaterialColor(0, 255, 0);
+    this.ball2.material = this.changeMaterialColor(0, 1, 0);
+
+    this.ball3 = MeshBuilder.CreateSphere("ball2", { diameter: 0.3 });
+    this.ball3.position.y = 0.1;
+    this.ball3.position.x = 8;
+    this.ball3.position.z = 2.5;
+    this.ball3.material = this.changeMaterialColor(255, 0, 0);
 
     this._ui._play.onPointerUpObservable.add(() => {
       this.deplacer();
       this.parabolic();
+      this.mvt_recigligne();
     });
 
     this._ui._restart.onPointerUpObservable.add(() => {
@@ -169,6 +177,8 @@ export class Environement {
     // Trajectoire
     let previousPosition = this.ball1.position.clone();
     let previousPosition1 = this.ball1.position.clone();
+    let previousPosition2 = this.ball1.position.clone();
+
 
     const linePoints: Vector3[] = [previousPosition];
 
@@ -208,10 +218,28 @@ export class Environement {
         inkMaterial.diffuseColor = new Color3(0, 1, 0);
         this.inkDrop.material = inkMaterial;
       }
+
+      if (Vector3.Distance(previousPosition1, this.ball3.position) > 0.01) {
+        previousPosition2 = this.ball3.position.clone();
+        linePoints.push(previousPosition2);
+
+        // Création d'une goutte d'encre
+        this.inkDrop = MeshBuilder.CreateSphere(
+          "inkDrop",
+          { diameter: 0.04 },
+          this.scene
+        );
+        this.inkDrop.position = previousPosition2.clone();
+        // this.inkDrop.position.y = 0.53;
+        const inkMaterial = new StandardMaterial("inkMaterial", this.scene);
+        inkMaterial.diffuseColor = new Color3(255, 0, 0);
+        this.inkDrop.material = inkMaterial;
+      }
       //effacer les gouttes
       this._ui._restart.onPointerUpObservable.add(() => {});
     });
   }
+
 
   public parabolic() {
     // Parameters for the parabolic motion
@@ -271,68 +299,65 @@ export class Environement {
   }
 
   public mvt_recigligne() {
-    // this.inkDrop = [];
-    for (let i = 0; i < this.inkDrop.length; i++) {
-      this.inkDrop[i].isVisible = false;
+    // Parameters for the parabolic motion
+    const v0 = 10; // initial velocity
+    const theta = Math.PI / 4; // launch angle in radians
+    const g = 9.81; // gravity
+    const timeStep = 0.1; // time step for simulation
+
+    // Create an array to store the trajectory points
+    const points: Vector3[] = [];
+
+    // Calculate the trajectory points
+    for (let t = 0; t <= (2 * v0 * Math.sin(theta)) / g; t += timeStep) {
+        const y = v0 * Math.sin(theta) * t - 0.5 * g * t * t;
+        const z = -(v0 * Math.cos(theta) * t) + 2.5;
+        const point = new Vector3(8, 0.3, z);
+        points.push(point);
+
+        // Draw a sphere at each point to represent the trajectory
+        const sphere = MeshBuilder.CreateSphere("sphere", { diameter: 0.04 }, this.scene);
+        sphere.position = point.clone();
+
+        // Optionally, set a different color or material for each sphere
+        const sphereMaterial = new StandardMaterial("sphereMaterial", this.scene);
+        sphereMaterial.diffuseColor = new Color3(0, 1, 0); // Green
+        sphere.material = sphereMaterial;
     }
 
-    // Définir les points de la courbe
-    const points = [
-      new Vector3(6.5, 0.3, -0.8),
-      new Vector3(6.7, 0.3, -0.9),
-      new Vector3(7.1, 0.3, -1.2),
-      new Vector3(6.5, 0.3, -1.4),
-      new Vector3(6.1, 0.3, -1.3),
-      new Vector3(6.3, 0.3, -1.6),
-      new Vector3(7.2, 0.3, -1.8),
-      new Vector3(6.1, 0.3, -2.1),
-      new Vector3(6, 0.3, -2.3),
-      new Vector3(6.2, 0.3, -2.4),
-      new Vector3(6.7, 0.3, -2.5),
-      new Vector3(6.8, 0.3, -2.6),
-      new Vector3(6.9, 0.3, -2.8),
-      new Vector3(7.8, 0.3, -3),
-      new Vector3(8.1, 0.3, -3.2),
-      new Vector3(8.4, 0.3, -3.4),
-      new Vector3(7.1, 0.3, -3.6),
-      new Vector3(7.3, 0.3, -3.8),
-      new Vector3(8.5, 0.3, -4.1),
-      new Vector3(6.9, 0.3, -4.3),
-    ];
-
-    // Créer une spline Catmull-Rom à partir des points
-    // const path = Curve3.CreateCatmullRomSpline(points, 20);
+    // Create a Catmull-Rom spline from the points
     const path = Curve3.CreateCatmullRomSpline(points, 20);
 
-    // Obtenir les points de la courbe
+    // Get the points of the curve
     const pathPoints = path.getPoints();
 
-    // Créer une animation
+    // Create an animation
     const animation = new Animation(
-      "anim",
-      "position",
-      20,
-      Animation.ANIMATIONTYPE_VECTOR3,
-      Animation.ANIMATIONLOOPMODE_CONSTANT
+        "anim",
+        "position",
+        20,
+        Animation.ANIMATIONTYPE_VECTOR3,
+        Animation.ANIMATIONLOOPMODE_CONSTANT
     );
 
-    // Clés pour l'animation (les étapes de l'animation le long de la courbe)
+    // Keys for the animation (the steps of the animation along the curve)
     const keys = [];
     for (let i = 0; i < pathPoints.length; i++) {
-      keys.push({
-        frame: i * (200 / (pathPoints.length - 1)), // Distribue les frames uniformément
-        value: pathPoints[i],
-      });
+        keys.push({
+            frame: i * (200 / (pathPoints.length - 1)), // Spread frames evenly
+            value: pathPoints[i],
+        });
     }
 
-    // Affecter les clés à l'animation
+    // Set keys to the animation
     animation.setKeys(keys);
 
-    // Ajouter l'animation à la balle
-    this.ball1.animations = [];
-    this.ball1.animations.push(animation);
+    // Add the animation to the ball
+    this.ball3.animations = [];
+    this.ball3.animations.push(animation);
 
-    // Commencer l'animation
-    this.scene.beginAnimation(this.ball1, 0, 200, false);
-  }
+    // Start the animation
+    this.scene.beginAnimation(this.ball3, 0, 200, false);
+}
+
 }
