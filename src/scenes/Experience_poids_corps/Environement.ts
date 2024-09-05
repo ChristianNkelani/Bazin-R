@@ -439,7 +439,7 @@ export class Environement {
 
   // }
 
-  actionGroupSlider() {
+ actionGroupSlider() {
     // Met à jour les valeurs des textes avec les masses initiales
     this._ui._textMasse[4].text =
         "P1 = " +
