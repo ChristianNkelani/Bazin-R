@@ -9,10 +9,10 @@ export class UI {
   public _environement: Environement;
   public _images: GUI.Image[];
   public advencedTexture: any;
-  public _play: any;
-  public _restart: any;
-  public _text2: any;
-  public _text4: any;
+  public startButton: any;
+  public restartButton: any;
+  public slider1 : any;
+  public slider2 : any;
 
   // gestion des chrono
   public _sec: int;
@@ -21,76 +21,73 @@ export class UI {
   constructor(scene: Scene) {
     this._scene = scene;
     this.advencedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
-    this.createChrono();
-    this.createPlayRestart();
+    this.btn();
+    this.menu();
   }
 
-  public createChrono() {
-    // Initialiser les valeurs du chronomètre
-    this._sec = 0;
-    this._milsec = 0;
+  
 
-    const container1 = new GUI.Rectangle();
-    container1.background = "white";
-    container1.width = "300px";
-    container1.height = "100px";
-
-    const text1 = new GUI.TextBlock();
-    text1.text = "Chrono balle bleue";
-    text1.fontSize = "10px";
-    text1.height = "20px";
-    text1.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
-    this._text2 = new GUI.TextBlock("", `${this._sec} : ${this._milsec}`);
-    this._text2.fontSize = "45px";
-    container1.addControl(this._text2);
-    container1.addControl(text1);
-
-    const container2 = new GUI.Rectangle();
-    container2.background = "white";
-    container2.width = "300px";
-    container2.height = "100px";
-
-    const text3 = new GUI.TextBlock("", "Chrono balle rouge");
-    text3.fontSize = "10px";
-    text3.height = "20px";
-    text3.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
-
-    this._text4 = new GUI.TextBlock("", `${this._sec} : ${this._milsec}`);
-    this._text4.fontSize = "45px";
-
-    container2.addControl(text3);
-    container2.addControl(this._text4);
-
-    const panel = new GUI.StackPanel();
-    panel.isVertical = false;
-    panel.width = "600px";
-    panel.height = "200px";
-    panel.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
-    panel.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
-    panel.addControl(container1);
-    panel.addControl(container2);
-    this.advencedTexture.addControl(panel);
-  }
-
-  public createPlayRestart() {
-    const panel = new GUI.StackPanel();
-    panel.isVertical = false;
+  public btn(){
+    var panel = new GUI.StackPanel();
+    panel.width = "400px";
+    panel.height = "50px"
+    panel.top = "-50px";
+    panel.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
     panel.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
-    panel.top = "-20px";
-    panel.height = "40px";
-    this._play = GUI.Button.CreateSimpleButton("myBtn", "Play");
-    this._play.width = "200px";
-    this._play.height = "40px";
-    this._play.color = "white";
-    this._play.background = "deepskyblue";
-
-    this._restart = GUI.Button.CreateSimpleButton("restart", "Restart");
-    this._restart.width = "200px";
-    this._restart.height = "40px";
-    this._restart.color = "white";
-    this._restart.background = "deepskyblue";
-    panel.addControl(this._play);
-    panel.addControl(this._restart);
+    panel.isVertical = false;
     this.advencedTexture.addControl(panel);
+
+    // Ajouter le bouton Start
+    this.startButton = GUI.Button.CreateSimpleButton("startButton", "Start");
+    this.startButton.width = "200px";
+    this.startButton.height = "40px";
+    this.startButton.color = "white";
+    this.startButton.background = "green";
+    panel.addControl(this.startButton);
+
+    // restart bouton
+    this.restartButton = GUI.Button.CreateSimpleButton("restartButton", "Restart");
+    this.restartButton.width = "200px";
+    this.restartButton.height = "40px";
+    this.restartButton.color = "white";
+    this.restartButton.background = "blue";
+    panel.addControl(this.restartButton);
+  }
+
+  public menu(){
+    var panel = new GUI.StackPanel();
+    panel.width = "220px";
+    panel.top = "-50px";
+    panel.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+    panel.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_CENTER;
+    this.advencedTexture.addControl(panel);
+
+    var header1 = new GUI.TextBlock();
+    header1.text = "Taille de la bille 1";
+    header1.height = "40px";
+    header1.color = "white";
+    panel.addControl(header1);
+
+    this.slider1 = new GUI.Slider();
+    this.slider1.minimum = 0.5;
+    this.slider1.maximum = 2;
+    this.slider1.value = 0.5;
+    this.slider1.height = "20px";
+    this.slider1.width = "200px";
+    panel.addControl(this.slider1);
+
+    var header2 = new GUI.TextBlock();
+    header2.text = "Taille de la bille 2";
+    header2.height = "40px";
+    header2.color = "white";
+    panel.addControl(header2);
+
+    this.slider2 = new GUI.Slider();
+    this.slider2.minimum = 0.5;
+    this.slider2.maximum = 2;
+    this.slider2.value = 0.5;
+    this.slider2.height = "20px";
+    this.slider2.width = "200px";
+    panel.addControl(this.slider2);
   }
 }
