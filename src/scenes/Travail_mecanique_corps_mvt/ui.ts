@@ -48,7 +48,7 @@ export class UI {
        text.fontFamily="Montserrat Black"
        text.color ="deepskyblue"
        text.height="25px"
-       text.top = "50px"
+       text.top = "35px"
        text.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP
        container.addControl(text);
     }
@@ -171,12 +171,12 @@ export class UI {
     
         container2.background = "white"
         container2.width = "300px"
-        container2.height=0.4
+        container2.height=0.3
     
         container2.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT
         container2.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP
-        container2.top = "300px"
-        container2.left = "10px"
+        container2.top = "380px"
+        container2.left = "30px"
     
         advancedTexture.addControl(container2)
         container1.isVisible = false;
@@ -315,17 +315,21 @@ export class UI {
             this._textMasse[i].top = posy;
             this._textMasse[i].horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
             this._textMasse[i].verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
-            if(i<3){
-                this._textMasse[i].text = texts[i]+" = " +this._sliders[i].value+" kg";
-            }
-            this._textMasse[i].left = "-10px";
+            // if(i<3){
+            //     this._textMasse[i].text = texts[i]+" = " +this._sliders[i].value+" kg";
+            // }
+            this._textMasse[i].left = "50px";
             container.addControl(this._textMasse[i]);
             posy += 20;
         }
 
         this._textMasse[2].top = 70;
+        this._textMasse[4].width = "250px";
         this._textMasse[2].text = "Données";
-        this._textMasse[3].text = "m12 = "+(this._sliders[0].value+this._sliders[1].value)+" kg";
+        this._textMasse[0].text = "Force  = " +this._sliders[0].value+" N";
+        this._textMasse[1].text = "Distance  = " +this._sliders[1].value+" m";
+
+        this._textMasse[3].text = "W =  Force x Distance";
         this._textMasse[3].top = 140;
         this._textMasse[2].underline = true;
         
@@ -346,11 +350,11 @@ export class UI {
             posy1 += 25;
         }
 
-        text[0].text = "Formules";
-        text[0].underline = true;
-        text[1].text = "P1 = m1xg";
-        text[2].text = "P2 = m2xg";
-        text[3].text = "P12 = (m12)xg";
+        // text[0].text = "Formules";
+        // text[0].underline = true;
+        // text[1].text = "P1 = m1xg";
+        // text[2].text = "P2 = m2xg";
+        // text[3].text = "P12 = (m12)xg";
 
         //application numérique
         text[4].text = "AN";
@@ -365,11 +369,11 @@ export class UI {
     createNewMenuMat(advancedTexture){
         const selectbox= new GUI.SelectionPanel("sp");
         selectbox.width=0.20;
-        selectbox.height = 0.4;
+        selectbox.height = 0.25;
         selectbox.left = "20px";
         selectbox.paddingLeft = "15px"
         selectbox.background = "white";
-        selectbox.top = "20px";
+        selectbox.top = "30px";
         selectbox.setPadding("5px","5px","10px","5px");
 
         selectbox.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;

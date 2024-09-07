@@ -11,6 +11,7 @@ import action_reaction from "@/components/action_reaction.vue";
 import element_base_cinematique from '@/components/element_base_cinematique.vue';
 import energie_cinetique_potentielle from '@/components/energie_cinetique_potentielle.vue';
 import Travail_mecanique_corps_mvt from '@/components/Travail_mecanique_corps_mvt.vue';
+import puissance_mecanique from '@/components/puissance_mecanique.vue';
 import mru from '@/components/mru.vue';
 
 
@@ -27,6 +28,7 @@ const routes = [
   {path : '/4', component : poids_corps},
   {path : '/1', component : element_base_cinematique},
   {path : '/8', component : Travail_mecanique_corps_mvt},
+  {path : '/0', component : puissance_mecanique},
   {path : '/9', component : energie_cinetique_potentielle},
   {path : '/2', component : mru},
 

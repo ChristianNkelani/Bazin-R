@@ -189,6 +189,7 @@ export class Environement {
         this.createImpulse();
         this._ui._stopTimer = false;
 
+
         this._ui.startTimer();
         this.cliquer = false;
       }
@@ -241,28 +242,75 @@ export class Environement {
       { mass: 10, friction: 0.04 }
     );
 
-    const bouger = () => {
-      var bouger = true;
-      var vitesse1 =
-        this.physicEngine.gravity.y / (6 * this.boitiers[0].scaling._x);
-      var vitesse2 =
-        this.physicEngine.gravity.y / (6 * this.boitiers[1].scaling._x);
+    // let bouger = true;
+    var vitesse1 =
+      this.physicEngine.gravity.y / (6 * this.boitiers[0].scaling._x);
+      
+    var vitesse2 =
+      this.physicEngine.gravity.y / (6 * this.boitiers[1].scaling._x);
+    
 
-      if (bouger) {
-        this.boitiers[0].physicsImpostor.setLinearVelocity(
-          new Vector3(0, 0, vitesse1)
-        );
-        this.boitiers[1].physicsImpostor.setLinearVelocity(
-          new Vector3(0, 0, vitesse2)
-        );
-        console.log(this.boitiers[0].position._z);
+    //   const update = () => {
+    //       if (bouger) {
+    //         this.boitiers[0].physicsImpostor.setLinearVelocity(
+    //           new Vector3(0, 0, vitesse1)
+    //         );
+    //         this.boitiers[1].physicsImpostor.setLinearVelocity(
+    //           new Vector3(0, 0, vitesse2)
+    //         );
+    //         console.log(this.boitiers[0].position._z);
+    //       }
+    //       if (this.boitiers[0].position._z <= -3) {
+    //         bouger = false;
+    //         this.cliquer=true;
+    
+    //       }
+    
+      
+    //   // Enregistrer la fonction d'update avant le rendu
+    //   this.scene.registerBeforeRender(update);
+
+
+
+    // Variable globale pour le mouvement
+    let bouger1 = true;
+    let bouger2 = true;
+
+    // const vitesse1 = -1;
+    
+    const update = () => {
+      if (bouger1) {
+        // Mettre à jour la vites
+        this.boitiers[0].physicsImpostor.setLinearVelocity(new Vector3(0, 0, vitesse1));
+
+        
+        // Vérifier la condition d'arrêt
+        if (this.boitiers[0].position._z <= -3.8) { // Notez l'utilisation de .z au lieu de ._z
+          // this.boitiers[0].dispose();
+          bouger1 = false; // Arrêter le mouvement
+          this.cliquer=true;
+        }
       }
-      if (this.boitiers[0].position._z == 3) {
-        bouger = false;
+
+      if (bouger2) {
+        // Mettre à jour la vites
+        this.boitiers[1].physicsImpostor.setLinearVelocity(new Vector3(0, 0, vitesse2));
+
+        
+        // Vérifier la condition d'arrêt
+        if (this.boitiers[1].position._z <= -3.8) { // Notez l'utilisation de .z au lieu de ._z
+          // this.boitiers[0].dispose();
+          bouger2 = false; // Arrêter le mouvement
+          this.cliquer=true;
+        }
       }
     };
+    
+    // Enregistrer la fonction d'update avant le rendu
+    this.scene.registerBeforeRender(update);
 
-    this.scene.registerBeforeRender(bouger);
+
+
   }
 
   createMotor() {
@@ -432,7 +480,7 @@ export class Environement {
   //     setBall2,
   //     "Kg",
   //     1,
-  //     2,
+  //     2,m1
   //     1,
   //     displayValue
   //   );
@@ -483,6 +531,14 @@ export class Environement {
         this._ui._textMasse[4].text =
             "P1 = " + displayValue(value).toFixed(2) + " x " + -this.physicEngine.gravity.y.toFixed(2) +
             " = " + (value * -this.physicEngine.gravity.y).toFixed(2) + " N";
+
+        this._ui._textMasse[6].text =
+            "P12 = " + (value+masse2).toFixed(2) + " x " + -this.physicEngine.gravity.y.toFixed(2) +
+            " = " + ((value+masse1) * -this.physicEngine.gravity.y).toFixed(2) + " N";
+          
+            this._ui._textMasse[0].text = "m1 = " + value.toFixed(2) + " kg";
+            this._ui._textMasse[3].text = "m12 = " + (masse2+value).toFixed(2) + " kg";
+
         ball1.scaling.x = value;
         ball1.scaling.y = value;
         ball1.scaling.z = value;
@@ -493,6 +549,15 @@ export class Environement {
         this._ui._textMasse[5].text =
             "P2 = " + displayValue(value).toFixed(2) + " x " + -this.physicEngine.gravity.y.toFixed(2) +
             " = " + (value * -this.physicEngine.gravity.y).toFixed(2) + " N";
+
+        this._ui._textMasse[6].text =
+            "P12 = " + (value+masse1).toFixed(2) + " x " + -this.physicEngine.gravity.y.toFixed(2) +
+            " = " + ((value+masse1) * -this.physicEngine.gravity.y).toFixed(2) + " N";
+
+            this._ui._textMasse[1].text = "m2 = " + value.toFixed(2) + " kg";
+            this._ui._textMasse[3].text = "m12 = " + (masse1+value).toFixed(2) + " kg";
+
+
         ball2.scaling.x = value;
         ball2.scaling.y = value;
         ball2.scaling.z = value;
@@ -516,6 +581,14 @@ export class Environement {
         this._ui._textMasse[4].text =
             "P1 = " + masse1.toFixed(2) + " x " + value.toFixed(2) +
             " = " + (masse1 * value).toFixed(2) + " N";
+        
+          this._ui._textMasse[5].text =
+            "P2 = " + masse2.toFixed(2) + " x " + value.toFixed(2) +
+            " = " + (masse2 * value).toFixed(2) + " N";
+
+          this._ui._textMasse[6].text =
+            "P12 = " + (masse1+masse2).toFixed(2) + " x " + value.toFixed(2) +
+            " = " + (value * value).toFixed(2) + " N";
     };
 
     this._ui.groupSliders[0].addSlider(

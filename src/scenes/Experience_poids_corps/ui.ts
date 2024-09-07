@@ -50,7 +50,7 @@ export class UI {
     text.fontFamily = "Montserrat Black";
     text.color = "deepskyblue";
     text.height = "25px";
-    text.top = "50px";
+    text.top = "20px";
     text.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
     container.addControl(text);
   }
@@ -343,6 +343,7 @@ export class UI {
     text[0].underline = true;
     text[1].text = "P1 = m1xg";
     text[2].text = "P2 = m2xg";
+    text[3].left = "140px";
     text[3].text = "P12 = (m12)xg";
 
     //application numérique
@@ -364,11 +365,11 @@ export class UI {
   createNewMenuMat(advancedTexture) {
     this._selectbox = new GUI.SelectionPanel("sp");
     this._selectbox.width = 0.2;
-    this._selectbox.height = 0.4;
+    this._selectbox.height = 0.3;
     this._selectbox.left = "20px";
     this._selectbox.paddingLeft = "15px";
-    this._selectbox.background = "red";
-    this._selectbox.top = "30px";
+    this._selectbox.background = "white";
+    this._selectbox.top = "80px";
     this._selectbox.setPadding("5px", "5px", "10px", "5px");
 
     this._selectbox.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
