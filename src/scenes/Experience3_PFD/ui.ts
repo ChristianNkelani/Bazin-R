@@ -38,7 +38,7 @@ export class UI {
     this.advencedTexture.addControl(panel);
 
     // Ajouter le bouton Start
-    this.startButton = GUI.Button.CreateSimpleButton("startButton", "Start");
+    this.startButton = GUI.Button.CreateSimpleButton("startButton", "Poussez");
     this.startButton.width = "200px";
     this.startButton.height = "40px";
     this.startButton.color = "white";
