@@ -87,19 +87,9 @@ export class Environement {
     this.ball2.position.y = 0.38;
     this.ball2.position.x = -0.9;
     this.ball2.position.z = -4.5;
-    this.ball2.material = this.changeMaterialColor(255, 0, 0);
+    this.ball2.material = this.changeMaterialColor(0, 0, 0);
 
-    // this._ui._play.onPointerUpObservable.add(() => {
-    //   this.deplacer();
-    //   this.deplacer2();
-    //   this.lancerChrono(0, 0, this._ui._text4, this.ball2);
-    //   this.lancerChrono(0, 0, this._ui._text2, this.ball1);
-    // });
-
-    // this._ui._restart.onPointerUpObservable.add(() => {
-    //   this.ball1.position.z = -4.5;
-    //   this.ball2.position.z = -4.5;
-    // });
+    
   }
 
   changerTaille(tailleB: string, tailleR: string) {
@@ -247,6 +237,7 @@ export class Environement {
     // Initialiser le chronomètre
     requestAnimationFrame(updateClock);
   }
+  
   public createTest() {
     // Créer les fils horizontaux avec un décalage en y
     var points1 = [];
@@ -264,20 +255,23 @@ export class Environement {
     var line2 = MeshBuilder.CreateLines("line2", {points: points2}, this.scene);
 
     // Créer les matériaux avec des textures
+    
+    // Créer les matériaux avec des couleurs
     var material1 = new StandardMaterial("material1", this.scene);
-    material1.diffuseTexture = new Texture("./texture/1.jpeg", this.scene);
+    material1.diffuseColor = new Color3(1, 0, 0); // Rouge
 
     var material2 = new StandardMaterial("material2", this.scene);
-    material2.diffuseTexture = new Texture("./texture/2.jpeg", this.scene);
+    material2.diffuseColor = new Color3(0, 0, 1); // Bleu
 
     // Créer les balles
-    var ball1 = MeshBuilder.CreateSphere("ball1", {diameter: 0.5}, this.scene);
+    var ball1 = MeshBuilder.CreateSphere("ball1", { diameter: 0.5 }, this.scene);
     ball1.position = new Vector3(-Math.PI, amplitude * Math.sin(frequency * -Math.PI) + yOffset1, -2);
-    ball1.material = material1; // Appliquer la texture au premier matériau
+    ball1.material = material1; // Appliquer la couleur rouge au premier matériau
 
-    var ball2 = MeshBuilder.CreateSphere("ball2", {diameter: 0.5}, this.scene);
+    var ball2 = MeshBuilder.CreateSphere("ball2", { diameter: 0.5 }, this.scene);
     ball2.position = new Vector3(-Math.PI, amplitude * Math.sin(frequency * -Math.PI) + yOffset2, 2);
-    ball2.material = material2; // Appliquer la texture au deuxième matériau
+    ball2.material = material2; // Appliquer la couleur bleue au deuxième matériau
+
 
     // Variables pour contrôler l'animation
     var isAnimating1 = false;

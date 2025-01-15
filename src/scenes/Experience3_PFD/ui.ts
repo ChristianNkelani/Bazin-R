@@ -63,7 +63,7 @@ export class UI {
     this.advencedTexture.addControl(panel);
 
     var header1 = new GUI.TextBlock();
-    header1.text = "Taille de la bille 1";
+    header1.text = "Taille de la bille rouge";
     header1.height = "40px";
     header1.color = "white";
     panel.addControl(header1);
@@ -77,7 +77,7 @@ export class UI {
     panel.addControl(this.slider1);
 
     var header2 = new GUI.TextBlock();
-    header2.text = "Taille de la bille 2";
+    header2.text = "Taille de la bille blue";
     header2.height = "40px";
     header2.color = "white";
     panel.addControl(header2);

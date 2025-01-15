@@ -75,8 +75,6 @@ import { Mru } from "@/scenes/mru/App";
 import { defineComponent } from "vue";
 import LoadingScreen from "@/components/LoadingScreen.vue";
 import Questions from "../components/debut_experience/question.vue";
-import { Question } from "@/scenes/Experience1/question";
-import Qcm from "./Qcm.vue";
 import { QcmStore } from "@/stores/store";
 
 export default defineComponent({
@@ -89,7 +87,7 @@ export default defineComponent({
       questions: [],
     };
   },
-  components: { LoadingScreen, Questions, Qcm },
+  components: { LoadingScreen, Questions },
   mounted() {
     const canvas = document.querySelector("canvas") as HTMLCanvasElement;
     this.mru = new Mru(canvas, this.setLoaded, this.voirCard);

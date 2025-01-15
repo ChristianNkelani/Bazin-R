@@ -64,4 +64,12 @@ export class Experience2 {
 
     return scene;
   }
+
+  adjustForce(force: number) {
+    this._environement.adjustForce(force);  // Appel correct de la méthode
+  }
+  
+  adjustVitesse(vitesse: number) {
+    this._environement.adjusteVitesse(vitesse);  // Appel correct de la méthode
+  }
 }

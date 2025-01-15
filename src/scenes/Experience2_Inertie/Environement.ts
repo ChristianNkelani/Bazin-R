@@ -43,6 +43,14 @@ export class Environement {
       new CannonJSPlugin(true, 10, CANNON)
     );
   }
+
+  adjustForce(force: number) {
+    this._penduleManager.adjustFore(force);  // Appel correct de la méthode
+  }
+  
+  adjusteVitesse(vitesse: number) {
+    this._penduleManager.adjusteVitesse(vitesse);  // Appel correct de la méthode
+  }
 }
 
 class LaboratoryManager {
@@ -125,6 +133,34 @@ class PenduleManager {
 
     return { support, rod, ball };
   }
+  adjustFore(force: number) {
+    const pivot = this.scene.getTransformNodeByName("root");
+    if (pivot) {
+      const maxAngle = Math.PI / 4; // Angle maximum d'oscillation
+      const angle = Math.sin(force) * maxAngle;  // Utiliser la force pour ajuster l'angle
+      pivot.rotation.z = angle;  // Appliquer l'angle ajusté
+    }
+    console.log('Force ajustée:', force);
+  }
+  
+  adjusteVitesse(force: number) {
+    const pivot = this.scene.getTransformNodeByName("root");
+    if (pivot) {
+        let previousTime = performance.now();
+        
+        this.scene.registerBeforeRender(() => {
+            const currentTime = performance.now();
+            const deltaTime = (currentTime - previousTime) * 0.001; // Temps écoulé en secondes
+            previousTime = currentTime;
 
+            // Utiliser force pour ajuster la vitesse
+            pivot.rotation.z += Math.sin(currentTime * 0.001 * force) * deltaTime * 0.05;
+        });
+    }
+    console.log('Vitesse ajustée:', force);
 }
+
+  
+}
+
 

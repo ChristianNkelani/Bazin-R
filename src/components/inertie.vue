@@ -7,14 +7,17 @@
     :questions="questions"
     fichier="principe_dynamique_inertie"
   />
+
   <main :class="{ 'blur-sm': flou == true }">
     <!-- Boutton pour la fin de la simulation -->
     <div
       class="absolute top-2 left-2 bg-white py-3 px-4 bg-white rounded-full flex justify-center items-center cursor-pointer"
-      @click="testfinal"
-    >
+      @click="testfinal">
       Fin de la simulation
     </div>
+
+
+
     <LoadingScreen :isLoaded="loaded" />
     <canvas></canvas>
   </main>
@@ -25,7 +28,6 @@ import { defineComponent } from "vue";
 import LoadingScreen from "@/components/LoadingScreen.vue";
 import { Experience2 } from "@/scenes/Experience2_Inertie/App";
 import Questions from "@/components/debut_experience/question.vue";
-import { Question } from "@/scenes/Experience1/question";
 import { QcmStore } from "@/stores/store";
 
 export default defineComponent({
@@ -38,6 +40,8 @@ export default defineComponent({
       flou: false,
       experience2: null,
       questions: [],
+      vitesse: 50, // Valeur par défaut pour la vitesse
+      force: 50,   // Valeur par défaut pour la force
     };
   },
   components: { LoadingScreen, Questions },
@@ -54,7 +58,6 @@ export default defineComponent({
       console.log(id);
       document.querySelector(`#${id}`)?.classList.remove("hidden");
     },
-
     cacherCard(id: string): void {
       document.querySelector(`#${id}`).classList.add("hidden");
       this.flou = false;
@@ -67,9 +70,27 @@ export default defineComponent({
       store.currentPage = 0;
       store.etat = "deux";
     },
+    gererVisibilite(id: string): void {
+      const element = document.querySelector(`#${id}`);
+      if (element?.classList.contains("hidden")) {
+        element.classList.remove("hidden");
+      } else {
+        element?.classList.add("hidden");
+        this.flou = false;
+      }
+    },
+    adjustSpeed() {
+      // Appeler la méthode pour ajuster la vitesse dans ton expérience
+      this.experience2?.adjustVitesse(this.vitesse);
+    },
+    adjustForce() {
+      // Appeler la méthode pour ajuster la force dans ton expérience
+      this.experience2?.adjustForce(this.force);
+    },
   },
 });
 </script>
+
 
 <style scoped>
 html,
