@@ -19,6 +19,7 @@ import * as CANNON from "cannon";
 import * as Ammo from "ammojs-typed"
 import * as GUI from '@babylonjs/gui/2D';
 import { UI } from "./ui";
+import { Tools } from "babylonjs";
 
 export class Environement {
 
@@ -27,6 +28,8 @@ export class Environement {
   boitiers: any;
   cliquer=true;//variable pour activer impostor ou non
   public _ui:UI;
+  public distance=1; //distance à parcourir par le boitier
+  public force=1;
   physicEngine:any;
   wheelFI:any;
 
@@ -78,6 +81,10 @@ export class Environement {
   //verification de la position des boitiers
   this.creqteFil();
 
+  this.createMesures();
+
+  this.createLabels();
+
 
   }
 
@@ -118,13 +125,9 @@ export class Environement {
   this.boitiers[0].position.z = -0.7
   this.boitiers[0].material = this.changeMaterialColor(170,255,0)
 
-  this.boitiers[1] = MeshBuilder.CreateBox("ball", {width: 0.25, height: 0.25, size: 0.25}, this.scene);
-  this.boitiers[1].position.y = 0.7;
-  this.boitiers[1].position.x = 7.7;
-  this.boitiers[1].position.z = -0.7
-  this.boitiers[1].material = this.changeMaterialColor(255,0,0)
+  
 
-  return [this.boitiers[0],this.boitiers[1]];
+  return [this.boitiers[0]];
   }
 
 
@@ -204,21 +207,18 @@ export class Environement {
   }
   toRestart(){
     //repositionate boitier
-    this.boitiers[1].position.y = 0.7;
-    this.boitiers[1].position.x = 7.7;
-    this.boitiers[1].position.z = -0.7
+
     this.boitiers[0].physicsImpostor.dispose();
 
 
     this.boitiers[0].position.y = 0.7;
     this.boitiers[0].position.x = 6.5;
-    this.boitiers[0].position.z = -0.7
+    this.boitiers[0].position.z = -0.25
 
 
     this.boitiers[0].rotation.x = 0;
     this.boitiers[0].rotation.y = 0;
     this.boitiers[0].rotation.z = 0;
-    this.boitiers[1].physicsImpostor.dispose();
 
     
     //reset clocktime
@@ -229,38 +229,34 @@ export class Environement {
     this._ui._clockTime.text = "00:00";
   }
 
-  createImpulse(){
+  createImpulse(){// Initialiser le PhysicsImpostor
     this.boitiers[0].physicsImpostor = new PhysicsImpostor(
       this.boitiers[0],
       PhysicsImpostor.BoxImpostor,
-      {mass: 10, friction: 0.04}
+      { mass: 10, friction: 0.04 }
     );
-
-    this.boitiers[1].physicsImpostor = new PhysicsImpostor(
-      this.boitiers[1],
-      PhysicsImpostor.BoxImpostor,
-      {mass: 10, friction: 0.04}
-    );
-
-
-    const bouger = () =>{
-      var bouger = true;
-      var vitesse1 = this.physicEngine.gravity.y/(6*this.boitiers[0].scaling._x);
-      var vitesse2 = this.physicEngine.gravity.y/(6*this.boitiers[1].scaling._x);
-
-      if(bouger){
-        this.boitiers[0].physicsImpostor.setLinearVelocity(new Vector3(0,0,vitesse1));
-        this.boitiers[1].physicsImpostor.setLinearVelocity(new Vector3(0,0,vitesse2));
-        console.log(this.boitiers[0].position._z)
-
+    
+    // Variable globale pour le mouvement
+    let bouger = true;
+    const vitesse1 = -0.05*this.force;
+    
+    const update = () => {
+      if (bouger) {
+        // Mettre à jour la vitesse
+        this.boitiers[0].physicsImpostor.setLinearVelocity(new Vector3(0, 0, vitesse1));
+        
+        // Vérifier la condition d'arrêt
+        if (this.boitiers[0].position._z <= -this.distance) { // Notez l'utilisation de .z au lieu de ._z
+          // this.boitiers[0].dispose();
+          bouger = false; // Arrêter le mouvement
+          this.cliquer=true;
+        }
+        console.log("z est", this.boitiers[0].position._z)
       }
-      if(this.boitiers[0].position._z == 3){
-        bouger = false;
-      }
-
-    }
-
-    this.scene.registerBeforeRender(bouger);
+    };
+    
+    // Enregistrer la fonction d'update avant le rendu
+    this.scene.registerBeforeRender(update);
 
   }
 
@@ -330,9 +326,9 @@ export class Environement {
 
   actionGroupSlider(){
     //valeur de p1
-    this._ui._textMasse[4].text = "P1 = "+(this._ui._sliders[0].value)+"x"+(-this.physicEngine.gravity.y)+" kg";
-    var masse1=1;
+    var masse1=2;
     var masse2=1;
+    this._ui._textMasse[4].text = "W = "+(this._ui._sliders[0].value)+"x"+ (masse2)+" = "+(this._ui._sliders[0].value*masse2).toFixed(2)+" J";
 
 
     const displayValue = function(value){
@@ -340,49 +336,32 @@ export class Environement {
     }
 
     const ball1 = this.boitiers[0];
-    const ball2 = this.boitiers[1];
 
     var m2=1;
-    const setBall1 = (value) => {
+    const setDist = (value) => {
+      this.distance = value;
       masse1 = value;
-
-      ball1.scaling.x = value;
-      ball1.scaling.y = value;
-      ball1.scaling.z = value;
-      this._ui._textMasse[0].text = "m1 = "+ value.toFixed(2)+"Kg";
-      // this._ui._textMasse[3].text = "m12 = "+(((value.toFixed(2))))+ "Kg"
-      this._ui._textMasse[3].text = "m12 = "+((value.toFixed(2)+(m2.toFixed(2))))+ "Kg"
-      this._ui._textMasse[4].text = "P1 = "+(value.toFixed(2))+"x"+(-this.physicEngine.gravity.y).toFixed(2)+" kg";
+      this._ui._textMasse[1].text = "Distance = "+ value.toFixed(2)+"Kg";
+      this._ui._textMasse[4].text = "W = "+(value.toFixed(2))+"x"+(masse2).toFixed(2)+" = "+(masse2*value).toFixed(2)+" J";
 
 
     }
-
-    const setBall2 = (value) => {
-      ball2.scaling.x = value;
-      ball2.scaling.y = value;
-      ball2.scaling.z = value;
-      m2=value;
-      masse2 = value;
-
-      this._ui._textMasse[1].text = "m2 = "+ value.toFixed(2)+"Kg";
-      this._ui._textMasse[3].text = "m12 = "+(value.toFixed(2)+parseInt(m2.toFixed(2)))+ "Kg"
-
-
-    }
-
 
     const physicEngine = this.physicEngine;
-    const setGravitaion = (value) => { 
+    const setForce = (value) => { 
       physicEngine.setGravity(new Vector3(0,-(value),0))
-      this._ui._textMasse[4].text = "P1 = "+(masse1.toFixed(2))+"x"+(value.toFixed(2))+" kg";
-
+      this._ui._textMasse[4].text = "W = "+(masse1.toFixed(2))+"x"+(value.toFixed(2))+" = "+(value*masse1).toFixed(2)+" J";
+      this._ui._textMasse[0].text = "Force = "+ value.toFixed(2)+" N";
+      this.force = value;
+      masse2=value;
 
     }
-    this._ui.groupSliders[0].addSlider("g = ",setGravitaion,"m/s2",0,15,9.81,displayValue);
-    this._ui.groupSliders[0].addSlider("Distance à parcourir OO'",setBall1,"m",1,10,1,displayValue);
-    this._ui.groupSliders[0].addSlider("Masse boîtier rouge",setBall2,"Kg",1,2,1,displayValue);
+    this._ui.groupSliders[0].addSlider("Force du moteur =  ",setForce,"N",1,20,2,displayValue);
+    this._ui.groupSliders[0].addSlider("Distance à parcourir OO'",setDist,"m",1,4,1,displayValue);
+    // this._ui.groupSliders[0].addSlider("Masse boîtier rouge",setBall2,"Kg",1,2,1,displayValue);
 
-    this._ui.groupSliders[1].addCheckbox("Chambre à vide")
+    // this._ui.groupSliders[1].addCheckbox("Chambre à vide")
+
 
     
   }
@@ -405,6 +384,43 @@ export class Environement {
 
 
 
+  }
+
+  createMesures(){
+    // Create graduation lines (1 meter apart)
+    const createGraduationLines = () => {
+      for (let i = 1; i <= 5; i++) {
+          // Create a line at each meter
+          const line = MeshBuilder.CreateLines("line" + i, {
+              points: [
+                  new Vector3(i-0.5, 0.7, 8.5),  // start of the line
+                  new Vector3(i-0.5, 0.7, 5.5)    // end of the line
+              ]
+          });
+          line.rotation.y = Tools.ToRadians(90);
+
+      }
+  };
+
+  createGraduationLines();
+  }
+
+  createLabels(){
+    for (let i = 1; i <= 10; i++) {
+      const label = new GUI.TextBlock();
+      label.width = 0.5;
+      label.text = "erweriou";  // Display the number
+      label.color = "black";
+      label.fontSize = 48;  // Increase the font size for better visibility
+
+      // Create a plane to display the label
+      const labelPlane = MeshBuilder.CreatePlane("labelPlane" + i, {size: 0.6});  // Bigger size for label plane
+      labelPlane.position = new Vector3(i, 1, 8);  // Position the label higher above the table
+
+      // Attach the label to the plane
+      const labelTexture = GUI.AdvancedDynamicTexture.CreateForMesh(labelPlane);
+      labelTexture.addControl(label);
+  }
   }
 
 

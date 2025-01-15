@@ -1,7 +1,11 @@
 <template>
   <Questions
     id="card"
-    Presentation="Japhet BAZ le leader"
+    Presentation="Le travail mécanique d'un corps en mouvement est un concept fondamental en physique, lié à l'énergie et au mouvement des objets. Il se réfère à l'énergie transférée à un corps lorsqu'une force est appliquée sur celui-ci et que le corps se déplace en raison de cette force. Voici les principaux concepts et formules associés au travail mécanique :
+                  Définition du Travail Mécanique Le travail (WW) effectué par une force (F) sur un corps est défini comme le produit scalaire de la force et du déplacement (d) du corps. Mathématiquement, cela peut être exprimé comme :
+
+      W=F*d
+"
     titre="Travail mecanique d'un corps en mouvement"
     :cacherCard="cacherCard"
     :questions="questions"

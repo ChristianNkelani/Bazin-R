@@ -307,7 +307,7 @@ this._ui._textMasse[3].text = "Énergie Cinétique Balle rouge : " + (0.5 * mass
 
 
     // Ajout des sliders pour la gravitation, les masses et les hauteurs des balles
-    this._ui.groupSliders[0].addSlider("Gravitation", setGravitaion, "m/s2", 0, 15, 9.81, displayValue);
+    this._ui.groupSliders[0].addSlider("g = ", setGravitaion, "m/s2", 0, 15, 9.81, displayValue);
     this._ui.groupSliders[0].addSlider("Masse balle jaune", setBall1, "Kg", 1, 2, 1, displayValue);
     this._ui.groupSliders[0].addSlider("Masse balle rouge", setBall2, "Kg", 1, 2, 1, displayValue);
     this._ui.groupSliders[0].addSlider("Hauteur de la balle jaune", setHauteur1, "m", 1, 3, 3, displayValue);
