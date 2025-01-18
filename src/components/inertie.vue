@@ -42,21 +42,55 @@
         </svg>
       </div>
       <div id="options" class="hidden">
-        <div class="bg-white w-96 h-80 absolute bottom-5 left-16 rounded-md">
-          <h2 class="text-xl text-blue-600 font-bold">Parametres</h2>
-          <div class="grid grid-cols-2">
-            <div>
-              <p>vitesse de la voiture jaune</p>
-            </div>
-            <div>
-              <p>vitesse de la voiture rouge</p>
-            </div>
+        <div class="bg-white w-96 h-80 absolute bottom-5 left-16 rounded-md p-4">
+          <div class="flex justify-between items-center mb-3">
+            <h2 class="text-xl text-blue-600 font-bold">Parametres</h2>
+            <div class="bg-red-400 text-white px-3 py-2 rounded-md w-32 text-center cursor-pointer" @click="gererVisibilite('options')">Fermer</div>
           </div>
+          <div class="flex flex-col items-center space-y-2">
+            <!-- Label -->
+            <label for="range" class="text-sm font-medium text-gray-700">
+              Ajustez la force de lancement initial
+            </label>
+            <!-- Range Input -->
+            <input
+              id="range"
+              @change="adjustSpeedB()"
+              type="range"
+              v-model="vitesseB"
+              min="1"
+              max="10"
+              step="1"
+              value="50"
+              class="w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            />
+            <!-- Output -->
+            <div id="output" class="text-lg font-semibold text-gray-800">{{vitesseB}}</div>
+          </div>
+
+          <div class="flex flex-col items-center space-y-2">
+            <!-- Label -->
+            <label for="range" class="text-sm font-medium text-gray-700">
+              Ajustez la force de lancement initial
+            </label>
+            <!-- Range Input -->
+            <input
+              id="range"
+              type="range"
+              @change="adjustSpeedJ()"
+              v-model="vitesseJ"
+              min="1"
+              max="10"
+              step="1"
+              value="50"
+              class="custom-range w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            />
+            <!-- Output -->
+            <div id="output" class="text-lg font-semibold text-gray-800">{{vitesseJ}}</div>
+          </div>
+
         </div>
       </div>
-
-
-
     <LoadingScreen :isLoaded="loaded" />
     <canvas></canvas>
   </main>
@@ -73,6 +107,8 @@ export default defineComponent({
   name: "Inertie",
   data() {
     return {
+      vitesseB : 4,
+      vitesseJ : 1,
       loaded: false,
       card: 1,
       tailleM: "petite",
@@ -118,15 +154,19 @@ export default defineComponent({
         this.flou = false;
       }
     },
-    adjustSpeed() {
+    adjustSpeedB() {
       // Appeler la méthode pour ajuster la vitesse dans ton expérience
-      this.experience2?.adjustVitesse(this.vitesse);
+      this.experience2?.adjustVitesseB(this.vitesseB);
+    },
+    adjustSpeedJ() {
+      // Appeler la méthode pour ajuster la vitesse dans ton expérience
+      this.experience2?.adjustVitesseJ(this.vitesseJ);
     },
     adjustForce() {
       // Appeler la méthode pour ajuster la force dans ton expérience
       this.experience2?.adjustForce(this.force);
-    },
-  },
+    }
+  }
 });
 </script>
 
@@ -148,4 +188,134 @@ main {
   width: 100%;
   height: 100%;
 }
+
+/* Style supplémentaire pour l'input range (curseur et barre) */
+/* Style par défaut pour tous les range inputs */
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  background: #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 8px;
+  background: #ddd;
+  border-radius: 5px;
+}
+
+input[type="range"]::-moz-range-track {
+  height: 8px;
+  background: #ddd;
+  border-radius: 5px;
+}
+
+input[type="range"]::-ms-track {
+  height: 8px;
+  background: #ddd;
+  border-radius: 5px;
+  border-color: transparent;
+  color: transparent;
+  background-color: #ddd;
+  border-width: 8px 0;
+  width: 100%;
+}
+
+/* Style pour le "thumb" du range input */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #3b82f6;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #3b82f6;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+input[type="range"]::-ms-thumb {
+  width: 20px;
+  height: 20px;
+  background: #3b82f6;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Nouveau style pour le range input avec la classe .custom-range */
+input[type="range"].custom-range {
+  width: 100%;
+  height: 8px;
+  background: #d6e40f;
+  border-radius: 5px;
+}
+
+input[type="range"].custom-range::-webkit-slider-runnable-track {
+  height: 8px;
+  background: #d6e40f;
+  border-radius: 5px;
+}
+
+input[type="range"].custom-range::-moz-range-track {
+  height: 8px;
+  background: #d6e40f;
+  border-radius: 5px;
+}
+
+input[type="range"].custom-range::-ms-track {
+  height: 8px;
+  background: #d6e40f;
+  border-radius: 5px;
+  border-color: transparent;
+  color: transparent;
+  background-color: #d6e40f;
+  border-width: 8px 0;
+  width: 100%;
+}
+
+/* Nouveau style pour le "thumb" du range input avec .custom-range */
+input[type="range"].custom-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #ff6347; /* couleur différente */
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+input[type="range"].custom-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #ff6347; /* couleur différente */
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+input[type="range"].custom-range::-ms-thumb {
+  width: 20px;
+  height: 20px;
+  background: #ff6347; /* couleur différente */
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
 </style>

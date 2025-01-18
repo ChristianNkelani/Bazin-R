@@ -12,6 +12,7 @@ import {
   ActionManager,
   ExecuteCodeAction,
 } from "@babylonjs/core";
+import { AdvancedDynamicTexture, TextBlock } from "babylonjs-gui";
 
 import "@babylonjs/loaders";
 import * as CANNON from "cannon";
@@ -48,8 +49,11 @@ export class Environement {
     this._penduleManager.adjustFore(force);  // Appel correct de la méthode
   }
   
-  adjusteVitesse(vitesse: number) {
-    this._penduleManager.adjusteVitesse(vitesse);  // Appel correct de la méthode
+  adjusteVitesseB(vitesse: number) {
+    this._penduleManager.adjusteVitesseB(vitesse);  // Appel correct de la méthode
+  }
+  adjusteVitesseJ(vitesse: number) {
+    this._penduleManager.adjusteVitesseJ(vitesse);  // Appel correct de la méthode
   }
 }
 
@@ -89,20 +93,22 @@ class PenduleManager {
 
   constructor(scene: Scene){
     this.scene = scene
-    this.createPendulum(new Vector3(0, 4.5, 0), new Color3(1, 1, 0), true); // Pendule animé
-    this.createPendulum(new Vector3(0, 4.5, 1), new Color3(0, 0, 1), true); // Pendule fixe
     this.vitesseJ = 1;
-    this.vitesseB = 1
+    this.vitesseB = 4
+
+    this.createPendulum(new Vector3(0, 4.5, 0), new Color3(1, 1, 0), true, true); // Pendule jaune (animé)
+    this.createPendulum(new Vector3(0, 4.5, 1), new Color3(0, 0, 1), true, false); // Pendule bleu (fixe)
+
 }
 
-createPendulum(position: Vector3, color: Color3, isAnimated: boolean) {
-    const pivot = this.createPendulumStructure(position, color); // Créer la structure
+createPendulum(position: Vector3, color: Color3, isAnimated: boolean, isYellowPendulum: boolean) {
+  const pivot = this.createPendulumStructure(position, color);
 
-    if (isAnimated) {
-        this.animatePendulum(pivot); // Ajouter l'animation si nécessaire
-    }
+  if (isAnimated) {
+    this.animatePendulum(pivot, isYellowPendulum); // Passer une indication pour la vitesse à utiliser
+  }
 
-    return pivot;
+  return pivot;
 }
 
 createPendulumStructure(position: Vector3, color: Color3): TransformNode {
@@ -136,30 +142,32 @@ createPendulumStructure(position: Vector3, color: Color3): TransformNode {
   return pivot; // Retourne le pivot pour permettre l'animation
 }
 
-animatePendulum(pivot: TransformNode) {
+animatePendulum(pivot: TransformNode, isYellowPendulum: boolean) {
   let isPaused = false;
   let pausedTime = 0;
 
   // Ajout d'une animation à chaque frame
   this.scene.registerBeforeRender(() => {
-      if (!isPaused) {
-          const time = (performance.now() * 0.001) - pausedTime;
-          pivot.rotation.z = Math.sin(time) * 0.5; // Modifier ici pour ajuster la vitesse et l'amplitude
-      }
+    if (!isPaused) {
+      const time = (performance.now() * 0.001) - pausedTime;
+      const speed = isYellowPendulum ? this.vitesseJ : this.vitesseB; // Utiliser les propriétés dynamiques
+      pivot.rotation.z = Math.sin(time * speed) * 0.5; // Modifier ici pour ajuster la vitesse et l'amplitude
+    }
   });
 
   // Ajout d'une interaction pour mettre en pause/reprendre l'animation
   const ball = pivot.getChildMeshes().find(mesh => mesh.name === "ball");
   if (ball) {
-      ball.actionManager = new ActionManager(this.scene);
-      ball.actionManager.registerAction(
-          new ExecuteCodeAction(ActionManager.OnPickTrigger, () => {
-              isPaused = !isPaused;
-              pausedTime = performance.now() * 0.001 - pausedTime;
-          })
-      );
+    ball.actionManager = new ActionManager(this.scene);
+    ball.actionManager.registerAction(
+      new ExecuteCodeAction(ActionManager.OnPickTrigger, () => {
+        isPaused = !isPaused;
+        pausedTime = performance.now() * 0.001 - pausedTime;
+      })
+    );
   }
 }
+
 
 
 
@@ -176,22 +184,15 @@ animatePendulum(pivot: TransformNode) {
     console.log('Force ajustée:', force);
   }
   
-  adjusteVitesse(force: number) {
-    const pivot = this.scene.getTransformNodeByName("root");
-    if (pivot) {
-        let previousTime = performance.now();
-        
-        this.scene.registerBeforeRender(() => {
-            const currentTime = performance.now();
-            const deltaTime = (currentTime - previousTime) * 0.001; // Temps écoulé en secondes
-            previousTime = currentTime;
+  adjusteVitesseB(vitesse: number) {
+    this.vitesseB = vitesse;
+    console.log('Vitesse ajustée:');
+  }
 
-            // Utiliser force pour ajuster la vitesse
-            pivot.rotation.z += Math.sin(currentTime * 0.001 * force) * deltaTime * 0.05;
-        });
-    }
-    console.log('Vitesse ajustée:', force);
-}
+  adjusteVitesseJ(vitesse: number) {
+    this.vitesseJ = vitesse;
+    console.log('Vitesse ajustée:');
+  }
 
   
 }
