@@ -255,7 +255,7 @@ export class Environement {
     var line2 = MeshBuilder.CreateLines("line2", {points: points2}, this.scene);
 
     // Créer les matériaux avec des textures
-    
+
     // Créer les matériaux avec des couleurs
     var material1 = new StandardMaterial("material1", this.scene);
     material1.diffuseColor = new Color3(1, 0, 0); // Rouge
@@ -283,7 +283,7 @@ export class Environement {
     // Créer les éléments UI pour les chronomètres
     var advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
     var chronoText1 = new GUI.TextBlock();
-    chronoText1.text = "Temps pour la balle 1: 00:00";
+    chronoText1.text = "Temps pour la balle Rouge: 00:00";
     chronoText1.color = "white";
     chronoText1.fontSize = 24;
     chronoText1.top = "-40%";
@@ -291,12 +291,15 @@ export class Environement {
     advancedTexture.addControl(chronoText1);
 
     var chronoText2 = new GUI.TextBlock();
-    chronoText2.text = "Temps pour la balle 2: 00:00";
+    chronoText2.text = "Temps pour la balle Blue: 00:00";
     chronoText2.color = "white";
     chronoText2.fontSize = 24;
     chronoText2.top = "-30%";
     chronoText2.left = "-40%";
     advancedTexture.addControl(chronoText2);
+
+
+    
 
     // Fonction pour formater le temps en SS:MS
     function formatTime(ms) {

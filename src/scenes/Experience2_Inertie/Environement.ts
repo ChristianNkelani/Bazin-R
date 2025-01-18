@@ -83,56 +83,89 @@ class LaboratoryManager {
 
 class PenduleManager {
   private scene : Scene;
+  public vitesseJ : number;
+  public vitesseB : number;
+
 
   constructor(scene: Scene){
     this.scene = scene
     this.createPendulum(new Vector3(0, 4.5, 0), new Color3(1, 1, 0), true); // Pendule animé
     this.createPendulum(new Vector3(0, 4.5, 1), new Color3(0, 0, 1), true); // Pendule fixe
-  }
+    this.vitesseJ = 1;
+    this.vitesseB = 1
+}
 
-  createPendulum(position: Vector3, color: Color3, isAnimated: boolean) {
-    const support = MeshBuilder.CreateBox("support", { height: 0.2, width: 0.2, depth: 0.2 }, this.scene);
-    support.position = position;
-    const supportMaterial = new StandardMaterial("supportMaterial", this.scene);
-    supportMaterial.diffuseTexture = new Texture("textures/wood.jpg", this.scene);
-    support.material = supportMaterial;
-
-    const pivot = new TransformNode("root");
-    pivot.position = position;
-
-    const rod = MeshBuilder.CreateCylinder("rod", { height: 2, diameter: 0.05 }, this.scene);
-    rod.position.y = -1;
-    const rodMaterial = new StandardMaterial("rodMaterial", this.scene);
-    rodMaterial.diffuseColor = color;
-    rod.material = rodMaterial;
-    rod.parent = pivot;
-
-    const ball = MeshBuilder.CreateSphere("ball", { diameter: 0.5 }, this.scene);
-    ball.position.y = -2;
-    const ballMaterial = new StandardMaterial("ballMaterial", this.scene);
-    ballMaterial.diffuseColor = color;
-    ball.material = ballMaterial;
-    ball.parent = pivot;
+createPendulum(position: Vector3, color: Color3, isAnimated: boolean) {
+    const pivot = this.createPendulumStructure(position, color); // Créer la structure
 
     if (isAnimated) {
-        let isPaused = false;
-        let pausedTime = 0;
-        this.scene.registerBeforeRender(() => {
-            if (!isPaused) {
-                const time = (performance.now() * 0.001) - pausedTime;
-                pivot.rotation.z = Math.sin(time) * 0.5;
-            }
-        });
-
-        ball.actionManager = new ActionManager(this.scene);
-        ball.actionManager.registerAction(new ExecuteCodeAction(ActionManager.OnPickTrigger, () => {
-            isPaused = !isPaused;
-            pausedTime = performance.now() * 0.001 - pausedTime;
-        }));
+        this.animatePendulum(pivot); // Ajouter l'animation si nécessaire
     }
 
-    return { support, rod, ball };
+    return pivot;
+}
+
+createPendulumStructure(position: Vector3, color: Color3): TransformNode {
+  // Création du support
+  const support = MeshBuilder.CreateBox("support", { height: 0.2, width: 0.2, depth: 0.2 }, this.scene);
+  support.position = position;
+  const supportMaterial = new StandardMaterial("supportMaterial", this.scene);
+  supportMaterial.diffuseTexture = new Texture("textures/wood.jpg", this.scene);
+  support.material = supportMaterial;
+
+  // Création du pivot
+  const pivot = new TransformNode("root");
+  pivot.position = position;
+
+  // Création de la tige
+  const rod = MeshBuilder.CreateCylinder("rod", { height: 2, diameter: 0.05 }, this.scene);
+  rod.position.y = -1;
+  const rodMaterial = new StandardMaterial("rodMaterial", this.scene);
+  rodMaterial.diffuseColor = color;
+  rod.material = rodMaterial;
+  rod.parent = pivot;
+
+  // Création de la bille
+  const ball = MeshBuilder.CreateSphere("ball", { diameter: 0.5 }, this.scene);
+  ball.position.y = -2;
+  const ballMaterial = new StandardMaterial("ballMaterial", this.scene);
+  ballMaterial.diffuseColor = color;
+  ball.material = ballMaterial;
+  ball.parent = pivot;
+
+  return pivot; // Retourne le pivot pour permettre l'animation
+}
+
+animatePendulum(pivot: TransformNode) {
+  let isPaused = false;
+  let pausedTime = 0;
+
+  // Ajout d'une animation à chaque frame
+  this.scene.registerBeforeRender(() => {
+      if (!isPaused) {
+          const time = (performance.now() * 0.001) - pausedTime;
+          pivot.rotation.z = Math.sin(time) * 0.5; // Modifier ici pour ajuster la vitesse et l'amplitude
+      }
+  });
+
+  // Ajout d'une interaction pour mettre en pause/reprendre l'animation
+  const ball = pivot.getChildMeshes().find(mesh => mesh.name === "ball");
+  if (ball) {
+      ball.actionManager = new ActionManager(this.scene);
+      ball.actionManager.registerAction(
+          new ExecuteCodeAction(ActionManager.OnPickTrigger, () => {
+              isPaused = !isPaused;
+              pausedTime = performance.now() * 0.001 - pausedTime;
+          })
+      );
   }
+}
+
+
+
+
+
+
   adjustFore(force: number) {
     const pivot = this.scene.getTransformNodeByName("root");
     if (pivot) {
