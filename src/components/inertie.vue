@@ -16,8 +16,8 @@
       Fin de la simulation
     </div>
 
-    <!-- Le bouton des parametres -->
-    <div
+      <!-- Le bouton des parametres -->
+      <div
         class="absolute bottom-2 left-2 bg-white w-16 h-16 rounded-full flex justify-center items-center"
         @click="gererVisibilite('options')"
       >
@@ -41,12 +41,27 @@
           />
         </svg>
       </div>
+      <!-- Les parametres  -->
       <div id="options" class="hidden">
-        <div class="bg-white w-96 h-80 absolute bottom-5 left-16 rounded-md p-4">
+        <div class="bg-white w-96 absolute bottom-5 left-16 rounded-md p-4">
           <div class="flex justify-between items-center mb-3">
             <h2 class="text-xl text-blue-600 font-bold">Parametres</h2>
-            <div class="bg-red-400 text-white px-3 py-2 rounded-md w-32 text-center cursor-pointer" @click="gererVisibilite('options')">Fermer</div>
+            <div class="bg-red-400 text-white px-3 py-2 w-10 h-10 text-center cursor-pointer rounded-full flex items-center justify-center" @click="gererVisibilite('options')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+
+            </div>
           </div>
+
+          <div class="flex justify-between items-center mb-3">
+            <div class="bg-yellow-400 text-white px-3 py-2 rounded-md w-32 text-center cursor-pointer">Pause</div>
+            <div class="bg-blue-400 text-white px-3 py-2 rounded-md w-32 text-center cursor-pointer">Pause</div>
+
+          </div>
+          
+
           <div class="flex flex-col items-center space-y-2">
             <!-- Label -->
             <label for="range" class="text-sm font-medium text-gray-700">
