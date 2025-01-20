@@ -63,12 +63,12 @@
       </div>
 
       <!-- Les graphiques -->
-       <div class="bg-white absolute top-12 right-16 w-96 h-96 pb-28" v-if="graphique">
-          Les Graphiques Pour illustre le concept
+       <div class="bg-white absolute top-12 right-16 w-96 h-96 pb-24" v-if="graphique">
+         
 
-          <div class="grid grid-cols-2 text-center">
-            <div class="bg-blue-300" >MRU</div>
-            <div class="bg-red-300" >MRUV</div>
+          <div class="grid grid-cols-2 text-center mb-5">
+            <div class="cursor-pointer" :class="{'bg-blue-300': currentExp}" @click="currentExp = true" >MRU</div>
+            <div class="cursor-pointer" :class="{'bg-blue-300': !currentExp}" @click="currentExp = false" >MRUV</div>
           </div>
           <!-- Bouton Suivant -->
 
@@ -81,8 +81,8 @@
 
 
           <div class="flex justify-around">
-            <div class="bg-gray-300 px-1 py-1 text-blue-300" @click="voirGraphique(1)">Precedant</div>
-            <div class="bg-blue-300 px-3 py-2 text-white" @click="voirGraphique(2)">Suivant</div>
+            <div class="bg-red-300 px-3 py-1 text-white cursor-pointer" @click="voirGraphique(1)" v-if="graphiqueId == 2">Precedant</div>
+            <div class="bg-blue-300 px-3 py-1 text-white cursor-pointer" @click="voirGraphique(2)" v-if="graphiqueId == 1">Suivant</div>
           </div>
        </div>
       <LoadingScreen :isLoaded="loaded" />
@@ -120,7 +120,7 @@ export default defineComponent({
       graphique : false,
       graphiqueId : 1,
       questions: [],
-
+      currentExp : true, // permet de gerer l'affichage des graphiques pour le mru et le mruv
       chartData: {
         labels: ['0', '10', '30', '40', '50'],
         datasets: [
