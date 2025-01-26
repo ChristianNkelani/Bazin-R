@@ -72,19 +72,19 @@ export class Environement {
   public createBalle() {
     this.ball1 = MeshBuilder.CreateSphere("ball1", { diameter: 0.3 });
     this.ball1.position.y = 0.7;
-    this.ball1.position.x = 9;
+    this.ball1.position.x = 5.5;
     this.ball1.position.z = 2.5;
     this.ball1.material = this.changeMaterialColor(0, 0, 255);
 
     this.ball2 = MeshBuilder.CreateSphere("ball2", { diameter: 0.3 });
     this.ball2.position.y = 0.1;
-    this.ball2.position.x = 7;
+    this.ball2.position.x = 6.5;
     this.ball2.position.z = 2.5;
     this.ball2.material = this.changeMaterialColor(0, 1, 0);
 
     this.ball3 = MeshBuilder.CreateSphere("ball2", { diameter: 0.3 });
     this.ball3.position.y = 0.1;
-    this.ball3.position.x = 8;
+    this.ball3.position.x = 7.5;
     this.ball3.position.z = 2.5;
     this.ball3.material = this.changeMaterialColor(255, 0, 0);
 
@@ -96,75 +96,118 @@ export class Environement {
 
     this._ui._restart.onPointerUpObservable.add(() => {
       this.ball1.position.z = 2.5;
+      this.ball2.position.z = 2.5;
+      this.ball3.position.z = 2.5;
+
+      for (let i = 0; i < this.inkDrop.length; i++) {
+        this.inkDrop[i].isVisible = false ;
+      }
     });
   }
 
   public deplacer() {
     // this.inkDrop = [];
     for (let i = 0; i < this.inkDrop.length; i++) {
-      this.inkDrop[i].isVisible = false;
+      this.inkDrop[i].dispose() ;
     }
-
-    // Définir les points de la courbe
     const points = [
-      new Vector3(6.5, 0.3, 2.5),
-      new Vector3(6.6, 0.3, 2.3),
-      new Vector3(6.4, 0.3, 2.1),
-      new Vector3(6.2, 0.3, 1.8),
-      new Vector3(6.1, 0.3, 1.5),
-      new Vector3(6, 0.3, 1.3),
-      new Vector3(6.4, 0.3, 0.9),
-      new Vector3(6.4, 0.3, 0.7),
-      new Vector3(6.4, 0.3, 0.5),
-      new Vector3(6.4, 0.3, 0.3),
-      new Vector3(6.4, 0.3, 0.2),
-      new Vector3(6.4, 0.3, 0.1),
-      // new Vector3(6.4, 0.3, -0.1),
-      // new Vector3(6.4, 0.3, 1.1),
-      // new Vector3(6.4, 0.3, 1.1),
-
-      new Vector3(6.7, 0.3, -0.9),
-      new Vector3(7.1, 0.3, -1.2),
-      new Vector3(6.5, 0.3, -1.4),
-      new Vector3(6.1, 0.3, -1.3),
-      new Vector3(6.3, 0.3, -1.6),
-      new Vector3(7.2, 0.3, -1.8),
-      new Vector3(6.1, 0.3, -2.1),
-      new Vector3(6, 0.3, -2.3),
-      new Vector3(6.2, 0.3, -2.4),
-      new Vector3(6.7, 0.3, -2.5),
-      new Vector3(6.8, 0.3, -2.6),
-      new Vector3(6.9, 0.3, -2.8),
-      new Vector3(7.8, 0.3, -3),
-      new Vector3(8.1, 0.3, -3.2),
-      new Vector3(8.4, 0.3, -3.4),
-      new Vector3(7.1, 0.3, -3.6),
-      new Vector3(7.3, 0.3, -3.8),
-      new Vector3(8.5, 0.3, -4.1),
-      new Vector3(6.9, 0.3, -4.3),
-      new Vector3(5.7, 0.3, -4.5),
-      new Vector3(5.4, 0.3, -4.6),
-      new Vector3(5.3, 0.3, -4.8),
-      new Vector3(5.1, 0.3, -5),
+      new Vector3(5.5, 0.3, 2.5),
+      new Vector3(5.6, 0.3, 2.3),
+      new Vector3(5.4, 0.3, 2.1),
+      new Vector3(5.2, 0.3, 1.8),
+      new Vector3(5.1, 0.3, 1.5),
+      new Vector3(5.0, 0.3, 1.3),
+      new Vector3(5.4, 0.3, 0.9),
+      new Vector3(5.4, 0.3, 0.7),
+      new Vector3(5.4, 0.3, 0.5),
+      new Vector3(5.4, 0.3, 0.3),
+      new Vector3(5.4, 0.3, 0.2),
+      new Vector3(5.4, 0.3, 0.1),
+      // new Vector3(5.4, 0.3, -0.1),
+      // new Vector3(5.4, 0.3, 1.1),
+      // new Vector3(5.4, 0.3, 1.1),
+    
+      new Vector3(5.7, 0.3, -0.9),
+      new Vector3(6.1, 0.3, -1.2),
+      new Vector3(5.5, 0.3, -1.4),
+      new Vector3(5.1, 0.3, -1.3),
+      new Vector3(5.3, 0.3, -1.6),
+      new Vector3(5.6, 0.3, -1.8),
+      new Vector3(5.2, 0.3, -2.1),
+      new Vector3(5.0, 0.3, -2.3),
+      new Vector3(5.2, 0.3, -2.4),
+      new Vector3(5.5, 0.3, -2.5),
+      new Vector3(5.8, 0.3, -2.6),
+      new Vector3(5.5, 0.3, -2.8),
+      new Vector3(5.1, 0.3, -3.0),
+      new Vector3(5.5, 0.3, -3.2),
+      new Vector3(5.2, 0.3, -3.4),
+      new Vector3(5.1, 0.3, -3.6),
+      new Vector3(5.3, 0.3, -3.8),
+      new Vector3(5.5, 0.3, -4.1),
+      new Vector3(5.9, 0.3, -4.3),
+      new Vector3(4.7, 0.3, -4.5),
+      new Vector3(4.4, 0.3, -4.6),
+      new Vector3(4.3, 0.3, -4.8),
+      new Vector3(5.1, 0.3, -5.0),
       new Vector3(5.3, 0.3, -5.2),
       new Vector3(5.6, 0.3, -5.4),
       new Vector3(5.8, 0.3, -5.6),
-      new Vector3(6.1, 0.3, -5.8),
-      new Vector3(6.3, 0.3, -6.1),
-      new Vector3(6.4, 0.3, -6.3),
-      new Vector3(6.6, 0.3, -6.5),
-      new Vector3(6.8, 0.3, -6.5),
-      new Vector3(6.4, 0.3, -6.7),
-      new Vector3(6.3, 0.3, -6.9),
-      new Vector3(6.4, 0.3, -7.1),
-      new Vector3(6.5, 0.3, -7.3),
-
-
+      new Vector3(5.1, 0.3, -5.8),
+      new Vector3(5.3, 0.3, -6.1),
+      new Vector3(5.4, 0.3, -6.3),
+      new Vector3(5.6, 0.3, -6.5),
+      new Vector3(5.8, 0.3, -6.5),
+      new Vector3(5.4, 0.3, -6.7),
+      new Vector3(5.3, 0.3, -6.9),
+      new Vector3(5.4, 0.3, -7.1),
+      new Vector3(5.5, 0.3, -7.3),
     ];
+    
+    
+    
+
+    // Fonction pour interpoler les points
+function interpolatePoints(points, segments = 50) {
+  const interpolated = [];
+  for (let i = 0; i < points.length - 1; i++) {
+    const p0 = points[Math.max(i - 1, 0)];
+    const p1 = points[i];
+    const p2 = points[i + 1];
+    const p3 = points[Math.min(i + 2, points.length - 1)];
+
+    for (let j = 0; j <= segments; j++) {
+      const t = j / segments;
+      const t2 = t * t;
+      const t3 = t2 * t;
+
+      const x =
+        0.5 *
+        ((2 * p1.x) +
+          (-p0.x + p2.x) * t +
+          (2 * p0.x - 5 * p1.x + 4 * p2.x - p3.x) * t2 +
+          (-p0.x + 3 * p1.x - 3 * p2.x + p3.x) * t3);
+      const y = p1.y; // Garder une hauteur constante
+      const z =
+        0.5 *
+        ((2 * p1.z) +
+          (-p0.z + p2.z) * t +
+          (2 * p0.z - 5 * p1.z + 4 * p2.z - p3.z) * t2 +
+          (-p0.z + 3 * p1.z - 3 * p2.z + p3.z) * t3);
+
+      interpolated.push(new Vector3(x, y, z));
+    }
+  }
+  return interpolated;
+}
+
+// Interpoler les points
+const smoothPoints = interpolatePoints(points);
+
 
     // Créer une spline Catmull-Rom à partir des points
     // const path = Curve3.CreateCatmullRomSpline(points, 20);
-    const path = Curve3.CreateCatmullRomSpline(points, 20);
+    const path = Curve3.CreateCatmullRomSpline(smoothPoints, 20);
 
     // Obtenir les points de la courbe
     const pathPoints = path.getPoints();
@@ -206,7 +249,8 @@ export class Environement {
 
   chatgpt() {
     // Position initiale de la balle
-    this.ball1.position = new Vector3(6, 0.15, 2.5);
+
+    this.ball1.position = new Vector3(5.5, 0.3, 2.5);
 
     // Trajectoire
     let previousPosition = this.ball1.position.clone();
@@ -346,7 +390,7 @@ export class Environement {
     for (let t = 0; t <= (2 * v0 * Math.sin(theta)) / g; t += timeStep) {
         const y = v0 * Math.sin(theta) * t - 0.5 * g * t * t;
         const z = -(v0 * Math.cos(theta) * t) + 2.5;
-        const point = new Vector3(8, 0.3, z);
+        const point = new Vector3(7.5, 0.3, z);
         points.push(point);
 
         // Draw a sphere at each point to represent the trajectory

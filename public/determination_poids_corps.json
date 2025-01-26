@@ -1,17 +1,5 @@
 [
     {
-      "question": "<<Loi>> de Newton et <<Principe>> de Newton signifient ne signifient pas la même chose.",
-      "options": ["Vrai", "Faux"],
-      "correctAnswer": "Vrai",
-      "points": 1
-    },
-    {
-      "question": "La dynamique est l'étude de la persévérance d'un corps.",
-      "options": ["Vrai", "Faux"],
-      "correctAnswer": "Faux",
-      "points": 1
-    },
-    {
       "question": "La masse seule d'un corps peut déterminer la force à exercer par un objet.",
       "options": ["Vrai", "Faux"],
       "correctAnswer": "Faux",
@@ -30,9 +18,45 @@
         "points": 1
       },
       {
-        "question": "Comment peut-on calculer le poids(P) d'un corps de masse= 10kg?.",
+        "question": " Par quelle formule peut-on calculer la masse d'un corps.",
         "options": ["Poids = (masse du corps) X g", "Poids = masse x vitesse","Poids = masse du corps"],
         "correctAnswer": "Poids = (masse du corps) X g",
+        "points": 1
+      },
+      {
+        "question": "Le kilogramme est l’unité du poids car sur les boîtes de conserve on écrit « poids net : X kg ».",
+        "options": ["Vrai", "Faux"],
+        "correctAnswer": "Vrai",
+        "points": 1
+      },
+      {
+        "question": "La masse est une grandeur scalaire tandis que le poids est une grandeur vectorielle comme la force.",
+        "options": ["Vrai", "Faux"],
+        "correctAnswer": "Vrai",
+        "points": 1
+      },
+      {
+        "question": "Le poids d’un corps est différent de sa densité relative.",
+        "options": ["Vrai", "Faux"],
+        "correctAnswer": "Vrai",
+        "points": 1
+      },
+      {
+        "question": "Deux corps en mouvement et possédant une certaine masse s’attirent et se repoussent à la fois.",
+        "options": ["Vrai", "Faux"],
+        "correctAnswer": "Vrai",
+        "points": 1
+      },
+      {
+        "question": "La loi d’attraction des corps a été initiée par Newton.",
+        "options": ["Vrai", "Faux"],
+        "correctAnswer": "Vrai",
+        "points": 1
+      },
+      {
+        "question": "La force d’attraction est notée par: F = G x [(M1 x M2)/r²] ",
+        "options": ["Vrai", "Faux"],
+        "correctAnswer": "Faux",
         "points": 1
       }
    

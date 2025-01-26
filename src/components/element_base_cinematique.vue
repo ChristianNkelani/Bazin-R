@@ -19,6 +19,16 @@
     >
       Fin de la simulation
     </div>
+
+    <!-- retour bouton -->
+    <RouterLink to="/categorie" class="fixed z-40 right-2 bottom-5 w-16 h-16">
+      <img
+        class="w-16 h-16 bg-blue-500 rounded-full"
+        src="../assets/retour.png"
+        alt=""
+      />
+    </RouterLink>
+    
     <LoadingScreen :isLoaded="loaded" />
     <canvas></canvas>
   </main>

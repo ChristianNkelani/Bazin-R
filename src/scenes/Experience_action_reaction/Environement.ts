@@ -154,13 +154,13 @@ export class Environement {
      advancedTexture.addControl(slider);
  
      var textBlock = new GUI.TextBlock();
-     textBlock.text = "Ajuster la force de frappe";
+     textBlock.text = "Ajuster la force de frappe: "+ slider.value + " N";
      textBlock.color = "white";
      textBlock.height = "30px";
      textBlock.top = "-40px";
      advancedTexture.addControl(textBlock);
  
-     var button = GUI.Button.CreateSimpleButton("startButton", "Frapper");
+     var button = GUI.Button.CreateSimpleButton("startButton", "Tirer.");
      button.width = "150px";
      button.height = "40px";
      button.color = "white";
@@ -173,7 +173,9 @@ export class Environement {
 
      slider.onValueChangedObservable.add((value) => {
          force = new Vector3(0, 0, value); // Mettez à jour la force en fonction de la valeur du slider
-     });
+         textBlock.text = "Ajuster la force de frappe: "+ slider.value + " N";
+
+        });
      
      button.onPointerDownObservable.add(() => {
          // Lancer le ballon avec la force spécifiée par le slider

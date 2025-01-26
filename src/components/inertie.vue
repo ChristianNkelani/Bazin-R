@@ -1,11 +1,7 @@
 <template>
   <Questions
     id="card"
-<<<<<<< HEAD
-    Presentation=""
-=======
     Presentation="L'inertie, c’est la tendance d’un objet à rester immobile ou à continuer son mouvement si aucune force ne le dérange. C'est un principe fondamental qui explique le comportement des objets dans leur état de repos ou de mouvement."
->>>>>>> 44ec51de983061929676ea984dad3c698318391b
     titre="Premiere loi de Newton, l'inertie"
     :cacherCard="cacherCard"
     :questions="questions"

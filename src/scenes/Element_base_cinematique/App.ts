@@ -8,10 +8,12 @@ import {
 import "@babylonjs/loaders";
 import { UI } from "./ui";
 import { Environement } from "./Environement";
+import { Camera } from "babylonjs";
 
 export class Experience3 {
   scene: Scene;
   engine: Engine;
+  camera: UniversalCamera;
 
   private _ui: UI;
   private _environement: Environement;
@@ -23,9 +25,8 @@ export class Experience3 {
   ) {
     this.engine = new Engine(this.canvas);
 
-    //on cree la scene de base
     this.scene = this.CreateScene();
-
+     
     //on charge l environnement
     this._environement = new Environement(
       this.scene,
@@ -36,20 +37,22 @@ export class Experience3 {
 
     this.engine.runRenderLoop(() => {
       this.scene.render();
+      // console.log("cam ", this.camera.rotation.x,", ", this.camera.rotation.y, ", ", this.camera.rotation.z);
+
     });
   }
 
   CreateScene(): Scene {
     const scene = new Scene(this.engine);
-    const camera = new UniversalCamera(
+     this.camera = new UniversalCamera(
       "camera",
       new Vector3(0, 3.5, -2.5),
       this.scene
     );
-    camera.speed = 0.5;
-    camera.rotation._y = Math.PI / 2;
-    camera.rotation._x = Math.PI / 14;
-    camera.detachControl();
+    this.camera.speed = 0.5;
+    this.camera.rotation._y = Math.PI / 2;
+    this.camera.rotation._x = Math.PI / 14;
+    this.camera.attachControl();
     const hemiLight = new HemisphericLight(
       "hemiLight",
       new Vector3(0, 1, 0),

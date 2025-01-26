@@ -16,6 +16,48 @@
       "options": ["Vrai", "Faux"],
       "correctAnswer": "Faux",
       "points": 1
+    },
+    {
+      "question": "Tout corps en mouvement est un mobile.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    },
+    {
+      "question": "Un référentiel est un système de coordonnées permettant de localiser un point dans l’espace.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Vrai",
+      "points": 1
+    },
+    {
+      "question": "Tout mouvement fait appel à un changement de référentiel.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Vrai",
+      "points": 1
+    },
+    {
+      "question": "Translation et rotation sont deux mouvements identiques.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    },
+    {
+      "question": "Le repos signifie un mouvement sans bouger.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    },
+    {
+      "question": "Une surface plane est toujours rectiligne.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    },
+    {
+      "question": "Vitesse instantanée et vitesse moyenne sont identiques.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
     }
   ]
   
