@@ -1,17 +1,17 @@
 <template>
   <div
     id="card"
-    class="w-1/3 h-96 bg-white absolute z-40 top-1/3 left-1/3 hidden"
+    class="w-1/3 h-96 absolute z-40 top-1/3 left-1/3 hidden " style="background-color: rgba(0, 0, 0, .4);"
   >
     <div
       class="h-full w-full flex flex-col justify-around items-center border"
       v-if="store.card === 1 && store.etat === 'un'"
     >
-      <h2 class="text-blue-500 text-2xl font-bold text-center">{{ titre }}</h2>
-      <p class="text-gray-500 w-96">{{ Presentation }}</p>
+      <h2 class="text-yellow-500 text-2xl font-bold text-center">{{ titre }}</h2>
+      <p class="text-gray-100 w-96">{{ Presentation }}</p>
       <button
         @click="incrementerCard"
-        class="bg-blue-500 w-64 text-md py-2 px-3 text-white"
+        class="bg-yellow-500 w-64 text-md py-2 px-3 text-white"
       >
         continuer
       </button>
@@ -20,13 +20,13 @@
       class="h-full w-full flex flex-col justify-around items-center border"
       v-if="store.card === 2 && store.etat === 'un'"
     >
-      <h2 class="text-blue-500 text-2xl font-bold text-center">
+      <h2 class="text-yellow-500 text-2xl font-bold text-center">
         Comment experimenter {{ titre }} ?
       </h2>
       <!-- <img src="../assets/guide.gif" alt="" class="bg-red-300 h-1/2" /> -->
       <button
         @click="incrementerCard"
-        class="bg-blue-500 w-64 text-md py-2 px-3 text-white"
+        class="bg-yellow-500 w-64 text-md py-2 px-3 text-white"
       >
         Continuer
       </button>
