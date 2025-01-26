@@ -3,7 +3,6 @@ import {
     Engine, 
     SceneLoader,
     Vector3,
-    Animation,
     Mesh
 } from "@babylonjs/core";
 import "@babylonjs/loaders";
@@ -17,8 +16,8 @@ export class Environement {
     private _ui: UI;
     private voiture: Mesh;
     private voiture2: Mesh;
-    private vitesseVoiture1: number = 0;
-    private vitesseVoiture2: number = 0;
+    private vitesseVoiture1 = 0;
+    private vitesseVoiture2 = 0;
     private intervalId: number | null = null;
     private lastPositionVoiture1: Vector3;
     private lastPositionVoiture2: Vector3;

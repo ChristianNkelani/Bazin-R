@@ -50,6 +50,7 @@ export class UI {
 
         // Ajouter les boutons au panneau
         this._bouttonAction.forEach((element) => panel.addControl(element));
+        panel.addControl(this.restore);
 
         // Ajouter le panneau à la texture avancée
         this.advancedTexture.addControl(panel);

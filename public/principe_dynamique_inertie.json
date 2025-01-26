@@ -16,6 +16,36 @@
       "options": ["Vrai", "Faux"],
       "correctAnswer": "Faux",
       "points": 1
+    },
+    {
+      "question": "La dynamique est l'étude de la persévérence d'un corps.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    },
+    {
+      "question": "L'inertie est la resistance qu'un corps massique oppose  au changement de son mouvement ou de son repos",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    },
+    {
+      "question": "L'arrêt ou le mouvement  d'un corps n'a jamais été naturel, la force externe  intervient toujours",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    },
+    {
+      "question": "la force n'est pas une grandeur intrinsèque d'un objet mais elle naît de l'interaction entre les objets",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    },
+    {
+      "question": "la masse, la charge et l'energie interne sont des grandeurs intrinsèques car elles sont des grandeurs intrinsèques car elles sont mésurées indépendamment des autres objets",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
     }
   ]
   

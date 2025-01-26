@@ -20,7 +20,7 @@
 
       <!-- Le bouton des parametres -->
       <div
-        class="absolute bottom-2 left-2 bg-white w-16 h-16 rounded-full flex justify-center items-center"
+        class="absolute bottom-2 left-2 bg-white w-16 h-16 rounded-full flex justify-center items-center cursor-pointer"
         @click="gererVisibilite('options')"
       >
         <svg
@@ -43,9 +43,14 @@
           />
         </svg>
       </div>
+
       <div id="options" class="hidden">
         <div class="bg-white w-96 h-80 absolute bottom-5 left-16 rounded-md">
           <h2 class="text-xl text-blue-600 font-bold">Parametres</h2>
+
+          <div class="bg-blue-300 text-white px-3 py-2 w-52 cursor-pointer" @click="toggleGraphique()">
+            {{graphique ? "Masuqer les graphiques" : "Voir les graphiques"}}
+          </div>
           <div class="grid grid-cols-2">
             <div>
               <p>vitesse de la voiture jaune</p>
@@ -57,6 +62,29 @@
         </div>
       </div>
 
+      <!-- Les graphiques -->
+       <div class="bg-white absolute top-12 right-16 w-96 h-96 pb-24" v-if="graphique">
+         
+
+          <div class="grid grid-cols-2 text-center mb-5">
+            <div class="cursor-pointer" :class="{'bg-blue-300': currentExp}" @click="currentExp = true" >MRU</div>
+            <div class="cursor-pointer" :class="{'bg-blue-300': !currentExp}" @click="currentExp = false" >MRUV</div>
+          </div>
+          <!-- Bouton Suivant -->
+
+          <div v-if="graphiqueId ==1" class="w-full h-full">
+            <LineChart :data="chartData" :options="chartOptions" />
+          </div>
+          <div v-if="graphiqueId ==2" class="w-full h-full">
+            <LineChart :data="chartData2" :options="chartOptions2" />
+          </div>
+
+
+          <div class="flex justify-around">
+            <div class="bg-red-300 px-3 py-1 text-white cursor-pointer" @click="voirGraphique(1)" v-if="graphiqueId == 2">Precedant</div>
+            <div class="bg-blue-300 px-3 py-1 text-white cursor-pointer" @click="voirGraphique(2)" v-if="graphiqueId == 1">Suivant</div>
+          </div>
+       </div>
       <LoadingScreen :isLoaded="loaded" />
       <canvas></canvas>
       <!-- retour bouton -->
@@ -75,9 +103,12 @@ import { Mru } from "@/scenes/mru/App";
 import { defineComponent } from "vue";
 import LoadingScreen from "@/components/LoadingScreen.vue";
 import Questions from "../components/debut_experience/question.vue";
-import { Question } from "@/scenes/Experience1/question";
-import Qcm from "./Qcm.vue";
 import { QcmStore } from "@/stores/store";
+
+// Pour les graphiques
+import {Line} from 'vue-chartjs'
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js'
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
 
 export default defineComponent({
   name: "mru",
@@ -86,10 +117,42 @@ export default defineComponent({
       mru: null,
       loaded: false,
       flou: false,
+      graphique : false,
+      graphiqueId : 1,
       questions: [],
+      currentExp : true, // permet de gerer l'affichage des graphiques pour le mru et le mruv
+      chartData: {
+        labels: ['0', '10', '30', '40', '50'],
+        datasets: [
+          {
+            label: 'Espace-Temps',
+            data: [1, 2, 3, 4, 5],
+            borderColor: 'rgb(75, 192, 192)',
+            fill: false
+          }
+        ]
+      },
+      chartOptions: {
+        responsive: true,
+        maintainAspectRatio: false
+      },chartOptions2: {
+        responsive: true,
+        maintainAspectRatio: false
+      },
+      chartData2: {
+        labels: ['1s', '2s', '3s', '4s', '5s'],
+        datasets: [
+          {
+            label: 'Vitesse-Temps',
+            data: [5, 5, 5, 5, 5],
+            borderColor: 'rgb(75, 192, 192)',
+            fill: false
+          }
+        ]
+      },
     };
   },
-  components: { LoadingScreen, Questions, Qcm },
+  components: { LoadingScreen, Questions, LineChart: Line },
   mounted() {
     const canvas = document.querySelector("canvas") as HTMLCanvasElement;
     this.mru = new Mru(canvas, this.setLoaded, this.voirCard);
@@ -124,7 +187,13 @@ export default defineComponent({
       store.currentPage = 0;
       store.etat = "deux";
     },
-  },
+    toggleGraphique(){
+      this.graphique = !this.graphique; // Inverse l'état de "graphique"
+    },
+    voirGraphique(id){
+      this.graphiqueId = id;
+    }
+  }
 });
 </script>
 <style scoped>

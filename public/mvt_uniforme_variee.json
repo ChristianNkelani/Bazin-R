@@ -22,5 +22,23 @@
     "options": ["Vrai", "Faux"],
     "correctAnswer": "Faux",
     "points": 1
+  },
+  {
+    "question": "Sur un rond point une moto suit un trajectoire rectiligne ?",
+    "options": ["Vrai", "Faux"],
+    "correctAnswer": "Faux",
+    "points": 1
+  },
+  {
+    "question": "Un mobile en mouvement relatif signifie qu'il peut être condidéré à la fois au repos ou en mouvement par rapport à un référencetiel donné",
+    "options": ["Vrai", "Faux"],
+    "correctAnswer": "Faux",
+    "points": 1
+  },
+  {
+    "question": "Une voiture qui reduit sa vitesse effectue toujours un mouvement varié ?",
+    "options": ["Vrai", "Faux"],
+    "correctAnswer": "Faux",
+    "points": 1
   }
 ]

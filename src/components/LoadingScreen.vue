@@ -2,7 +2,7 @@
     <main :class="[isLoaded ? 'loaded' : '', 'loader']">
         <div id="animationContainer">
             <p>{</p>
-            <p>BAZIN</p>
+            <p>BAZIN VirtLab</p>
             <P>}</P>
         </div>
         <h2>Rechargement ...</h2>
@@ -52,7 +52,7 @@
     transition: opacity 1s ease;
     }
     #animationContainer {
-    width: 50%;
+    width: 80%;
     display: flex;
     justify-content: center;
     align-items: center;
