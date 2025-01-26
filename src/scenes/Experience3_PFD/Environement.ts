@@ -64,7 +64,7 @@ export class Environement {
     this.tailleB = a;
     this.tailleR = b;
     const taille = {
-      petite: 0.1,
+      petite: 0.5,
       moyenne: 0.2,
       grosse: 0.3,
     };
@@ -98,7 +98,7 @@ export class Environement {
       moyenne: 2,
       grosse: 3,
     };
-
+    
     const newSizeB = sizeMap[tailleB];
     const newSizeR = sizeMap[tailleR];
 
@@ -221,7 +221,7 @@ export class Environement {
       if (ball.position.z < -0.3) {
         this._ui._milsec = ms;
         this._ui._sec = sec;
-        texte.text = `${this._ui._sec} : ${this._ui._milsec}`;
+        texte.text = `00 : ${this._ui._sec}`;
         this._ui._milsec++;
 
         if (this._ui._milsec >= 60) {
@@ -240,49 +240,49 @@ export class Environement {
   
   public createTest() {
     // Créer les fils horizontaux avec un décalage en y
-    var points1 = [];
-    var points2 = [];
-    var amplitude = 1;
-    var frequency = 2;
-    var yOffset1 = 3; // Décalage en y pour le premier rail
-    var yOffset2 = 3; // Décalage en y pour le deuxième rail
+    const points1 = [];
+    const points2 = [];
+    const amplitude = 1;
+    const frequency = 2;
+    const yOffset1 = 3; // Décalage en y pour le premier rail
+    const yOffset2 = 3; // Décalage en y pour le deuxième rail
 
-    for (var i = -Math.PI; i <= Math.PI; i += 0.1) {
+    for (let i = -Math.PI; i <= Math.PI; i += 0.1) {
         points1.push(new Vector3(i, amplitude * Math.sin(frequency * i) + yOffset1, -2));
         points2.push(new Vector3(i, amplitude * Math.sin(frequency * i) + yOffset2, 2));
     }
-    var line1 = MeshBuilder.CreateLines("line1", {points: points1}, this.scene);
-    var line2 = MeshBuilder.CreateLines("line2", {points: points2}, this.scene);
+    MeshBuilder.CreateLines("line1", {points: points1}, this.scene);
+    MeshBuilder.CreateLines("line2", {points: points2}, this.scene);
 
     // Créer les matériaux avec des textures
 
     // Créer les matériaux avec des couleurs
-    var material1 = new StandardMaterial("material1", this.scene);
+    const material1 = new StandardMaterial("material1", this.scene);
     material1.diffuseColor = new Color3(1, 0, 0); // Rouge
 
-    var material2 = new StandardMaterial("material2", this.scene);
+    const material2 = new StandardMaterial("material2", this.scene);
     material2.diffuseColor = new Color3(0, 0, 1); // Bleu
 
     // Créer les balles
-    var ball1 = MeshBuilder.CreateSphere("ball1", { diameter: 0.5 }, this.scene);
+    const ball1 = MeshBuilder.CreateSphere("ball1", { diameter: 0.5 }, this.scene);
     ball1.position = new Vector3(-Math.PI, amplitude * Math.sin(frequency * -Math.PI) + yOffset1, -2);
     ball1.material = material1; // Appliquer la couleur rouge au premier matériau
 
-    var ball2 = MeshBuilder.CreateSphere("ball2", { diameter: 0.5 }, this.scene);
+    const ball2 = MeshBuilder.CreateSphere("ball2", { diameter: 0.5 }, this.scene);
     ball2.position = new Vector3(-Math.PI, amplitude * Math.sin(frequency * -Math.PI) + yOffset2, 2);
     ball2.material = material2; // Appliquer la couleur bleue au deuxième matériau
 
 
     // Variables pour contrôler l'animation
-    var isAnimating1 = false;
-    var isAnimating2 = false;
+    const isAnimating1 = false;
+    const isAnimating2 = false;
 
     // Variables pour les chronomètres
-    var startTime1, startTime2;
+    const startTime1, startTime2;
 
     // Créer les éléments UI pour les chronomètres
-    var advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
-    var chronoText1 = new GUI.TextBlock();
+    const advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+    const chronoText1 = new GUI.TextBlock();
     chronoText1.text = "Temps pour la balle Rouge: 00:00";
     chronoText1.color = "white";
     chronoText1.fontSize = 24;
@@ -290,7 +290,7 @@ export class Environement {
     chronoText1.left = "-40%";
     advancedTexture.addControl(chronoText1);
 
-    var chronoText2 = new GUI.TextBlock();
+    const chronoText2 = new GUI.TextBlock();
     chronoText2.text = "Temps pour la balle Blue: 00:00";
     chronoText2.color = "white";
     chronoText2.fontSize = 24;
@@ -305,7 +305,7 @@ export class Environement {
     function formatTime(ms) {
         var totalSeconds = Math.floor(ms / 1000);
         var milliseconds = ms % 1000;
-        return `${totalSeconds.toString().padStart(2, '0')}:${milliseconds.toString().padStart(3, '0')}`;
+        return `00 : ${totalSeconds.toString().padStart(2, '0')} s`;
     }
 
     // Animation des balles

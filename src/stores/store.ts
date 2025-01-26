@@ -16,6 +16,7 @@ export const QcmStore = defineStore("qcms", {
       this.currentPage = 0;
       this.card = 1;
       this.score1 = 0;
+      location.reload();
     }
   },
 
