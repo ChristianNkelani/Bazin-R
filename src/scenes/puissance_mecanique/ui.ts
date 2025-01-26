@@ -18,7 +18,19 @@ export class UI {
     public _stopTimer: boolean;
     public _sString = "00";
     public _mString = 0;
+    public _container2: any;
+    public _container3: any;
+    public _container4: any;
+
     public gravitation: -9.8;
+
+    public time1: number; //keep track to signal end game REAL TIME
+    private _prevTime1 = 0;
+    public _clockTime1: any; //GAME TIME
+    private _startTime1: number;
+    public _stopTimer1: boolean;
+    public _sString1 = "00";
+    public _mString1 = 0;
 
     public box :any;
     public textedynamique : string
@@ -27,14 +39,14 @@ export class UI {
         this._scene = scene;
         
         //creation du menu
-        // this.createMenu();
+        this.createMenu();
         //menu action
         this.createButtonActionMenu();
 
         //create the texture 
         const advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI('UI', undefined);        
         this.Chrono(advancedTexture);
-    
+        this.Chrono1(advancedTexture);
 
         
         
@@ -43,46 +55,53 @@ export class UI {
     createMenuCalculs(container){
        // creation du texte
        const text = new GUI.TextBlock();
-       text.text = "Calculs"
+       text.text = "Formules"
        text.fontSize=30
        text.fontFamily="Montserrat Black"
        text.color ="deepskyblue"
        text.height="25px"
-       text.top = "35px"
+       text.top = "10px"
        text.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP
        container.addControl(text);
+
+       const textCalc = new GUI.TextBlock();
+       textCalc.text = "Données"
+       textCalc.fontSize=30
+       textCalc.fontFamily="Montserrat Black"
+       textCalc.color ="deepskyblue"
+       textCalc.height="25px"
+       textCalc.top = "110px"
+       textCalc.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP
+       textCalc.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_CENTER
+       
+       container.addControl(textCalc);
     }
 
-    createMenuMats(container){
+    createMenuCalculs1(container){
         // creation du texte
         const text = new GUI.TextBlock();
-        text.text = "Materiels"
+        text.text = "Formules"
         text.fontSize=30
         text.fontFamily="Montserrat Black"
         text.color ="deepskyblue"
         text.height="25px"
-        text.top = "5px"
+        text.top = "10px"
         text.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP
         container.addControl(text);
-    
+ 
+        const textCalc = new GUI.TextBlock();
+        textCalc.text = "Calculs"
+        textCalc.fontSize=30
+        textCalc.fontFamily="Montserrat Black"
+        textCalc.color ="deepskyblue"
+        textCalc.height="25px"
+        textCalc.top = "110px"
+        textCalc.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP
+        container.addControl(textCalc);
+     }
 
-        // creation de la bille
-        const bille = GUI.Checkbox.AddCheckBoxWithHeader('Bille ',(value)=>{
-            // console.log('bille');  
-        })
-        bille.children[1].color = 'black'
-        bille.verticalAlignment=GUI.Control.VERTICAL_ALIGNMENT_TOP
-        bille.top = 40
-        // container.addControl(bille);
-    
-        //text boitier 1
-        const textBille = new GUI.TextBlock();
-        textBille.text = "Taille du boitier Jaune "
-        textBille.height = "15px"
-        textBille.top="55px"
-        textBille.left = "-10px"
-        textBille.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP
-        container.addControl(textBille)
+    createMenuMats(container){
+        
         
         //define slider as an array
         this._sliders = [];
@@ -167,26 +186,50 @@ export class UI {
     
         advancedTexture.addControl(container1)
 
-        const container2 = new GUI.Container();
+        this._container2 = new GUI.Container("container2");
     
-        container2.background = "white"
-        container2.width = "300px"
-        container2.height=0.3
+        this._container2.background = "white"
+        this._container2.width = 0.23
+        this._container2.height=0.4
     
-        container2.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT
-        container2.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP
-        container2.top = "380px"
-        container2.left = "30px"
+        this._container2.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT
+        this._container2.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP
+        this._container2.top = "200px"
+        this._container2.left = "30px"
+        advancedTexture.addControl(this._container2)
+
+        this._container3 = new GUI.Container("container3");
     
-        advancedTexture.addControl(container2)
+        this._container3.background = "white"
+        this._container3.width = 0.23
+        this._container3.height=0.4
+    
+        this._container3.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT
+        this._container3.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP
+        this._container3.top = "200px"
+        this._container3.left = "-30px"
+        advancedTexture.addControl(this._container3)
+
+    
         container1.isVisible = false;
         this.createMenuMats(container1);
-        this.createMenuCalculs(container2);
-        this.textMassses(container2);
+        this.createMenuCalculs(this._container2);
+        this.createMenuCalculs1(this._container3);
+
+        this.textMassses(this._container2);
+        this.textMassses(this._container3);
+
+
+        this.textMassses2(this._container2);
+        this.textMassses1(this._container2);
+
         this.createNewMenuMat(advancedTexture);
 
         // Code de japhet
-        // container2.isVisible = false
+        this._container2.isVisible = false;
+        this._container3.isVisible = false;
+        container1.isVisible = false;
+
     }
 
     createButtonActionMenu(){
@@ -201,6 +244,7 @@ export class UI {
         this._buttonAction[0].height = "39px";
         this._buttonAction[0].background = 'white';
         this._buttonAction[0].color = "deepskyblue";
+        this._buttonAction[0].isVisible = true;
         
         panel.addControl(this._buttonAction[0]);
       
@@ -234,10 +278,32 @@ export class UI {
         clockTime.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
         clockTime.resizeToFit = true;
         clockTime.height = "96px";
+        clockTime.top = "150px";
         clockTime.width = "220px";
+        clockTime.left = "-250px";
         clockTime.fontFamily = "Viga";
         advancedTexture.addControl(clockTime);
         this._clockTime = clockTime;
+        
+    }
+
+    public Chrono1(advancedTexture){
+        //Game timer text
+        const clockTime = new GUI.TextBlock();
+        clockTime.name = "clock";
+        clockTime.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+        clockTime.fontSize = "48px";
+        clockTime.color = "white";
+        clockTime.text = "00:00";
+        clockTime.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        clockTime.top = "150px";
+        clockTime.left = "250px";
+        clockTime.resizeToFit = true;
+        clockTime.height = "96px";
+        clockTime.width = "220px";
+        clockTime.fontFamily = "Viga";
+        advancedTexture.addControl(clockTime);
+        this._clockTime1 = clockTime;
         
     }
 
@@ -256,15 +322,14 @@ export class UI {
     //format the time so that it is relative to 11:00 -- game time
     private _formatTime(time: number): string {
         let minsPassed = Math.floor(time / 60); //seconds in a min 
-        let secPassed = time % 240; // goes back to 0 after 4mins/240sec
+        let secPassed = time % 100; // goes back to 0 after 4mins/240sec
         //gameclock works like: 4 mins = 1 hr
         // 4sec = 1/15 = 1min game time        
             this._mString = Math.floor(minsPassed / 1) ;
             this._sString = (secPassed / 1 < 10 ? "0" : "") + secPassed / 1;
         
-        let day = (this._mString == 11 ? " " : " ");
         
-        return ("0"+this._mString + ":" + this._sString + day);
+        return (this._mString < 10 ? "0" + this._mString + ":" + this._sString : this._mString + ":" + this._sString);
     }
 
     public updateHud(): void {
@@ -273,6 +338,45 @@ export class UI {
 
             this.time = curTime; //keeps track of the total time elapsed in seconds
             this._clockTime.text = this._formatTime(curTime);
+        }
+            
+    }
+
+
+    //---- Game Timer ----
+    public startTimer1(): void {
+        if(!this._stopTimer1){
+            this._startTime1 = new Date().getTime();
+            this._stopTimer1 = false;
+        }
+    }
+    
+    public stopTimer1(): void {
+        this._stopTimer1 = true;
+    }
+
+
+    //format the time so that it is relative to 11:00 -- game time
+    private _formatTime1(time: number): string {
+        const minsPassed = Math.floor(time / 60); //seconds in a min 
+        const secPassed = time % 100; // goes back to 0 after 4mins/240sec
+        //gameclock works like: 4 mins = 1 hr
+        // 4sec = 1/15 = 1min game time        
+            this._mString1 = Math.floor(minsPassed / 1) ;
+            this._sString1 = (secPassed / 1 < 10 ? "0" : "") + secPassed / 1;
+        
+        const day = (this._mString1 == 11 ? " " : " ");
+        
+        return (this._mString1 < 10 ? "0" + this._mString1 + ":" + this._sString1 + day : "" + this._mString1 + ":" + this._sString1 + day);
+    }
+
+
+    public updateHud1(): void {
+        if(!this._stopTimer1 && this._startTime1 != null ){
+            const curTime = Math.floor((new Date().getTime() - this._startTime1) / 10) + this._prevTime1; // divide by 1000 to get seconds
+
+            this.time1 = curTime; //keeps track of the total time elapsed in seconds
+            this._clockTime1.text = this._formatTime1(curTime);
         }
             
     }
@@ -310,61 +414,63 @@ export class UI {
         const texts = ["m1", "m2","Données"]
         for (let i = 0; i <= 4; i++) {
             this._textMasse[i] = new GUI.TextBlock("m1");
-            this._textMasse[i].width = "200px";
-            this._textMasse[i].height = "20px";
+            this._textMasse[i].width = "250px";
             this._textMasse[i].top = posy;
-            this._textMasse[i].horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
             this._textMasse[i].verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
             // if(i<3){
             //     this._textMasse[i].text = texts[i]+" = " +this._sliders[i].value+" kg";
             // }
-            this._textMasse[i].left = "50px";
+            this._textMasse[i].left = "0px";
+            container.addControl(this._textMasse[i]);
+            posy += 20;
+        }
+       
+        
+
+    }
+
+    textMassses1(container){
+        
+        this._textMasse[2].top = 70;
+        this._textMasse[4].width = "230px";
+        this._textMasse[2].text = "Puissance = Travail/temps \n Travail = Force x Déplacement ";
+       
+        this._textMasse[3].text = "Force déployée : 50 N \n Distance parcourue : 10 m \n répétée 3 fois consécutive \n Temps= ??";
+        this._textMasse[2].top = "-80px"
+        this._textMasse[3].top = "30px"
+
+
+    }
+
+    textMassses2(container){
+                let posy = 95;
+
+                
+
+        for (let i = 5; i <= 7; i++) {
+            this._textMasse[i] = new GUI.TextBlock("m1");
+            this._textMasse[i].width = "250px";
+            this._textMasse[i].top = posy;
+            this._textMasse[i].verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+            // if(i<3){
+            //     this._textMasse[i].text = texts[i]+" = " +this._sliders[i].value+" kg";
+            // }
+            this._textMasse[i].left = "0px";
             container.addControl(this._textMasse[i]);
             posy += 20;
         }
 
-        this._textMasse[2].top = 70;
-        this._textMasse[4].width = "250px";
-        this._textMasse[2].text = "Données";
-        this._textMasse[0].text = "Force  = " +this._sliders[0].value+" N";
-        this._textMasse[1].text = "Distance  = " +this._sliders[1].value+" m";
+        this._textMasse[6].top = -80;
+        this._textMasse[6].text = "Puissance = Travail/temps \n Travail = Force x Déplacement ";
 
-        this._textMasse[3].text = "W =  Force x Distance";
-        this._textMasse[3].top = 140;
-        this._textMasse[2].underline = true;
-        
 
-        //text for formules
-        let posy1 = 70;
-        let text:any;
-        text = [];
-        for (let i = 0; i <= 4; i++) {
-            text[i] = new GUI.TextBlock("m1");
-            text[i].width = "200px";
-            text[i].height = "20px";
-            text[i].top = posy1;
-            text[i].horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-            text[i].verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
-            text[i].left = "120px";
-            container.addControl(text[i]);
-            posy1 += 25;
-        }
-
-        // text[0].text = "Formules";
-        // text[0].underline = true;
-        // text[1].text = "P1 = m1xg";
-        // text[2].text = "P2 = m2xg";
-        // text[3].text = "P12 = (m12)xg";
-
-        //application numérique
-        text[4].text = "AN";
-        text[4].underline = true;
-        text[4].horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-        text[4].left = "45px";
-
-        this._textMasse[4].top = 190;
+        this._textMasse[5].text = "Force déployée : 50 N \n Distance parcourue : 10 m \n répétée 3 fois consécutive \n Temps= ??";
+        this._textMasse[5].top = "30px"
 
     }
+
+  
+
 
     createNewMenuMat(advancedTexture){
         const selectbox= new GUI.SelectionPanel("sp");
@@ -386,8 +492,10 @@ export class UI {
         this.groupSliders[1] = new GUI.CheckboxGroup("");
         this.groupSliders[1].top = "10px";
         selectbox.addGroup(this.groupSliders[1])
+        selectbox.isVisible = false;
      
     }
+
   
     
 

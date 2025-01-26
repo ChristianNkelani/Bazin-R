@@ -50,9 +50,12 @@ export class Environement {
   // this._ui.startTimer();
   this.scene.onBeforeRenderObservable.add(() => {
     // when the game isn't paused, update the timer
-    
         this._ui.updateHud();
-        // console.log(this.boitiers[0].position._y);
+        this._ui.updateHud1();
+
+        // console.log("b1",this.boitiers[0].position._x);
+        // console.log("b2", this.boitiers[1].position._x);
+
   });
 
   this.scene.enablePhysics(
@@ -73,17 +76,10 @@ export class Environement {
 
   //action des sliders
   this.actionButtonMenu();  
+
   //creategravity
   this.createGravity();
-  //action slider
-  // this.actionGroupSlider();
 
-  //verification de la position des boitiers
-  // this.creqteFil();
-
-  // this.createMesures();
-
-  // this.createLabels();
 
   this.fonction();
 
@@ -190,8 +186,11 @@ export class Environement {
            
       this.createImpulse();
       this._ui._stopTimer = false;
+      this._ui._stopTimer1 = false;
 
       this._ui.startTimer();
+      this._ui.startTimer1();
+
       this.cliquer = false;
     
     }
@@ -199,32 +198,15 @@ export class Environement {
     
   })
 
-  this.scene.registerAfterRender(() => {
-    if(this.cliquer !== true){
-      this.wheelFI.rotate(Axis.X, Math.PI/2, Space.WORLD); 
-    }
-  }); 
-
 
   this._ui._buttonAction[1].onPointerUpObservable.add(()=>{
     this.toRestart();
   })
   }
+
+
   toRestart(){
-    //repositionate boitier
-
-    this.boitiers[0].physicsImpostor.dispose();
-
-
-    this.boitiers[0].position.y = 0.7;
-    this.boitiers[0].position.x = 6.5;
-    this.boitiers[0].position.z = -0.25
-
-
-    this.boitiers[0].rotation.x = 0;
-    this.boitiers[0].rotation.y = 0;
-    this.boitiers[0].rotation.z = 0;
-
+  
     
     //reset clocktime
     this.cliquer=true;
@@ -232,6 +214,12 @@ export class Environement {
     this._ui._mString = 0;
     this._ui.time = 0;
     this._ui._clockTime.text = "00:00";
+
+    //restart second chrono
+    this._ui._sString1 = "00";
+    this._ui._mString1 = 0;
+    this._ui.time1 = 0;
+    this._ui._clockTime1.text = "00:00";
   }
 
   createImpulse(){// Initialiser le PhysicsImpostor
@@ -246,6 +234,7 @@ export class Environement {
     const vitesse1 = -0.05*this.force;
     
     const update = () => {
+      
       if (bouger) {
         // Mettre à jour la vitesse
         this.boitiers[0].physicsImpostor.setLinearVelocity(new Vector3(0, 0, vitesse1));
@@ -428,6 +417,7 @@ export class Environement {
   }
   }
 
+  
 
   fonction(){
     let animationStarted = false; // Drapeau pour indiquer si l'animation a commencé
@@ -447,17 +437,21 @@ export class Environement {
      // Création des machines
      const machine1 = MeshBuilder.CreateBox("machine1", { size: 0.3 });
      machine1.position = new Vector3(3, 1, -1); // Position initiale de la première machine
+     machine1.material = this.changeMaterialColor(255,0,0);
+     
  
      const machine2 = MeshBuilder.CreateBox("machine2", { size: 0.3 });
      machine2.position = new Vector3(3, 1, -5); // Position initiale de la deuxième machine
- 
+     machine2.material = this.changeMaterialColor(0,255,0);
+
      // Fonction pour ajouter une bille sur la surface
      function placeBall(position: Vector3, scene: Scene,color) {
          const ball = MeshBuilder.CreateSphere("ball", { diameter: 0.2 }, scene);
          ball.position = position;
-         const ballMaterial = new StandardMaterial("ballMaterial", scene);
-         ballMaterial.diffuseColor = color; // Couleur bleue pour la bille
-         ball.material = ballMaterial;
+        //  const ballMaterial = new StandardMaterial("ballMaterial", scene);
+        //  ballMaterial.diffuseColor = color; // Couleur bleue pour la bille
+        //  ball.material = ballMaterial;
+         return ball;
      }
  
      // Variables pour gérer les mouvements et le placement des billes en lignes et colonnes
@@ -477,17 +471,21 @@ export class Environement {
  
      // Animation des machines
      this.scene.registerBeforeRender(() => {
+
+      console.log("m1", machine1.position._z)
+      console.log("m2", machine2.position._z)
          if (!animationStarted) return; // Sortir si l'animation n'a pas commencé
  
          // Machine 1 (rapide) se déplace en fonction de sa vitesse
          counterMachine1++;
          if (counterMachine1 >= speedMachine1) { // Gérer la vitesse en fonction du compteur
              if (rowIndex1 < 3) {
-                 if (colIndex1 < 7) {
+                 if (colIndex1 < 6) {
                      const ballPosition1 = new Vector3(3 + colIndex1 * gridSpacing, 0.1, -1 + rowIndex1 * gridSpacing);
-                     placeBall(ballPosition1, this.scene, new Vector3(0,0,255)); // Place la bille à la position actuelle
+                     const newball = placeBall(ballPosition1, this.scene, new BABYLON.Vector3(255,0,0)); // Place la bille à la position actuelle
+                     newball.material = this.changeMaterialColor(255,0,0);
                      machine1.position.x = 1 + colIndex1 * gridSpacing;
-                     machine1.position.z = -1 + rowIndex1 * gridSpacing;
+                     machine1.position.z = -2 + rowIndex1 * gridSpacing;
                      colIndex1++;
                  } else {
                      colIndex1 = 0;
@@ -501,9 +499,10 @@ export class Environement {
          counterMachine2++;
          if (counterMachine2 >= speedMachine2) { // Gérer la vitesse en fonction du compteur
              if (rowIndex2 < 3) {
-                 if (colIndex2 < 7) {
+                 if (colIndex2 < 6) {
                      const ballPosition2 = new Vector3(3 + colIndex2 * gridSpacing, 0.1, -6 + rowIndex2 * gridSpacing);
-                     placeBall(ballPosition2, this.scene, new Vector3(255,0,0)); // Place la bille à la position actuelle
+                     const newball = placeBall(ballPosition2, this.scene, new Vector3(255,0,0)); // Place la bille à la position actuelle
+                     newball.material = this.changeMaterialColor(0,255,0);
                      machine2.position.x = 1 + colIndex2 * gridSpacing;
                      machine2.position.z = -5 + rowIndex2 * gridSpacing;
                      colIndex2++;
@@ -514,29 +513,52 @@ export class Environement {
              }
              counterMachine2 = 0; // Réinitialiser le compteur pour la machine 2
          }
+
+         if(machine1.position._x == 6 && machine1.position._z == 0){
+            this._ui.stopTimer();
+            this._ui._textMasse[5].text = "Force déployée : 50 N \n Distance parcourue : 10 m \n répétée 3 fois consécutive \n Temps= " + this._ui._mString+ "." + this._ui._sString + " secondes";
+            
+          }
+         if(machine2.position._x == 6 && machine2.position._z == -3){
+           this._ui.stopTimer1();
+           this._ui._textMasse[3].text = "Force déployée : 50 N \n Distance parcourue : 10 m \n répétée 3 fois consécutive \n Temps= " + this._ui._mString1 + "." + this._ui._sString1 + " secondes";
+
+         }
      });
  
      // GUI (User Interface) pour le bouton
-     const advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
- 
-     const startButton = GUI.Button.CreateSimpleButton("startButton", "Démarrer l'animation");
-     startButton.width = "150px";
-     startButton.height = "40px";
-     startButton.color = "white";
-     startButton.background = "green";
-     startButton.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
-     startButton.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-     startButton.top = "20px"; // Position en haut
- 
-     // Action du bouton
-     startButton.onPointerClickObservable.add(() => {
-         animationStarted = true;
-         startButton.isEnabled = false; // Désactiver le bouton après démarrage
+  
+     this._ui._buttonAction[0].onPointerUpObservable.add(()=>{
+        this._ui._stopTimer = false; 
+        this._ui._stopTimer1 = false; 
+
+        this._ui.startTimer();
+        this._ui.startTimer1();
+
+        animationStarted = true;
      });
  
-     advancedTexture.addControl(startButton); // Ajouter le bouton à l'interface GUI
- 
   }
+
+    // ! voir les parametres
+ voirCalcul() {
+  if (this._ui._container2.isVisible == true) {
+    this._ui._container2.isVisible = false;
+    this._ui._container3.isVisible = false;
+  } else {
+    this._ui._container2.isVisible = true;
+    this._ui._container3.isVisible = true;
+  }
+}
+// !voir les calculs
+// voirParam() {
+//   if (this._ui._selectbox.isVisible == true) {
+//     this._ui._selectbox.isVisible = false;
+//   } else {
+//     this._ui._selectbox.isVisible = true;
+//   }
+// }
+
 
 
 } 

@@ -12,7 +12,9 @@
   <main :class="{ 'blur-sm': flou == true }">
     <!-- Boutton pour la fin de la simulation -->
     <div
-      class="absolute top-2 left-2 bg-white py-3 px-4 bg-white rounded-full flex justify-center items-center cursor-pointer"
+      class="absolute bottom-6 right-20 bg-white py-3 px-4 bg-white rounded-full flex justify-center items-center cursor-pointer"
+      @click="testfinal"
+
     >
       Fin de la simulation
     </div>
@@ -73,6 +75,7 @@ import LoadingScreen from "@/components/LoadingScreen.vue";
 import { Experience4 } from "@/scenes/Energie_cinetique_potentielle/App";
 import Questions from "../components/debut_experience/question.vue";
 import { Question } from "@/scenes/Experience1/question";
+import { QcmStore } from "@/stores/store";
 
 export default defineComponent({
   name: "Inertie",
@@ -123,6 +126,14 @@ export default defineComponent({
     },
     voirCalcul() {
       this.experience4._environement.voirCalcul();
+    },
+    testfinal() {
+      const store = QcmStore();
+      this.voirCard();
+      this.flou = true;
+      store.card = 3;
+      store.currentPage = 0;
+      store.etat = "deux";
     },
   },
 });

@@ -54,7 +54,7 @@ export class Experience2 {
     // camera.setTarget(new Vector3(8, 1, -2.5)); 
 
     
-    camera.attachControl();
+    camera.detachControl();
     const hemiLight = new HemisphericLight(
       "hemiLight",
       new Vector3(0, 1, 0),

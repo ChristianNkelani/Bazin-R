@@ -34,6 +34,38 @@
       "options": ["Vrai", "Faux"],
       "correctAnswer": "Faux",
       "points": 1
+    },
+    {
+      "question": "Gravité et gravitation signifient la même chose.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    },
+    {
+      "question": "L’accélération de la pesanteur d’un corps en chute libre est positive.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    },
+    {
+      "question": "Un corps sans masse ne peut pas tomber en chute libre.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Vrai",
+      "points": 1
+    },
+    {
+      "question": "L’accélération d’un corps en chute libre dépend de sa masse et de la force gravitationnelle lui appliquée par la Terre.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Vrai",
+      "points": 1
+    },
+    {
+      "question": "Le temps d’un corps en chute libre est calculé par √(2*h/g).",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Vrai",
+      "points": 1
     }
+   
+    
   ]
   

@@ -56,10 +56,11 @@ export class Experience3 {
     camera.speed = 0.5;
     camera.rotation._y = Math.PI / 2;
     camera.rotation._x = Math.PI / 14;
-    camera.detachControl();
+    camera.attachControl();
+    // camera.detachControl();
 
     // console.log(camera.position.x, camera.position.y, camera.position.z, camera.rotation.x, camera.rotation.y, camera.rotation.z)
-    // camera.attachControl();
+                  // camera.attachControl();
     const hemiLight = new HemisphericLight(
       "hemiLight",
       new Vector3(0, 1, 0),

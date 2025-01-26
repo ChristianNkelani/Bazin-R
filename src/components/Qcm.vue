@@ -74,7 +74,7 @@
             {{ score }} / {{ totalPoints }}
           </p>
         </div>
-        <h2 class="pt-16">Liste des bonnes reponse</h2>
+        <h2 class="pt-16">Liste de bonnes reponse</h2>
         <ul
           class="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400"
           v-for="(question, index) in questions"

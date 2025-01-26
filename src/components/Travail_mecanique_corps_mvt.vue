@@ -12,9 +12,20 @@
     fichier="travail_mecanique_corps"
   />
   <main :class="{ 'blur-sm': flou == true }">
+
+    <!-- Boutton pour la fin de la simulation -->
+    <div
+      class="absolute bottom-2 right-2 bg-white py-3 px-4 bg-white rounded-full flex justify-center items-center cursor-pointer"
+      @click="testfinal"
+    >
+      Fin de la simulation
+    </div>
+
+
     <!-- Le bouton des parametres -->
     <div
       class="absolute top-2 left-2 bg-white w-16 h-16 rounded-full flex justify-center items-center cursor-pointer"
+      @click="afficheParam"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -36,8 +47,11 @@
         />
       </svg>
     </div>
+
+    <!-- button calculs -->
     <div
-      class="absolute bottom-2 left-2 bg-white w-16 h-16 rounded-full flex justify-center items-center cursor-pointer"
+        class="absolute bottom-2 left-2 bg-white w-16 h-16 rounded-full flex justify-center items-center cursor-pointer"
+        @click = "afficherMenu"
     >
       <img src="../assets/calculer.png" class="w-8 h-8" alt="" />
     </div>
@@ -52,6 +66,7 @@ import { defineComponent } from "vue";
 import LoadingScreen from "@/components/LoadingScreen.vue";
 import Questions from "../components/debut_experience/question.vue";
 import { Question } from "@/scenes/Experience1/question";
+import { QcmStore } from "@/stores/store";
 import { Experience8 } from "@/scenes/Travail_mecanique_corps_mvt/App";
 
 export default defineComponent({
@@ -61,61 +76,21 @@ export default defineComponent({
     return {
       loaded: false,
       flou: false,
+      experience: null,
       presentation: "Japhet BAZ le leader",
       titre: "Détermination du poids d'un corps",
       questions: [
         new Question(
           "<<Loi>> de Newton et <<Principe>> de Newton signifien la même chose",
           ["Vrai", "Faux"]
-          // ),
-          // new Question(
-          //     'La dynamique est l\'étude de la persévérance d\'un corpso',
-          //     [
-          //         'Vrai',
-          //         'Faux',
-          //     ]
-          // ),
-          // new Question(
-          //     'La masse seule d\'un corps peut déterminer la force à exercer par un objet.',
-          //     [
-          //         'Vrai',
-          //         'Faux',
-          //     ]
-          // ),
-          // new Question(
-          //     'Lors d\'un mouvement, la masse s\'oppose au mouvement',
-          //     [
-          //         'Vrai',
-          //         'Faux',
-          //     ]
-          // ),
-          // new Question(
-          //     'Le poids et la masse sont deux grandeurs physiquement identiques.',
-          //     [
-          //         'Vrai',
-          //         'Faux',
-          //     ]
-          // ),
-          // new Question(
-          //     'La dynamique est l\'étude de la persévérance d\'un corpso',
-          //     [
-          //         'Vrai',
-          //         'Faux',
-          //     ]
-          // ),
-          // new Question(
-          //     'Comment se calcul le poid d\'un corps?',
-          //     [
-          //         'Poids = (masse pesée sur la balance) x (accélération de la pesanteur)',
-          //         'Poids = masse pesée sur la balance',
-          //     ]
+        
         ),
       ],
     };
   },
   mounted() {
     const canvas = document.querySelector("canvas") as HTMLCanvasElement;
-    new Experience8(canvas, this.setLoaded, this.voirCard);
+    this.experience = new Experience8(canvas, this.setLoaded, this.voirCard);
   },
   methods: {
     setLoaded() {
@@ -128,6 +103,23 @@ export default defineComponent({
     cacherCard() {
       document.querySelector("#card").classList.add("hidden");
       this.flou = false;
+    },
+
+    testfinal() {
+      const store = QcmStore();
+      this.voirCard();
+      this.flou = true;
+      store.card = 3;
+      store.currentPage = 0;
+      store.etat = "deux";
+    },
+
+    afficheParam(){
+      this.experience._environement._ui.afficheParametre1();
+    },
+
+    afficherMenu() {
+      this.experience._environement._ui.affichageParametre();
     },
   },
 });

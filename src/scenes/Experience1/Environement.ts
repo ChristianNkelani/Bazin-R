@@ -44,6 +44,7 @@ export class Environement {
     this.scene.onBeforeRenderObservable.add(() => {
       // when the game isn't paused, update the timer
       this._ui.updateHud();
+      this._ui.updateHud1();
     });
 
     //enable physics
@@ -177,9 +178,11 @@ export class Environement {
     this._ui._buttonAction[0].onPointerUpObservable.add(() => {
       if (this.cliquer == true) {
         this._ui._stopTimer = false;
+        this._ui._stopTimer1 = false;
         this.createImpostor();
 
         this._ui.startTimer();
+        this._ui.startTimer1();
         this.cliquer = false;
       }
     });
@@ -203,19 +206,29 @@ export class Environement {
     this.ball2.position.x = 7.2;
     this.ball2.position.z = -4.4;
     this.ball2.diameter = 0.25;
-    this.ball1.physicsImpostor.dispose();
-
+    
     this.ball1.position.y = 2.5;
     this.ball1.position.x = 7.2;
     this.ball1.position.z = -0.7;
     this.ball2.diameter = 0.25;
-    this.ball2.physicsImpostor.dispose();
+    if(this.ball2.physicsImpostor || this.ball1.physicsImpostor ){
+      
+      this.ball1.physicsImpostor.dispose();
+      this.ball2.physicsImpostor.dispose();
+
+    }
     this.cliquer = true;
     this._ui._sString = "00";
     this._ui._mString = 0;
     this._ui.time = 0;
     // this._ui._stopTimer = false;
     this._ui._clockTime.text = "00:00";
+
+    //restart second chrono
+    this._ui._sString1 = "00";
+    this._ui._mString1 = 0;
+    this._ui.time1 = 0;
+    this._ui._clockTime1.text = "00:00";
   }
 
   async createGravity() {

@@ -19,6 +19,8 @@ export class UI {
     public _sString = "00";
     public _mString = 0;
     public gravitation: -9.8;
+    public selectbox;
+    public container2;
 
     public box :any;
     public textedynamique : string
@@ -177,6 +179,8 @@ export class UI {
         container2.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP
         container2.top = "380px"
         container2.left = "30px"
+
+        this.container2 = container2;
     
         advancedTexture.addControl(container2)
         container1.isVisible = false;
@@ -184,6 +188,25 @@ export class UI {
         this.createMenuCalculs(container2);
         this.textMassses(container2);
         this.createNewMenuMat(advancedTexture);
+
+        //container pour les mesures sur la table
+        const containerMesure = new GUI.Container();
+        containerMesure.background = "transparent";
+        containerMesure.width = "670px";
+        containerMesure.height = "20px";
+        containerMesure.top = "-210px"; 
+        containerMesure.left = "-20px";                
+        containerMesure.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+
+        advancedTexture.addControl(containerMesure);
+
+        const mesures = new GUI.TextBlock();
+        mesures.text = "0m                          1m                          2m                          3m                          4m";
+        mesures.color = "white";
+        mesures.width = "670px"
+        mesures.left = "10px";
+        mesures.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_CENTER;
+        containerMesure.addControl(mesures);
 
         // Code de japhet
         // container2.isVisible = false
@@ -256,7 +279,7 @@ export class UI {
     //format the time so that it is relative to 11:00 -- game time
     private _formatTime(time: number): string {
         let minsPassed = Math.floor(time / 60); //seconds in a min 
-        let secPassed = time % 240; // goes back to 0 after 4mins/240sec
+        let secPassed = time % 100; // goes back to 0 after 4mins/240sec
         //gameclock works like: 4 mins = 1 hr
         // 4sec = 1/15 = 1min game time        
             this._mString = Math.floor(minsPassed / 1) ;
@@ -264,7 +287,8 @@ export class UI {
         
         let day = (this._mString == 11 ? " " : " ");
         
-        return ("0"+this._mString + ":" + this._sString + day);
+        return (this._mString < 10 ? "0" + this._mString + ":" + this._sString : this._mString + ":" + this._sString);
+
     }
 
     public updateHud(): void {
@@ -280,27 +304,30 @@ export class UI {
 
       // creation de la chambre a vide
 
-    chambreVide(){
-    this.box = MeshBuilder.CreateBox(
-      "box", {
-        width : 2.8,
-        height : 5.9,
-        size:5.5
-      }, 
-      this._scene
-    );
-    this.box.position.x = 6.5;
-    this.box.position.z = -2.5;
-    const glass = new PBRMaterial("glass", this._scene);
-    glass.alpha = 0.5;
-    glass.directIntensity = 0.0;
-    glass.environmentIntensity = 0.7;
-    glass.cameraExposure = 0.66;
-    glass.cameraContrast = 1.66;
-    glass.microSurface = 1;
-    glass.reflectivityColor = new Color3(0.2, 0.2, 0.2);
-    glass.albedoColor = new Color3(0.95, 0.95, 0.95);
-    this.box.material = glass
+
+    createNewMenuMat(advancedTexture){
+        const selectbox= new GUI.SelectionPanel("sp");
+        selectbox.width=0.20;
+        selectbox.height = 0.25;
+        selectbox.left = "20px";
+        selectbox.paddingLeft = "15px"
+        selectbox.background = "white";
+        selectbox.top = "70px";
+        selectbox.setPadding("5px","5px","10px","5px");
+
+        selectbox.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+        selectbox.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        advancedTexture.addControl(selectbox);
+
+        this.selectbox = selectbox;
+
+        this.groupSliders = [];
+        this.groupSliders[0] = new GUI.SliderGroup("Menu Paramètres");
+        selectbox.addGroup(this.groupSliders[0]);
+        this.groupSliders[1] = new GUI.CheckboxGroup("");
+        this.groupSliders[1].top = "10px";
+        selectbox.addGroup(this.groupSliders[1])
+     
     }
 
     textMassses(container){
@@ -310,28 +337,27 @@ export class UI {
         const texts = ["m1", "m2","Données"]
         for (let i = 0; i <= 4; i++) {
             this._textMasse[i] = new GUI.TextBlock("m1");
-            this._textMasse[i].width = "200px";
+            this._textMasse[i].width = "250px";
             this._textMasse[i].height = "20px";
             this._textMasse[i].top = posy;
-            this._textMasse[i].horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+            this._textMasse[i].horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
             this._textMasse[i].verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
             // if(i<3){
             //     this._textMasse[i].text = texts[i]+" = " +this._sliders[i].value+" kg";
             // }
-            this._textMasse[i].left = "50px";
+            this._textMasse[i].left = "0px";
             container.addControl(this._textMasse[i]);
             posy += 20;
         }
 
-        this._textMasse[2].top = 70;
-        this._textMasse[4].width = "250px";
-        this._textMasse[2].text = "Données";
-        this._textMasse[0].text = "Force  = " +this._sliders[0].value+" N";
-        this._textMasse[1].text = "Distance  = " +this._sliders[1].value+" m";
+        this._textMasse[4].width = "230px";
+        this._textMasse[0].text = "Force = 1 N";
+        this._textMasse[1].text = "Distance  = 1 mètre";
 
-        this._textMasse[3].text = "W =  Force x Distance";
+        this._textMasse[3].text = "Travail = Force x Déplacement";
         this._textMasse[3].top = 140;
-        this._textMasse[2].underline = true;
+        this._textMasse[0].top = 80;
+        // this._textMasse[2].underline = true;
         
 
         //text for formules
@@ -366,27 +392,20 @@ export class UI {
 
     }
 
-    createNewMenuMat(advancedTexture){
-        const selectbox= new GUI.SelectionPanel("sp");
-        selectbox.width=0.20;
-        selectbox.height = 0.25;
-        selectbox.left = "20px";
-        selectbox.paddingLeft = "15px"
-        selectbox.background = "white";
-        selectbox.top = "30px";
-        selectbox.setPadding("5px","5px","10px","5px");
+    affichageParametre() {
+        if (this.container2.isVisible == false) {
+          this.container2.isVisible = true;
+        } else {
+          this.container2.isVisible = false;
+        }
+    }
 
-        selectbox.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-        selectbox.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
-        advancedTexture.addControl(selectbox);
-
-        this.groupSliders = [];
-        this.groupSliders[0] = new GUI.SliderGroup("Menu Paramètres");
-        selectbox.addGroup(this.groupSliders[0]);
-        this.groupSliders[1] = new GUI.CheckboxGroup("");
-        this.groupSliders[1].top = "10px";
-        selectbox.addGroup(this.groupSliders[1])
-     
+    afficheParametre1(){
+        if (this.selectbox.isVisible == false) {
+            this.selectbox.isVisible = true;
+          } else {
+            this.selectbox.isVisible = false;
+          }
     }
   
     

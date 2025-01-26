@@ -44,8 +44,9 @@ export class Experience1 {
 
     this.engine.runRenderLoop(() => {
       this.scene.render();
-      if (this._environement.ball1.position._y <= 0.82) {
+      if (this._environement.ball1.position._y <= 0.90 || this._environement.ball2.position._y <= 0.90   ) {
         this._environement._ui.stopTimer();
+        this._environement._ui.stopTimer1();
       }
     });
   }
@@ -70,7 +71,7 @@ export class Experience1 {
       camera.rotation.y,
       camera.rotation.z
     );
-    camera.attachControl();
+    camera.detachControl();
     const hemiLight = new HemisphericLight(
       "hemiLight",
       new Vector3(0, 1, 0),

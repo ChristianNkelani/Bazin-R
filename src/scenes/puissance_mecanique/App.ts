@@ -35,10 +35,7 @@ this._environement = new Environement(this.scene, this.engine, this.setLoaded, v
 
 this.engine.runRenderLoop(()=>{
   this.scene.render();
-  if(this._environement.boitiers[0].position._y <= 0.82  ){
-
-    this._environement._ui.stopTimer();
-  }
+  
 })
 }
 

@@ -55,6 +55,7 @@ export class Environement {
       "studio.glb",
       this.scene
     );
+
     //
     this.setLoaded();
     //
@@ -69,10 +70,10 @@ export class Environement {
     return labo;
   }
   public createBalle() {
-    this.ball1 = MeshBuilder.CreateSphere("ball1", { diameter: 0.5 });
+    this.ball1 = MeshBuilder.CreateSphere("ball1", { diameter: 0.3 });
     this.ball1.position.y = 0.7;
-    this.ball1.position.x = 7;
-    this.ball1.position.z = -0.8;
+    this.ball1.position.x = 9;
+    this.ball1.position.z = 2.5;
     this.ball1.material = this.changeMaterialColor(0, 0, 255);
 
     this.ball2 = MeshBuilder.CreateSphere("ball2", { diameter: 0.3 });
@@ -94,7 +95,7 @@ export class Environement {
     });
 
     this._ui._restart.onPointerUpObservable.add(() => {
-      this.ball1.position.z = -0.8;
+      this.ball1.position.z = 2.5;
     });
   }
 
@@ -106,7 +107,22 @@ export class Environement {
 
     // Définir les points de la courbe
     const points = [
-      new Vector3(6.5, 0.3, -0.8),
+      new Vector3(6.5, 0.3, 2.5),
+      new Vector3(6.6, 0.3, 2.3),
+      new Vector3(6.4, 0.3, 2.1),
+      new Vector3(6.2, 0.3, 1.8),
+      new Vector3(6.1, 0.3, 1.5),
+      new Vector3(6, 0.3, 1.3),
+      new Vector3(6.4, 0.3, 0.9),
+      new Vector3(6.4, 0.3, 0.7),
+      new Vector3(6.4, 0.3, 0.5),
+      new Vector3(6.4, 0.3, 0.3),
+      new Vector3(6.4, 0.3, 0.2),
+      new Vector3(6.4, 0.3, 0.1),
+      // new Vector3(6.4, 0.3, -0.1),
+      // new Vector3(6.4, 0.3, 1.1),
+      // new Vector3(6.4, 0.3, 1.1),
+
       new Vector3(6.7, 0.3, -0.9),
       new Vector3(7.1, 0.3, -1.2),
       new Vector3(6.5, 0.3, -1.4),
@@ -126,6 +142,24 @@ export class Environement {
       new Vector3(7.3, 0.3, -3.8),
       new Vector3(8.5, 0.3, -4.1),
       new Vector3(6.9, 0.3, -4.3),
+      new Vector3(5.7, 0.3, -4.5),
+      new Vector3(5.4, 0.3, -4.6),
+      new Vector3(5.3, 0.3, -4.8),
+      new Vector3(5.1, 0.3, -5),
+      new Vector3(5.3, 0.3, -5.2),
+      new Vector3(5.6, 0.3, -5.4),
+      new Vector3(5.8, 0.3, -5.6),
+      new Vector3(6.1, 0.3, -5.8),
+      new Vector3(6.3, 0.3, -6.1),
+      new Vector3(6.4, 0.3, -6.3),
+      new Vector3(6.6, 0.3, -6.5),
+      new Vector3(6.8, 0.3, -6.5),
+      new Vector3(6.4, 0.3, -6.7),
+      new Vector3(6.3, 0.3, -6.9),
+      new Vector3(6.4, 0.3, -7.1),
+      new Vector3(6.5, 0.3, -7.3),
+
+
     ];
 
     // Créer une spline Catmull-Rom à partir des points
@@ -172,7 +206,7 @@ export class Environement {
 
   chatgpt() {
     // Position initiale de la balle
-    this.ball1.position = new Vector3(7, 0.15, -0.8);
+    this.ball1.position = new Vector3(6, 0.15, 2.5);
 
     // Trajectoire
     let previousPosition = this.ball1.position.clone();
@@ -180,7 +214,7 @@ export class Environement {
     let previousPosition2 = this.ball1.position.clone();
 
 
-    const linePoints: Vector3[] = [previousPosition];
+    const linePoints: Vector3[] = [previousPosition]
 
     this.scene.registerBeforeRender(() => {
       // Mise à jour de la position de la balle (simulation simple d'un mouvement)

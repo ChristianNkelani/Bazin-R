@@ -208,7 +208,7 @@ export class UI {
     this._buttonAction[0].height = "39px";
     this._buttonAction[0].background = "white";
     this._buttonAction[0].color = "deepskyblue";
-    this._buttonAction[0].isVisible = false;
+    // this._buttonAction[0].isVisible = false;
 
     panel.addControl(this._buttonAction[0]);
 

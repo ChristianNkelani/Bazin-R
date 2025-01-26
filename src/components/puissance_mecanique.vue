@@ -1,19 +1,15 @@
 <template>
     <Questions
       id="card"
-      Presentation="Le travail mécanique d'un corps en mouvement est un concept fondamental en physique, lié à l'énergie et au mouvement des objets. Il se réfère à l'énergie transférée à un corps lorsqu'une force est appliquée sur celui-ci et que le corps se déplace en raison de cette force. Voici les principaux concepts et formules associés au travail mécanique :
-                    Définition du Travail Mécanique Le travail (WW) effectué par une force (F) sur un corps est défini comme le produit scalaire de la force et du déplacement (d) du corps. Mathématiquement, cela peut être exprimé comme :
-  
-        W=F*d
-  "
-      titre="Travail mecanique d'un corps en mouvement"
+      Presentation="La puissance mécanique, c’est la quantité d’énergie utilisée ou produite en un certain temps. Par exemple, si tu pousses une balançoire très fort, tu donnes beaucoup d’énergie rapidement, donc tu as une grande puissance. Mais si tu pousses doucement, tu as moins de puissance, car tu donnes l’énergie plus lentement. C’est comme mesurer à quelle vitesse on utilise ou produit de l’énergie !"
+      titre="Puissannce mécanique"
       :cacherCard="cacherCard"
-      :questions="questions"
-      fichier="travail_mecanique_corps"
+     
+      fichier="puissance_mecanique"
     />
     <main :class="{ 'blur-sm': flou == true }">
       <!-- Le bouton des parametres -->
-      <div
+      <!-- <div
         class="absolute top-2 left-2 bg-white w-16 h-16 rounded-full flex justify-center items-center cursor-pointer"
       >
         <svg
@@ -35,9 +31,17 @@
             d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
           />
         </svg>
-      </div>
+      </div> -->
+      <!-- Boutton pour la fin de la simulation -->
+    <div
+      class="absolute bottom-5 right-24 bg-white py-3 px-4 bg-white rounded-full flex justify-center items-center cursor-pointer"
+      @click="testfinal"
+    >
+      Fin de la simulation
+    </div>
       <div
-        class="absolute bottom-2 left-2 bg-white w-16 h-16 rounded-full flex justify-center items-center cursor-pointer"
+        class="absolute top-2 left-2 bg-white w-16 h-16 rounded-full flex justify-center items-center cursor-pointer"
+        @click="voirCalcul()"
       >
         <img src="../assets/calculer.png" class="w-8 h-8" alt="" />
       </div>
@@ -51,7 +55,7 @@
         src="../assets/retour.png"
         alt=""
       />
-    <</RouterLink>
+    </RouterLink>
     </main>
   </template>
   
@@ -61,69 +65,24 @@
   import Questions from "../components/debut_experience/question.vue";
   import { Question } from "@/scenes/Experience1/question";
   import { Experience8 } from "@/scenes/puissance_mecanique/App";
-  
+  import { QcmStore } from "@/stores/store";
+
   export default defineComponent({
     name: "Travail mecanique corps en mvt",
     components: { LoadingScreen, Questions },
     data() {
       return {
+        experience8:null,
         loaded: false,
         flou: false,
         presentation: "Japhet BAZ le leader",
         titre: "Détermination du poids d'un corps",
-        questions: [
-          new Question(
-            "<<Loi>> de Newton et <<Principe>> de Newton signifien la même chose",
-            ["Vrai", "Faux"]
-            // ),
-            // new Question(
-            //     'La dynamique est l\'étude de la persévérance d\'un corpso',
-            //     [
-            //         'Vrai',
-            //         'Faux',
-            //     ]
-            // ),
-            // new Question(
-            //     'La masse seule d\'un corps peut déterminer la force à exercer par un objet.',
-            //     [
-            //         'Vrai',
-            //         'Faux',
-            //     ]
-            // ),
-            // new Question(
-            //     'Lors d\'un mouvement, la masse s\'oppose au mouvement',
-            //     [
-            //         'Vrai',
-            //         'Faux',
-            //     ]
-            // ),
-            // new Question(
-            //     'Le poids et la masse sont deux grandeurs physiquement identiques.',
-            //     [
-            //         'Vrai',
-            //         'Faux',
-            //     ]
-            // ),
-            // new Question(
-            //     'La dynamique est l\'étude de la persévérance d\'un corpso',
-            //     [
-            //         'Vrai',
-            //         'Faux',
-            //     ]
-            // ),
-            // new Question(
-            //     'Comment se calcul le poid d\'un corps?',
-            //     [
-            //         'Poids = (masse pesée sur la balance) x (accélération de la pesanteur)',
-            //         'Poids = masse pesée sur la balance',
-            //     ]
-          ),
-        ],
+        
       };
     },
     mounted() {
       const canvas = document.querySelector("canvas") as HTMLCanvasElement;
-      new Experience8(canvas, this.setLoaded, this.voirCard);
+      this.experience8 = new Experience8(canvas, this.setLoaded, this.voirCard);
     },
     methods: {
       setLoaded() {
@@ -137,6 +96,17 @@
         document.querySelector("#card").classList.add("hidden");
         this.flou = false;
       },
+      voirCalcul() {
+        this.experience8._environement.voirCalcul();
+      },
+      testfinal() {
+        const store = QcmStore();
+        this.voirCard();
+        this.flou = true;
+        store.card = 3;
+        store.currentPage = 0;
+        store.etat = "deux";
+    },
     },
   });
   </script>

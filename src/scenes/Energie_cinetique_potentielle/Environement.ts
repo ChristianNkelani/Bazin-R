@@ -17,6 +17,7 @@ import {
     import "@babylonjs/loaders";
     import { UI } from "./ui";
     import * as GUI from '@babylonjs/gui/2D';
+import { double } from "babylonjs";
 
 
 
@@ -28,10 +29,14 @@ export class Environement {
     ball2 : any;
     inkDrop:any;
     aimants:any;
+    public masse = 0;
+    public masse1 = 0;
+    public hauteur = 0;
+    public hauteur1 = 0;
     physicEngine:any;
 
     cliquer=true;//variable pour activer impostor ou non
-    private _ui:UI;
+    public _ui:UI;
 
 
 constructor(
@@ -66,15 +71,13 @@ constructor(
     // this.createImpostor()
 
 
-     // Fonction d'animation
-     scene.onBeforeRenderObservable.add(() => {
+    this.scene.onBeforeRenderObservable.add(() => {
+        // when the game isn't paused, update the timer
+        this._ui.updateHud();
+        this._ui.updateHud1();
+      });
 
-        // this._ui.texts[0].text =  "Énergie Potentielle: "+this.ball1.position._y;
-        
-        // const kineticEnergy = 0.5 * mass * speed * speed;
-        // kineticEnergyText.text = `Énergie Cinétique: ${kineticEnergy.toFixed(2)}`;
-    
-    });
+   
 
 
 }
@@ -184,14 +187,19 @@ constructor(
 
 createSliders() {
     var hauteur = 3;
-    var hauteur1 = 3;
+    var hauteur1 = 2.5;
+
+    this.hauteur = hauteur;
+    this.hauteur1 = hauteur1;
 
     var g = 9.81;
     var masse = 1;
     var masse1 = 1;
 
+    this.masse = masse;
+    this.masse1 = masse1;
     const displayValue = (value) => {
-        return Math.floor(value * 100) / 100;
+        return (Math.floor(value * 100) / 100).toFixed(2);
     }
 
     const ball1 = this.ball1;
@@ -199,12 +207,18 @@ createSliders() {
     var energiePotentielle1 =  masse*g*hauteur;
     var energiePotentielle2 =  masse1*g*hauteur1;
 
+    const physicEngine = this.physicEngine;
 
-    this._ui._textMasse[0].text = `Énergie Potentielle Balle Jaune: ${energiePotentielle1.toFixed(2)} J`;
-    this._ui._textMasse[2].text = `Énergie Potentielle Balle rouge: ${energiePotentielle2.toFixed(2)} J`;
 
-    this._ui._textMasse[1].text = `Énergie Potentielle Balle Jaune: 0 J`;
-    this._ui._textMasse[3].text = `Énergie Potentielle Balle Jaune: 0 J`;
+
+    this._ui._textMasse[2].text = "EpA = "+masse1.toFixed(2) + " x "+ g.toFixed(2) + " x "  + hauteur1.toFixed(2) + " = " + energiePotentielle2.toFixed(2) + " Joules";
+    this._ui._textMasse[0].text = "Ep = "+masse.toFixed(2) + " x "+ g.toFixed(2) + " x "  + hauteur.toFixed(2) + " = " + energiePotentielle1.toFixed(2) + " Joules";
+
+    //texte pour le calcul de l energie cinetique balle jaune
+    this._ui._textMasse[1].text = "Ec4 = (1/2) x " + masse + " x " + "(" + hauteur + "/temps) ²" ;
+    this._ui._textMasse[3].text = "Ec4 = (1/2) x " + masse1+ " x " + "(" + hauteur1 + "/temps) ²" ;
+
+
 
 
     const setBall1 = (value) => {
@@ -212,22 +226,13 @@ createSliders() {
         ball1.scaling.y = value;
         ball1.scaling.z = value;
         masse = value;
+        this.masse = value.toFixed(2);
 
         // Calcul de l'énergie potentielle
-        this._ui._textMasse[0].text = "Énergie Potentielle: " + (value * hauteur * g).toFixed(2);
+        this._ui._textMasse[0].text = "Ep = "+masse.toFixed(2) + " x "+ g.toFixed(2) + " x "  + hauteur.toFixed(2) + " = " + (value * hauteur * g).toFixed(2) + " Joules";
 
-        // Calcul de l'énergie cinétique (norme de la vitesse)
-        if (ball1.physicsImpostor) {
-            var velocity1 = ball1.physicsImpostor.getLinearVelocity();
-        var speed1 = velocity1.length(); // Norme du vecteur vitesse
+        this._ui._textMasse[1].text = "Ec2 = (1/2) x " + value.toFixed(2) + " x " + "(" + this.hauteur.toFixed(2) + "/"  + "temps) ²" ;
 
-        // Introduire une tolérance pour considérer la balle au repos
-        if (speed1 < 0.001) {  // Tolérance de 0.001
-            speed1 = 0;
-        }
-
-    }
-    this._ui._textMasse[1].text = "Énergie Cinétique: " + (0.5 * value * Math.pow(speed1, 2)).toFixed(2);
     }
 
     const setHauteur1 = (value) => {
@@ -235,7 +240,10 @@ createSliders() {
         this.ball1.position.y = value;
 
         // Mise à jour de l'énergie potentielle pour ball1
-        this._ui._textMasse[0].text = "Énergie Potentielle: " + (masse * value * -this.physicEngine.gravity._y).toFixed(2);
+        this._ui._textMasse[0].text = "Ep = "+masse.toFixed(2) + " x "+ g.toFixed(2) + " x "  + value.toFixed(2) + " = " + (masse *g*value).toFixed(2)+ " Joules";
+        this._ui._textMasse[1].text = "Ec3 = (1/2) x " + masse.toFixed(2) + " x " + "(" + value.toFixed(2) + "/"  + "temps) ²" ;
+        
+        this.hauteur = value;
         hauteur = value;
     }
 
@@ -244,73 +252,42 @@ createSliders() {
         this.ball2.position.y = value;
 
         // Mise à jour de l'énergie potentielle pour ball2
-        this._ui._textMasse[2].text = "Énergie Potentielle balle jaune: " + (masse1 * value * -this.physicEngine.gravity._y).toFixed(2);
+        this._ui._textMasse[2].text = "Ep = "+masse1.toFixed(2) + " x "+ g.toFixed(2) + " x "  + value.toFixed(2) + " = " + (masse1 *g*value).toFixed(2)+ " Joules";
+        this._ui._textMasse[3].text = "Ec2 = (1/2) x " + masse1.toFixed(2) + " x " + "(" + value.toFixed(2) + "/"  + "temps) ²" ;
+        
         hauteur1 = value;
     }
 
     const setBall2 = (value) => {
         ball2.scaling.x = value;
-        ball2.scaling.y = value;var velocity1 = ball1.physicsImpostor.getLinearVelocity();
-        var speed1 = velocity1.length(); // Norme du vecteur vitesse
-
-        // Introduire une tolérance pour considérer la balle au repos
-        if (speed1 < 0.001) {  // Tolérance de 0.001
-            speed1 = 0;
-        }
-
-        this._ui._textMasse[1].text = "Énergie Cinétique balle jaune: " + (0.5 * value * Math.pow(speed1, 2)).toFixed(2);
+        ball2.scaling.y = value;
         ball2.scaling.z = value;
         masse1 = value;
 
+        // Calcul de l'énergie potentielle
+        this._ui._textMasse[2].text = "Ep = "+masse1.toFixed(2) + " x "+ g.toFixed(2) + " x "  + hauteur1.toFixed(2) + " = " + (value * hauteur1 * g).toFixed(2) + " Joules";
+        
+        this._ui._textMasse[3].text = "Ec2 = (1/2) x " + value.toFixed(2) + " x " + "(" + this.hauteur1.toFixed(2) + "/"  + "temps) ²" ;
+        
     }
 
-    const physicEngine = this.physicEngine;
 
     const setGravitaion = (value) => {
         physicEngine.setGravity(new BABYLON.Vector3(0, -(value), 0));
         
         // Mise à jour de l'énergie potentielle pour les deux balles
-        this._ui._textMasse[0].text = "Énergie Potentielle balle Jaune: " + (masse * hauteur * value).toFixed(2);
-        this._ui._textMasse[2].text = "Énergie Potentielle balle rouge: " + (masse1 * hauteur1 * value).toFixed(2);
+        this._ui._textMasse[0].text = "Ep = "+masse.toFixed(2) + " x "+ value.toFixed(2) + " x "  + hauteur.toFixed(2) + " = " + (masse * value * hauteur).toFixed(2) + " Joules";
+        this._ui._textMasse[2].text = "Ep = "+masse1.toFixed(2) + " x "+ value.toFixed(2) + " x "  + hauteur1.toFixed(2) + " = " + (masse1 *value*hauteur1).toFixed(2)+ " Joules";
     }
 
 
-
-// Calculer l'énergie cinétique des balles
-this.scene.onBeforeRenderObservable.add( () =>  {
-    // Calculer l'énergie cinétique de la première balle
-     // Calcul de l'énergie cinétique (norme de la vitesse)
-     if (ball1.physicsImpostor) {
-        var velocity1 = ball1.physicsImpostor.getLinearVelocity();
-        var speed1 = velocity1.length(); // Norme du vecteur vitesse
-
-        // Introduire une tolérance pour considérer la balle au repos
-        if (speed1 < 0.001) {  // Tolérance de 0.001
-            speed1 = 0;
-        }
-
-}
-this._ui._textMasse[1].text = "Énergie Cinétique Balle jaune: " + (0.5 * masse * Math.pow(speed1, 2)).toFixed(2);
-    
-if (ball2.physicsImpostor) {
-    var velocity1 = ball2.physicsImpostor.getLinearVelocity();
-var speed1 = velocity1.length(); // Norme du vecteur vitesse
-
-// Introduire une tolérance pour considérer la balle au repos
-if (speed1 < 0.001) {  // Tolérance de 0.001
-    speed1 = 0;
-}
-
-}
-this._ui._textMasse[3].text = "Énergie Cinétique Balle rouge : " + (0.5 * masse1 * Math.pow(speed1, 2)).toFixed(2);
-});
 
 
     // Ajout des sliders pour la gravitation, les masses et les hauteurs des balles
     this._ui.groupSliders[0].addSlider("g = ", setGravitaion, "m/s2", 0, 15, 9.81, displayValue);
     this._ui.groupSliders[0].addSlider("Masse balle jaune", setBall1, "Kg", 1, 2, 1, displayValue);
-    this._ui.groupSliders[0].addSlider("Masse balle rouge", setBall2, "Kg", 1, 2, 1, displayValue);
     this._ui.groupSliders[0].addSlider("Hauteur de la balle jaune", setHauteur1, "m", 1, 3, 3, displayValue);
+    this._ui.groupSliders[0].addSlider("Masse balle rouge", setBall2, "Kg", 1, 2, 1, displayValue);
     this._ui.groupSliders[0].addSlider("Hauteur de la balle rouge", setHauteur2, "m", 1, 3, 2.5, displayValue);
 }
 
@@ -319,9 +296,16 @@ this._ui._textMasse[3].text = "Énergie Cinétique Balle rouge : " + (0.5 * mass
         
         this._ui._buttonAction[0].onPointerUpObservable.add(()=>{
             if(this.cliquer == true){
-              this._ui._stopTimer = false;
-                this.createImpostor();        
+
+                
+                this._ui._stopTimer = false;
+                this._ui._stopTimer1 = false;
+
+                this.createImpostor();  
+                        
                 this._ui.startTimer();
+                this._ui.startTimer1();
+
                 this.cliquer = false;
              
             }
@@ -339,15 +323,15 @@ this._ui._textMasse[3].text = "Énergie Cinétique Balle rouge : " + (0.5 * mass
     // Animation
     public createImpostor():void{
         this.ball1.physicsImpostor = new PhysicsImpostor(
-        this.ball1, 
-        PhysicsImpostor.BoxImpostor,
-        { mass: 1, restitution : 0.75 }
+            this.ball1, 
+            PhysicsImpostor.BoxImpostor,
+            { mass: 1, restitution : 0.75 }
         )
         
         this.ball2.physicsImpostor = new PhysicsImpostor(
-        this.ball2,
-        PhysicsImpostor.BoxImpostor,
-        {mass : 1 , restitution : 0.75}
+            this.ball2,
+            PhysicsImpostor.BoxImpostor,
+            {mass : 1 , restitution : 0.75}
         )
     }
 
@@ -366,11 +350,19 @@ toRestart(){
     this.ball2.diameter = 0.25
     this.ball2.physicsImpostor.dispose();
     this.cliquer=true;
+
+    //restart first chrono
     this._ui._sString = "00";
     this._ui._mString = 0;
     this._ui.time = 0;
-    // this._ui._stopTimer = false;
     this._ui._clockTime.text = "00:00";
+
+
+    //restart second chrono
+    this._ui._sString1 = "00";
+    this._ui._mString1 = 0;
+    this._ui.time1 = 0;
+    this._ui._clockTime1.text = "00:00";
     
     }
     
@@ -381,6 +373,12 @@ toRestart(){
       this._ui._container2.isVisible = false;
     } else {
       this._ui._container2.isVisible = true;
+    }
+
+    if (this._ui._container3.isVisible == true) {
+        this._ui._container3.isVisible = false;
+    } else {
+        this._ui._container3.isVisible = true;
     }
   }
   // !voir les calculs

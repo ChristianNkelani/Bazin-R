@@ -24,6 +24,14 @@ export class UI {
   public _mString = 0;
   public gravitation: -9.8;
 
+  public time1: number; //keep track to signal end game REAL TIME
+  private _prevTime1 = 0;
+  public _clockTime1: any; //GAME TIME
+  private _startTime1: number;
+  public _stopTimer1: boolean;
+  public _sString1 = "00";
+  public _mString1 = 0;
+
   public box: any;
   public textedynamique: string;
 
@@ -44,6 +52,7 @@ export class UI {
       undefined
     );
     this.Chrono(advancedTexture);
+    this.Chrono1(advancedTexture);
   }
 
   public createMenu() {
@@ -169,11 +178,11 @@ export class UI {
 
     this.selectbox = new GUI.SelectionPanel("sp");
     this.selectbox.width = 0.2;
-    this.selectbox.height = 0.5;
+    this.selectbox.height = 0.45;
     this.selectbox.left = "50px";
     this.selectbox.paddingLeft = "15px";
     this.selectbox.background = "white";
-    this.selectbox.top = "20px";
+    this.selectbox.top = "80px";
     this.selectbox.setPadding("5px", "5px", "10px", "5px");
 
     this.selectbox.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
@@ -231,7 +240,7 @@ export class UI {
     advancedTexture.addControl(panel);
   }
 
-  public Chrono(advancedTexture) {
+  public Chrono(advancedTexture){
     //Game timer text
     const clockTime = new GUI.TextBlock();
     clockTime.name = "clock";
@@ -242,11 +251,75 @@ export class UI {
     clockTime.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
     clockTime.resizeToFit = true;
     clockTime.height = "96px";
+    clockTime.top = "150px";
     clockTime.width = "220px";
+    clockTime.left = "-250px";
     clockTime.fontFamily = "Viga";
     advancedTexture.addControl(clockTime);
     this._clockTime = clockTime;
+    
+}
+
+  public Chrono1(advancedTexture){
+    //Game timer text
+    const clockTime = new GUI.TextBlock();
+    clockTime.name = "clock";
+    clockTime.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+    clockTime.fontSize = "48px";
+    clockTime.color = "white";
+    clockTime.text = "00:00";
+    clockTime.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+    clockTime.top = "150px";
+    clockTime.left = "250px";
+    clockTime.resizeToFit = true;
+    clockTime.height = "96px";
+    clockTime.width = "220px";
+    clockTime.fontFamily = "Viga";
+    advancedTexture.addControl(clockTime);
+    this._clockTime1 = clockTime;
+    
+}
+
+
+ //---- Game Timer ----
+ public startTimer1(): void {
+  if(!this._stopTimer1){
+      this._startTime1 = new Date().getTime();
+      this._stopTimer1 = false;
   }
+}
+
+public stopTimer1(): void {
+  this._stopTimer1 = true;
+}
+
+
+//format the time so that it is relative to 11:00 -- game time
+private _formatTime1(time: number): string {
+  const minsPassed = Math.floor(time / 60); //seconds in a min 
+  const secPassed = time % 100; // goes back to 0 after 4mins/240sec
+  //gameclock works like: 4 mins = 1 hr
+  // 4sec = 1/15 = 1min game time        
+      this._mString1 = Math.floor(minsPassed / 1) ;
+      this._sString1 = (secPassed / 1 < 10 ? "0" : "") + secPassed / 1;
+  
+  const day = (this._mString1 == 11 ? " " : " ");
+  
+  return (this._mString1 < 10 ? "0" + this._mString1 + ":" + this._sString1 + day : "" + this._mString1 + ":" + this._sString1 + day);
+}
+
+
+public updateHud1(): void {
+  if(!this._stopTimer1 && this._startTime1 != null ){
+      const curTime = Math.floor((new Date().getTime() - this._startTime1) / 10) + this._prevTime1; // divide by 1000 to get seconds
+
+      this.time1 = curTime; //keeps track of the total time elapsed in seconds
+      this._clockTime1.text = this._formatTime1(curTime);
+  }
+      
+}
+
+
 
   //---- Game Timer ----
   public startTimer(): void {
@@ -261,17 +334,16 @@ export class UI {
 
   //format the time so that it is relative to 11:00 -- game time
   private _formatTime(time: number): string {
-    const minsPassed = Math.floor(time / 60); //seconds in a min
-    const secPassed = time % 240; // goes back to 0 after 4mins/240sec
+    let minsPassed = Math.floor(time / 60); //seconds in a min 
+    let secPassed = time % 100; // goes back to 0 after 4mins/240sec
     //gameclock works like: 4 mins = 1 hr
-    // 4sec = 1/15 = 1min game time
-    this._mString = Math.floor(minsPassed / 1);
-    this._sString = (secPassed / 1 < 10 ? "0" : "") + secPassed / 1;
-
-    const day = this._mString == 11 ? " " : " ";
-
-    return "0" + this._mString + ":" + this._sString + day;
-  }
+    // 4sec = 1/15 = 1min game time        
+        this._mString = Math.floor(minsPassed / 1) ;
+        this._sString = (secPassed / 1 < 10 ? "0" : "") + secPassed / 1;
+    
+    
+    return (this._mString < 10 ? "0" + this._mString + ":" + this._sString : this._mString + ":" + this._sString);
+}
 
   public updateHud(): void {
     if (!this._stopTimer && this._startTime != null) {

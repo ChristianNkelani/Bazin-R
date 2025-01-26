@@ -53,9 +53,10 @@ export class Environement {
     //creation des materiels
     this.importLaboratoire();
     this.createMateriels();
-    this.createImpostor();
-    this.createground();
     this.createground2();
+    this.createImpostor();
+    this.Ui();
+    this.createground();
     this.newc();
 
     //action des sliders
@@ -134,11 +135,11 @@ export class Environement {
     this.ball1.physicsImpostor = new PhysicsImpostor(
       this.ball1,
       PhysicsImpostor.BoxImpostor,
-      { mass: 1, restitution: 1 }
+      { mass: 0.5, restitution: 1 }
     );
+  } 
 
-
-
+  public Ui(){
      // Ajouter un GUI pour contrôler la force de la lance
      var advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
@@ -174,7 +175,7 @@ export class Environement {
          force = new Vector3(0, 0, value); // Mettez à jour la force en fonction de la valeur du slider
      });
      
-     button.onPointerClickObservable.add(() => {
+     button.onPointerDownObservable.add(() => {
          // Lancer le ballon avec la force spécifiée par le slider
         //  this.ball1.physicsImpostor = new PhysicsImpostor(
         //   this.ball1,
@@ -197,7 +198,7 @@ export class Environement {
     ground.physicsImpostor = new PhysicsImpostor(
       ground,
       PhysicsImpostor.BoxImpostor,
-      { mass: 0, restitution: 0 }
+      { mass: 0, restitution: 0.5 }
     );
     ground.isVisible = false;
 

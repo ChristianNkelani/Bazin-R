@@ -32,6 +32,7 @@ export class Environement {
   public force=1;
   physicEngine:any;
   wheelFI:any;
+  public bouger:any;
 
   constructor(
   scene:Scene, engine:Engine,
@@ -79,8 +80,7 @@ export class Environement {
   this.actionGroupSlider();
 
   //verification de la position des boitiers
-  this.creqteFil();
-
+  // this.createLines(this.scene);
   this.createMesures();
 
   this.createLabels();
@@ -122,7 +122,8 @@ export class Environement {
   this.boitiers[0] = MeshBuilder.CreateBox("ball", {width: 0.25, height:0.25, size:0.25}, this.scene);
   this.boitiers[0].position.y = 0.7;
   this.boitiers[0].position.x = 6.5;
-  this.boitiers[0].position.z = -0.7
+  this.boitiers[0].position.z = -0.25
+  
   this.boitiers[0].material = this.changeMaterialColor(170,255,0)
 
   
@@ -181,13 +182,14 @@ export class Environement {
 
   actionButtonMenu(){
   this._ui._buttonAction[0].onPointerUpObservable.add(()=>{
+
     if(this.cliquer == true){
            
+      this.cliquer = false;
       this.createImpulse();
       this._ui._stopTimer = false;
 
       this._ui.startTimer();
-      this.cliquer = false;
     
     }
 
@@ -195,7 +197,7 @@ export class Environement {
   })
 
   this.scene.registerAfterRender(() => {
-    if(this.cliquer !== true){
+    if(this.bouger == true){
       this.wheelFI.rotate(Axis.X, Math.PI/2, Space.WORLD); 
     }
   }); 
@@ -207,9 +209,11 @@ export class Environement {
   }
   toRestart(){
     //repositionate boitier
+    if(this.boitiers[0].physicsImpostor){
+      this.boitiers[0].physicsImpostor.dispose();
 
-    this.boitiers[0].physicsImpostor.dispose();
-
+    }
+    this.bouger = false;
 
     this.boitiers[0].position.y = 0.7;
     this.boitiers[0].position.x = 6.5;
@@ -227,29 +231,34 @@ export class Environement {
     this._ui._mString = 0;
     this._ui.time = 0;
     this._ui._clockTime.text = "00:00";
+
+    this._ui._stopTimer = true;
+    this._ui.stopTimer();
   }
 
   createImpulse(){// Initialiser le PhysicsImpostor
     this.boitiers[0].physicsImpostor = new PhysicsImpostor(
       this.boitiers[0],
       PhysicsImpostor.BoxImpostor,
-      { mass: 10, friction: 0.04 }
+      { mass: 10, friction: 0.01 }
     );
     
     // Variable globale pour le mouvement
-    let bouger = true;
-    const vitesse1 = -0.05*this.force;
+     this.bouger = true;
+    const vitesse1 = -0.06*this.force;
     
     const update = () => {
-      if (bouger) {
+      if (this.bouger) {
         // Mettre à jour la vitesse
         this.boitiers[0].physicsImpostor.setLinearVelocity(new Vector3(0, 0, vitesse1));
         
         // Vérifier la condition d'arrêt
-        if (this.boitiers[0].position._z <= -this.distance) { // Notez l'utilisation de .z au lieu de ._z
+        if (this.boitiers[0].position._z <= (-this.distance-0.3)) { // Notez l'utilisation de .z au lieu de ._z
           // this.boitiers[0].dispose();
-          bouger = false; // Arrêter le mouvement
-          this.cliquer=true;
+          this.bouger = false; // Arrêter le mouvement
+          this._ui._stopTimer = true;
+          this._ui.stopTimer();
+          this.cliquer=false;
         }
         console.log("z est", this.boitiers[0].position._z)
       }
@@ -325,6 +334,10 @@ export class Environement {
   }
 
   actionGroupSlider(){
+    const physicEngine = this.physicEngine;
+
+    physicEngine.setGravity(new Vector3(0,-1,0))
+
     //valeur de p1
     var masse1=2;
     var masse2=1;
@@ -341,13 +354,13 @@ export class Environement {
     const setDist = (value) => {
       this.distance = value;
       masse1 = value;
-      this._ui._textMasse[1].text = "Distance = "+ value.toFixed(2)+"Kg";
+      this._ui._textMasse[1].text = "Distance = "+ value.toFixed(2)+"mètres";
       this._ui._textMasse[4].text = "W = "+(value.toFixed(2))+"x"+(masse2).toFixed(2)+" = "+(masse2*value).toFixed(2)+" J";
 
 
     }
 
-    const physicEngine = this.physicEngine;
+    
     const setForce = (value) => { 
       physicEngine.setGravity(new Vector3(0,-(value),0))
       this._ui._textMasse[4].text = "W = "+(masse1.toFixed(2))+"x"+(value.toFixed(2))+" = "+(value*masse1).toFixed(2)+" J";
@@ -356,7 +369,7 @@ export class Environement {
       masse2=value;
 
     }
-    this._ui.groupSliders[0].addSlider("Force du moteur =  ",setForce,"N",1,20,2,displayValue);
+    this._ui.groupSliders[0].addSlider("Force du moteur =  ",setForce,"N",1,20,1,displayValue);
     this._ui.groupSliders[0].addSlider("Distance à parcourir OO'",setDist,"m",1,4,1,displayValue);
     // this._ui.groupSliders[0].addSlider("Masse boîtier rouge",setBall2,"Kg",1,2,1,displayValue);
 
@@ -374,16 +387,49 @@ export class Environement {
 
   }
 
-  creqteFil(){
+  //fonction pour creer les lignes 
+  createLines(scene){
+    const points = [
+      this.boitiers[1].position,
+      new  BABYLON.Vector3(7.7,0.7,-5)
+    ];
+
+    //dessiner la ligne
+    const line = BABYLON.MeshBuilder.CreateLines("line",{points: points}, scene);
+    // line.scaling = new BABYLON.Vector3(10,10,10);
+
+    const lineMaterial = new BABYLON.StandardMaterial("lineMaterial", scene);
+    // lineMaterial.emissiveColor = new BABYLON.Color3(255,0,0);
+
+    // line.material = lineMaterial;
+  
+
+    const points1 = [
+      this.boitiers[0].position,
+      new  BABYLON.Vector3(6.5,0.7,-5)
+    ];
+
+    //dessiner la ligne
+    const line1 = BABYLON.MeshBuilder.CreateLines("line",{points: points1}, scene);
+    // line.scaling = new BABYLON.Vector3(10,10,10);
+
+
+    const linear = BABYLON.MeshBuilder.CreateBox("box",{width:0.1, height:0.2, size:2}, scene )
+    linear.position = new BABYLON.Vector3(7.3,0.5,-4.15);
+    linear.rotation._y = Math.PI/2;
+
+  }
+
+  createFil() {
     // Création d'un fil (cylindre)
     var wireLength = 5; // Longueur du fil
-    var wire = MeshBuilder.CreateCylinder("wire", { height: wireLength, diameter: 0.1 }, this.scene);
+    var wire = MeshBuilder.CreateCylinder(
+      "wire",
+      { height: wireLength, diameter: 0.1 },
+      this.scene
+    );
     wire.position.y = wireLength / 2; // Position initiale du fil
-    wire.rotation.x = Math.PI/2;
-
-
-
-
+    wire.rotation.x = Math.PI / 2;
   }
 
   createMesures(){
@@ -394,7 +440,7 @@ export class Environement {
           const line = MeshBuilder.CreateLines("line" + i, {
               points: [
                   new Vector3(i-0.5, 0.7, 8.5),  // start of the line
-                  new Vector3(i-0.5, 0.7, 5.5)    // end of the line
+                  new Vector3(i-0.5, 0.7, 5.68)    // end of the line
               ]
           });
           line.rotation.y = Tools.ToRadians(90);
@@ -422,6 +468,8 @@ export class Environement {
       labelTexture.addControl(label);
   }
   }
+
+  
 
 
 } 

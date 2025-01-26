@@ -6,9 +6,51 @@
       "points": 1
     },
     {
-      "question": "Lors d'une interaction, l'énergie mécanique ne se conserve pas.",
+      "question": "L’énergie est la capacité qu’a un système pour fournir un effort .",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Vrai",
+      "points": 1
+    },
+    {
+      "question": "L’énergie est transférable d’un système à un autre sous différentes formes.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Vrai",
+      "points": 1
+    },
+    {
+      "question": "J est appelé équivalent mécanique.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Vrai",
+      "points": 1
+    },
+    {
+      "question": "La chaleur peut se convertir en mouvement et vice-versa.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Vrai",
+      "points": 1
+    },
+    {
+      "question": "L’énergie ne concerne que les êtres vivants.",
       "options": ["Vrai", "Faux"],
       "correctAnswer": "Faux",
+      "points": 1
+    },
+    {
+      "question": "L’énergie n’a jamais été renouvelable.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Vrai",
+      "points": 1
+    },
+    {
+      "question": "L’énergie cinétique est créée par la vitesse d’un corps massique.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Vrai",
+      "points": 1
+    },
+    {
+      "question": "Lors d’une interaction, l’énergie mécanique ne se conserve jamais.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Vrai",
       "points": 1
     }
   ]

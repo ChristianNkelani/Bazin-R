@@ -178,8 +178,7 @@ export class UI {
     this._container2.width = 0.25;
     this._container2.height = 0.4;
 
-    this._container2.horizontalAlignment =
-      GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+    this._container2.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
     this._container2.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
     this._container2.top = "350px";
     this._container2.left = -70;
@@ -254,6 +253,7 @@ export class UI {
     clockTime.fontFamily = "Viga";
     advancedTexture.addControl(clockTime);
     this._clockTime = clockTime;
+    clockTime.isVisible = false;
   }
 
   //---- Game Timer ----

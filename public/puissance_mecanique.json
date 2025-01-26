@@ -1,8 +1,29 @@
 [
     {
-      "question": "La puissance est aussi une force. Dieu est puissant, cela signifie ausi qu'il est strictement fort!.",
+      "question": "Avoir de l’énergie c’est nécessairement être puissant.",
       "options": ["Vrai", "Faux"],
       "correctAnswer": "Faux",
+      "explication": "Faux, la puissance est la quantité d'énergie transférée ou convertie par unité de temps. C’est une mesure de la vitesse à laquelle le travail est effectué ou de la quantité d’énergie transférée ou convertie par unité de temps. Elle exprime donc la capacité à accomplir du travail rapidement.",
+      "points": 1
+    },
+    {
+      "question": "Puissance et pression signifient la même chose.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "explication": "Faux, la puissance est la quantité d'énergie transférée ou convertie par unité de temps. C’est une mesure de la vitesse à laquelle le travail est effectué ou de la quantité d’énergie transférée ou convertie par unité de temps. Elle exprime donc la capacité à accomplir du travail rapidement.",
+      "points": 1
+    },
+    {
+      "question": "Le Watt est l’unité de la puissance dans le système international.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Vrai",
+      "explication": "Faux, la puissance est la quantité d'énergie transférée ou convertie par unité de temps. C’est une mesure de la vitesse à laquelle le travail est effectué ou de la quantité d’énergie transférée ou convertie par unité de temps. Elle exprime donc la capacité à accomplir du travail rapidement.",
+      "points": 1
+    },
+    {
+      "question": "1 CV (cheval-vapeur) équivaut à 736Watts.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Vrai",
       "explication": "Faux, la puissance est la quantité d'énergie transférée ou convertie par unité de temps. C’est une mesure de la vitesse à laquelle le travail est effectué ou de la quantité d’énergie transférée ou convertie par unité de temps. Elle exprime donc la capacité à accomplir du travail rapidement.",
       "points": 1
     }

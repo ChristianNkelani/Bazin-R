@@ -24,6 +24,66 @@
       "options": ["Vrai", "Faux"],
       "correctAnswer": "Faux",
       "points": 1
+    },
+    {
+      "question": "Le travail ne dépend pas du chemin suivi mais uniquement des extrémités A et B. ",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Vrai",
+      "points": 1
+    },
+    {
+      "question": "Le travail moteur est équivalent à celui résistant.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Vrai",
+      "points": 1
+    },
+    {
+      "question": "Le travail s’exprime aussi en calories comme l’énergie ",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Vrai",
+      "points": 1
+    },
+    {
+      "question": "Il n’y a travail que lorsqu’un corps tourne à l’instar d’un moteur.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Faux",
+      "points": 1
+    },
+    {
+      "question": "Il n’y a travail que lorsqu’il y a transfert physique de l’énergie par contact.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Vrai",
+      "points": 1
+    },
+    {
+      "question": "Actuellement, on peut travailler sans pour autant dépenser son énergie physique et sans se déplacer physiquement.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Vrai",
+      "points": 1
+    },
+    {
+      "question": "Le travail est un coefficient exprimant le transfert de l’énergie pour le déplacement d’un corps .",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Vrai",
+      "points": 1
+    },
+    {
+      "question": "L’angle effectué entre la direction du déplacement et celle de la force influence le travail effectué .",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Vrai",
+      "points": 1
+    },
+    {
+      "question": "Le travail est égal au moment d’inertie car ils s’expriment par une même unité .",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Vrai",
+      "points": 1
+    },
+    {
+      "question": "Le travail et la chaleur sont deux grandeurs strictement distinctes tant que l’énergie interne les reliant n’est pas nulle.",
+      "options": ["Vrai", "Faux"],
+      "correctAnswer": "Vrai",
+      "points": 1
     }
   ]
   
