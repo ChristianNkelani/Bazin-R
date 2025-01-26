@@ -1,20 +1,23 @@
 <template>
 
-<div class="h-screen w-screen bg-cover bg-[url('@/assets/architecture2.jpg')] flex items-center justify-center flex-col px-16">
-    <div class="w-full px-32 flex justify-between">
-        <h1 class=" text-blue-500 font-bold text-3xl  uppercase">
-            {{ tt }}
-        </h1>
-        <p><RouterLink to="/categorie">Retour</RouterLink></p>
-    </div>
-    <div class="flex gap-3 py-10">
-            <div v-for="experience in filteredExperiences" :key="experience.cat" class="">
-                <RouterLink :to="`/${experience.id}`">
-                    <div class="bg-[url('@/assets/architecture2.jpg')] bg-cover border shadow-md w-48 h-48 rounded-full text-center flex items-center justify-center p-3">
-                        {{ experience.nom }}
-                    </div>
-                </RouterLink>
-            </div>
+<div class="h-screen w-screen bg-cover bg-[url('@/assets/fond.gif')] flex items-center justify-center flex-col">
+    <div style="background-color: rgba(0, 0, 50, .5);" class="w-full h-full flex flex-col items-center justify-center">   
+
+        <div class="w-full px-32 flex justify-between text-white">
+            <h1 class=" text-yellow-500 font-bold text-3xl  uppercase">
+                {{ tt }}
+            </h1>
+            <p><RouterLink to="/categorie">Retour</RouterLink></p>
+        </div>
+        <div class="flex gap-10 py-10">
+                <div v-for="experience in filteredExperiences" :key="experience.cat" class="flex-1">
+                    <RouterLink :to="`/${experience.id}`">
+                        <div class="text-white bg-cover shadow-md  text-center flex items-center justify-center px-5 h-64 py-16 text-lg" style="background-color: rgba(0, 0, 0, .3);">
+                            {{ experience.nom }}
+                        </div>
+                    </RouterLink>
+                </div>
+        </div>full
     </div>
     
 

@@ -1,6 +1,6 @@
 <template>
   <div class="p-4" style="width: 600px">
-    <h1 class="text-3xl font-bold mb-6 text-center">Questionnaire</h1>
+    <h1 class="text-3xl font-bold mb-6 text-center text-yellow-500">Questionnaire</h1>
     <div class="relative w-full h-96 overflow-hidden">
       <transition-group
         name="slide"
@@ -14,7 +14,7 @@
           class="w-full h-full flex-shrink-0 px-4"
         >
           <div v-if="store.currentPage === index">
-            <h2 class="text-xl font-semibold mb-2">{{ question.question }}</h2>
+            <h2 class="text-xl font-semibold mb-2 text-white">{{ question.question }}</h2>
             <div
               v-for="(option, optionIndex) in question.options"
               :key="optionIndex"
@@ -27,13 +27,13 @@
                 v-model="selectedOption"
                 class="mr-2"
               />
-              <label :for="'option' + optionIndex" class="text-gray-700">{{
+              <label :for="'option' + optionIndex" class="text-gray-100">{{
                 option
               }}</label>
             </div>
             <button
               @click="nextPage"
-              class="mt-3 bg-blue-500 text-white py-2 px-4 rounded"
+              class="mt-3 bg-yellow-500 text-white py-2 px-4 rounded"
             >
               Suivant
             </button>

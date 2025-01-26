@@ -67,23 +67,23 @@
          
 
           <div class="grid grid-cols-2 text-center mb-5">
-            <div class="cursor-pointer" :class="{'bg-blue-300': currentExp}" @click="currentExp = true" >MRU</div>
-            <div class="cursor-pointer" :class="{'bg-blue-300': !currentExp}" @click="currentExp = false" >MRUV</div>
+            <div class="cursor-pointer" :class="{'bg-blue-300': currentExp}" @click="changerExp" >MRU</div>
+            <div class="cursor-pointer" :class="{'bg-blue-300': !currentExp}" @click="changerExp" >MRUV</div>
           </div>
           <!-- Bouton Suivant -->
 
-          <div v-if="graphiqueId ==1" class="w-full h-full">
+          <div v-if="exp =='mruv'" class="w-full h-full">
             <LineChart :data="chartData" :options="chartOptions" />
           </div>
-          <div v-if="graphiqueId ==2" class="w-full h-full">
+          <div class="w-full h-full" v-if="exp=='mru'">
             <LineChart :data="chartData2" :options="chartOptions2" />
           </div>
 
 
-          <div class="flex justify-around">
+          <!-- <div class="flex justify-around">
             <div class="bg-red-300 px-3 py-1 text-white cursor-pointer" @click="voirGraphique(1)" v-if="graphiqueId == 2">Precedant</div>
             <div class="bg-blue-300 px-3 py-1 text-white cursor-pointer" @click="voirGraphique(2)" v-if="graphiqueId == 1">Suivant</div>
-          </div>
+          </div> -->
        </div>
       <LoadingScreen :isLoaded="loaded" />
       <canvas></canvas>
@@ -115,6 +115,7 @@ export default defineComponent({
   data() {
     return {
       mru: null,
+      exp : "mru",
       loaded: false,
       flou: false,
       graphique : false,
@@ -126,7 +127,7 @@ export default defineComponent({
         datasets: [
           {
             label: 'Espace-Temps',
-            data: [1, 2, 3, 4, 5],
+            data: [1, 2, 3, 2, 1],
             borderColor: 'rgb(75, 192, 192)',
             fill: false
           }
@@ -192,8 +193,13 @@ export default defineComponent({
     },
     voirGraphique(id){
       this.graphiqueId = id;
+    },
+    changerExp(){
+      this.currentExp = !this.currentExp;
+      this.exp = this.exp == "mru"?"mruv":"mru"; 
+  
     }
-  }
+  },
 });
 </script>
 <style scoped>

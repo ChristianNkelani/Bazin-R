@@ -1,15 +1,15 @@
 <template>
   <div
-    class="h-screen w-screen bg-cover bg-[url('@/assets/architecture2.jpg')] flex items-center justify-center px-16"
+    class="h-screen w-screen bg-cover bg-[url('@/assets/fond.gif')]"
   >
-    <div>
-      <div class="px-32 py-16 flex justify-between">
-        <h1 class="text-blue-500 font-bold text-3xl uppercase">Categories</h1>
-        <p class="text-blue-500 font-bold">
+    <div class="h-full w-full flex items-center justify-center px-16 flex-col" style="background-color: rgba(0, 0, 50, .5);">
+      <div class="px-48 py-16 flex justify-between w-full">
+        <h1 class="text-gray-100 font-bold text-3xl uppercase">Categories</h1>
+        <p class="text-gray-100 font-bold">
           <RouterLink to="/">Retour</RouterLink>
         </p>
       </div>
-      <div class="grid grid-cols-3 gap-3">
+      <div class="grid grid-cols-3 gap-10 px-48 h-full">
         <RouterLink
           :to="{ name: 'catDetail', params: { cat: 2, tit: 'Dynamique' } }"
         >
