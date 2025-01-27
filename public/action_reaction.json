@@ -2,7 +2,7 @@
     {
       "question": "L'action et la réaction sont deux forces égales mais opposées qui agissent toujours sur un même et seul objet.",
       "options": ["Vrai", "Faux"],
-      "correctAnswer": "Vrai",
+      "correctAnswer": "Faux",
       "points": 1
     },
     {
@@ -14,13 +14,13 @@
     {
       "question": "L’action agit sur l’objet poussé ou tiré tandis que la réaction agit sur le pousseur ou le tireur.",
       "options": ["Vrai", "Faux"],
-      "correctAnswer": "Faux",
+      "correctAnswer": "Vrai",
       "points": 1
     },
     {
       "question": "L’action et la réaction ne s’annulent pas.",
       "options": ["Vrai", "Faux"],
-      "correctAnswer": "Faux",
+      "correctAnswer": "Vrai",
       "points": 1
     }
   ]

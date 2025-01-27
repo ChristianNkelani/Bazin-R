@@ -1,8 +1,8 @@
 [
     {
       "question": "Sans intervention d'une force externe, un objet doit rester au repos ou en mouvement. Raison pour laquelle le mot <<inertie>> ne fait allusion qu'au repos mais pas au mouvement.",
-      "options": ["Vrai", "Faux"],
-      "correctAnswer": "Faux",
+      "options": ["Vrai", "Faux", "Partie Vrai, mais tout Faux"],
+      "correctAnswer": "Partie Vrai, mais tout Faux",
       "points": 1
     },
     {
@@ -26,25 +26,25 @@
     {
       "question": "L'inertie est la resistance qu'un corps massique oppose  au changement de son mouvement ou de son repos",
       "options": ["Vrai", "Faux"],
-      "correctAnswer": "Faux",
+      "correctAnswer": "Vrai",
       "points": 1
     },
     {
       "question": "L'arrêt ou le mouvement  d'un corps n'a jamais été naturel, la force externe  intervient toujours",
       "options": ["Vrai", "Faux"],
-      "correctAnswer": "Faux",
+      "correctAnswer": "Vrai",
       "points": 1
     },
     {
       "question": "la force n'est pas une grandeur intrinsèque d'un objet mais elle naît de l'interaction entre les objets",
       "options": ["Vrai", "Faux"],
-      "correctAnswer": "Faux",
+      "correctAnswer": "Vrai",
       "points": 1
     },
     {
       "question": "la masse, la charge et l'energie interne sont des grandeurs intrinsèques car elles sont des grandeurs intrinsèques car elles sont mésurées indépendamment des autres objets",
       "options": ["Vrai", "Faux"],
-      "correctAnswer": "Faux",
+      "correctAnswer": "Vrai",
       "points": 1
     }
   ]

@@ -12,12 +12,6 @@
       "points": 1
     },
     {
-      "question": "comment appelle t-on g=9.81 ou g=10 en physique?.",
-      "options": ["la pesanteur", "la gravité","L'accélération de la pesanteur"],
-      "correctAnswer": "L'accélération de la pesanteur",
-      "points": 1
-    },
-    {
       "question": "La gravité n'agit que sur les corps possédant une masse mais en mouvement.",
       "options": ["Vrai", "Faux"],
       "correctAnswer": "Faux",
@@ -44,7 +38,7 @@
     {
       "question": "L’accélération de la pesanteur d’un corps en chute libre est positive.",
       "options": ["Vrai", "Faux"],
-      "correctAnswer": "Faux",
+      "correctAnswer": "Vrai",
       "points": 1
     },
     {

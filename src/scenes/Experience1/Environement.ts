@@ -23,6 +23,7 @@ export class Environement {
   scene: Scene;
   engine: Engine;
   ball1: any;
+  aimants: any = [];
   ball2: any;
   physicEngine: any;
 
@@ -82,6 +83,8 @@ export class Environement {
     aimant1.position.y = 2.5;
     aimant1.position.z = -0.5;
 
+    this.aimants[0] = aimant1;
+
     const aimant2 = MeshBuilder.CreateBox(
       "aimant",
       { width: 0.5, height: 0.08, size: 1, depth: 1 },
@@ -90,6 +93,8 @@ export class Environement {
     aimant2.position.x = 7.3;
     aimant2.position.y = 2.5;
     aimant2.position.z = -4.6;
+
+    this.aimants[1] = aimant2;
 
     this.ball1 = MeshBuilder.CreateSphere(
       "ball",
@@ -163,6 +168,13 @@ export class Environement {
   }
 
   actionButtonMenu() {
+
+    
+    
+    
+
+
+
     this._ui._sliders[0].onValueChangedObservable.add((value) => {
       this.ball1.scaling.x = value;
       this.ball1.scaling.y = value;
@@ -202,12 +214,14 @@ export class Environement {
     this.actionGroupSlider();
   }
   toRestart() {
-    this.ball2.position.y = 2.5;
+
+    this.ball2.position.y = this.aimants[1].position._y;
+    this.ball1.position.y = this.aimants[0].position._y;
+
     this.ball2.position.x = 7.2;
     this.ball2.position.z = -4.4;
     this.ball2.diameter = 0.25;
     
-    this.ball1.position.y = 2.5;
     this.ball1.position.x = 7.2;
     this.ball1.position.z = -0.7;
     this.ball2.diameter = 0.25;
@@ -215,7 +229,7 @@ export class Environement {
       
       this.ball1.physicsImpostor.dispose();
       this.ball2.physicsImpostor.dispose();
-
+      
     }
     this.cliquer = true;
     this._ui._sString = "00";
@@ -230,13 +244,34 @@ export class Environement {
     this._ui.time1 = 0;
     this._ui._clockTime1.text = "00:00";
   }
-
+  
   async createGravity() {
     this.scene.enablePhysics(null, new CannonJSPlugin(true, 10, CANNON));
     this.physicEngine = this.scene.getPhysicsEngine();
   }
-
+  
   actionGroupSlider() {
+    const setHauteur1 = (value) => {
+      this.aimants[0].position.y = value;
+      this.ball1.position.y = value;
+      // Mise à jour de l'énergie potentielle pour ball1
+      // this._ui._textMasse[0].text = "Ep = "+masse.toFixed(2) + " x "+ g.toFixed(2) + " x "  + value.toFixed(2) + " = " + (masse *g*value).toFixed(2)+ " Joules";
+      // this._ui._textMasse[1].text = "Ec3 = (1/2) x " + masse.toFixed(2) + " x " + "(" + value.toFixed(2) + "/"  + "temps) ²" ;
+      
+      // this.hauteur = value;
+      // hauteur = value;
+    }
+  
+  const setHauteur2 = (value) => {
+      this.aimants[1].position.y = value;
+      this.ball2.position.y = value;
+  
+      // Mise à jour de l'énergie potentielle pour ball2
+      // this._ui._textMasse[2].text = "Ep = "+masse1.toFixed(2) + " x "+ g.toFixed(2) + " x "  + value.toFixed(2) + " = " + (masse1 *g*value).toFixed(2)+ " Joules";
+      // this._ui._textMasse[3].text = "Ec2 = (1/2) x " + masse1.toFixed(2) + " x " + "(" + value.toFixed(2) + "/"  + "temps) ²" ;
+      
+      // hauteur1 = value;
+    }
     const displayValue = function (value) {
       return Math.floor(value * 100) / 100;
     };
@@ -287,5 +322,10 @@ export class Environement {
       1,
       displayValue
     );
+
+    this._ui.groupSliders[0].addSlider("Hauteur de la balle jaune", setHauteur1, "m", 1, 3, 3, displayValue);
+    this._ui.groupSliders[0].addSlider("Hauteur de la balle rouge", setHauteur2, "m", 1, 3, 3, displayValue);
+
+    
   }
 }

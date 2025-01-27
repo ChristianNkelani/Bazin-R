@@ -14,13 +14,13 @@
   {
     "question": "La route nationale N°1 de mbanza-ngungu jusqu'à kisantu décrit une trajectoire curviligne.",
     "options": ["Vrai", "Faux"],
-    "correctAnswer": "Vrai",
+    "correctAnswer": "Faux",
     "points": 1
   },
   {
     "question": "Un mouvement est dit rectiligne uniforme si sa trajectoire est une ligne droite et sa vitesse variable.",
-    "options": ["Vrai", "Faux"],
-    "correctAnswer": "Faux",
+    "options": ["Vrai", "Faux", "Partie Vrais mais tout Faux"],
+    "correctAnswer": "Partie Vrais mais tout Faux",
     "points": 1
   },
   {
@@ -32,13 +32,13 @@
   {
     "question": "Un mobile en mouvement relatif signifie qu'il peut être condidéré à la fois au repos ou en mouvement par rapport à un référencetiel donné",
     "options": ["Vrai", "Faux"],
-    "correctAnswer": "Faux",
+    "correctAnswer": "Vrai",
     "points": 1
   },
   {
     "question": "Une voiture qui reduit sa vitesse effectue toujours un mouvement varié ?",
     "options": ["Vrai", "Faux"],
-    "correctAnswer": "Faux",
+    "correctAnswer": "Vrai",
     "points": 1
   }
 ]

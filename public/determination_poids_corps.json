@@ -1,11 +1,5 @@
 [
     {
-      "question": "La masse seule d'un corps peut déterminer la force à exercer par un objet.",
-      "options": ["Vrai", "Faux"],
-      "correctAnswer": "Faux",
-      "points": 1
-    },
-    {
         "question": "Lors d'un mouvement, la masse ne s'oppose pas au mouvement.",
         "options": ["Vrai", "Faux"],
         "correctAnswer": "Vrai",
@@ -18,15 +12,15 @@
         "points": 1
       },
       {
-        "question": " Par quelle formule peut-on calculer la masse d'un corps.",
-        "options": ["Poids = (masse du corps) X g", "Poids = masse x vitesse","Poids = masse du corps"],
-        "correctAnswer": "Poids = (masse du corps) X g",
+        "question": "POur calculer la masse d'un corps, on utilise la formule: P = m x g",
+        "options": ["Vrai", "Faux"],
+        "correctAnswer": "Vrai",
         "points": 1
       },
       {
         "question": "Le kilogramme est l’unité du poids car sur les boîtes de conserve on écrit « poids net : X kg ».",
         "options": ["Vrai", "Faux"],
-        "correctAnswer": "Vrai",
+        "correctAnswer": "Faux",
         "points": 1
       },
       {
@@ -56,7 +50,7 @@
       {
         "question": "La force d’attraction est notée par: F = G x [(M1 x M2)/r²] ",
         "options": ["Vrai", "Faux"],
-        "correctAnswer": "Faux",
+        "correctAnswer": "Vrai",
         "points": 1
       }
    

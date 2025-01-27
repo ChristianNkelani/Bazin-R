@@ -9,10 +9,12 @@ import {
   Color3,
   Path3D,
   Curve3,
+  Texture
 } from "@babylonjs/core";
 
 import "@babylonjs/loaders";
 import { UI } from "./ui";
+import { TextureAspect } from "babylonjs/index";
 
 export class Environement {
   scene: Scene;
@@ -437,5 +439,16 @@ const smoothPoints = interpolatePoints(points);
     // Start the animation
     this.scene.beginAnimation(this.ball3, 0, 200, false);
 }
+
+  createGroundMaterial(scene): StandardMaterial{
+    const groundMat = new StandardMaterial("groundMat", this.scene);
+    const diffuseTex = new Texture("./texture/sol/forest_ground_04_diff_1k.jpg", scene);
+    
+    groundMat.diffuseTexture = diffuseTex ;
+
+
+     
+    return groundMat;
+  }
 
 }

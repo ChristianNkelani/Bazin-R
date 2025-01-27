@@ -159,6 +159,7 @@ export class Environement {
   ground.position.x = 7.2
   ground.position.z = -2.5
 
+
   ground.physicsImpostor = new PhysicsImpostor(
     ground,
     PhysicsImpostor.BoxImpostor,
@@ -171,6 +172,8 @@ export class Environement {
   ground.position.y = 0.7
   ground.position.x = 7
   ground.position.z = -4.5
+
+
 
   ground.physicsImpostor = new PhysicsImpostor(
     ground,
@@ -422,17 +425,17 @@ export class Environement {
   fonction(){
     let animationStarted = false; // Drapeau pour indiquer si l'animation a commencé
      // Création des deux surfaces (10x10)
-     const surface1 = MeshBuilder.CreateGround("surface1", { width: 10, height: 3});
+     const surface1 = MeshBuilder.CreateBox("surface1", { width: 10, height: 0.2, depth:3});
      surface1.position = new Vector3(7.2, 0, 0); // Position de la première surface
  
-     const surface2 = MeshBuilder.CreateGround("surface2", { width: 10, height: 3 });
+     const surface2 = MeshBuilder.CreateBox("surface2", { width: 10, height: 0.2, depth:3 });
      surface2.position = new Vector3(7.2, 0, -5); // Position de la deuxième surface
  
      // Matériau pour les surfaces (gris par défaut)
      const groundMaterial = new StandardMaterial("groundMaterial");
      groundMaterial.diffuseColor = new Color3(0.8, 0.8, 0.8); // Couleur gris clair
-     surface1.material = groundMaterial;
-     surface2.material = groundMaterial;
+     surface1.material = this.createGroundMaterial(this.scene);
+     surface2.material = this.createGroundMaterial(this.scene);
  
      // Création des machines
      const machine1 = MeshBuilder.CreateBox("machine1", { size: 0.3 });
@@ -558,7 +561,32 @@ export class Environement {
 //     this._ui._selectbox.isVisible = true;
 //   }
 // }
+createGroundMaterial(scene){
+  const textArray: Texture [] = [];
 
+  const groundMat = new StandardMaterial("groundMat", this.scene);
+  const diffuseTex = new Texture("./texture/sol1/brown_mud_leaves_01_diff_1k.jpg", scene);
+  textArray.push(diffuseTex);
+  
+  groundMat.diffuseTexture = diffuseTex ;
+  
+
+  const aoTex = new Texture("./texture/sol1/brown_mud_leaves_01_ao_1k.jpg",  scene);
+  groundMat.ambientTexture = aoTex;
+  textArray.push(aoTex);
+
+  const normalTex = new Texture("./texture/sol1/brown_mud_leaves_01_nor_gl_1k.jpg",scene);
+  groundMat.bumpTexture = normalTex;
+  textArray.push(normalTex);
+
+  textArray.forEach((tex) => {
+    tex.uScale = 1;
+    tex.vScale = 2;
+  })
+
+  return groundMat;
+
+}
 
 
 } 

@@ -6,7 +6,7 @@
       "points": 1
     },
     {
-      "question": "L’énergie est la capacité qu’a un système pour fournir un effort .",
+      "question": "L’énergie est la capacité qu’a un système pour fournir un effort.",
       "options": ["Vrai", "Faux"],
       "correctAnswer": "Vrai",
       "points": 1
@@ -38,7 +38,7 @@
     {
       "question": "L’énergie n’a jamais été renouvelable.",
       "options": ["Vrai", "Faux"],
-      "correctAnswer": "Vrai",
+      "correctAnswer": "Faux",
       "points": 1
     },
     {
@@ -48,9 +48,9 @@
       "points": 1
     },
     {
-      "question": "Lors d’une interaction, l’énergie mécanique ne se conserve jamais.",
+      "question": "Lors d’une interaction, l’énergie mécanique ne se conserve pas.",
       "options": ["Vrai", "Faux"],
-      "correctAnswer": "Vrai",
+      "correctAnswer": "Faux",
       "points": 1
     }
   ]

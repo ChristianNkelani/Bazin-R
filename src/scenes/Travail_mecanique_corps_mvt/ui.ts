@@ -246,7 +246,7 @@ export class UI {
         advancedTexture.addControl(panel);
       }
 
-    public Chrono(advancedTexture){
+   public Chrono(advancedTexture){
         //Game timer text
         const clockTime = new GUI.TextBlock();
         clockTime.name = "clock";
@@ -276,7 +276,7 @@ export class UI {
         this._stopTimer = true;
     }
 
-    //format the time so that it is relative to 11:00 -- game time
+    //format th e time so that it is relative to 11:00 -- game time
     private _formatTime(time: number): string {
         let minsPassed = Math.floor(time / 60); //seconds in a min 
         let secPassed = time % 100; // goes back to 0 after 4mins/240sec

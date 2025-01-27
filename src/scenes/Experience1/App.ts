@@ -44,8 +44,10 @@ export class Experience1 {
 
     this.engine.runRenderLoop(() => {
       this.scene.render();
-      if (this._environement.ball1.position._y <= 0.90 || this._environement.ball2.position._y <= 0.90   ) {
+      if (this._environement.ball1.position._y <= 0.90) {
         this._environement._ui.stopTimer();
+      }
+      if (this._environement.ball2.position._y <= 0.90) {
         this._environement._ui.stopTimer1();
       }
     });

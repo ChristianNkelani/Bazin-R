@@ -1,19 +1,5 @@
 [
     {
-      "question": "On ne peut parler du travail mécanique que lorsqu'il y a déplacement d'un objet par une force.",
-      "options": ["Vrai", "Faux"],
-      "correctAnswer": "Faux",
-      "explication": "Faux, le travail est une mesure de l’énergie transférée lorsqu’une force agit sur un objet et le déplace sur une distance donnée. Le déplacement est une nécessaire condition mais pas toujours suffisante car actuellement, un travail peut se faire à distance grâce aux technologies numériques et aux outils de communication en ligne (effort intellectuel). Lorsqu’il n’y a pas de résistance au déplacement d’un point d’application, il n’y a pas de frottements (F=0), il n’y a donc pas travail de pesanteur. ",
-      "points": 1
-    },
-    {
-      "question": "Le travail et la chaleur sont deux grandeurs strictement similaires.",
-      "options": ["Vrai", "Faux"],
-      "correctAnswer": "Faux",
-      "explication": "Le Travail et la chaleur sont deux grandeurs distinctes : Le travail est le transfert d’énergie résultant du déplacement d’un objet sous l’influence d’une force. La chaleur est le transfert spontané de l’énergie thermique entre les objets de températures différentes. Les deux deviennent équivalents au cas où l’énergie interne du système considéré est nul.",
-      "points": 1
-    },
-    {
       "question": "Si un objet parcourt une grande distance, même si la force appliquée est faible, il aura accompli un grand travail.",
       "options": ["Vrai", "Faux"],
       "correctAnswer": "Faux",
@@ -34,11 +20,11 @@
     {
       "question": "Le travail moteur est équivalent à celui résistant.",
       "options": ["Vrai", "Faux"],
-      "correctAnswer": "Vrai",
+      "correctAnswer": "Faux",
       "points": 1
     },
     {
-      "question": "Le travail s’exprime aussi en calories comme l’énergie ",
+      "question": "Le travail s’exprime aussi en calories comme l’énergie.",
       "options": ["Vrai", "Faux"],
       "correctAnswer": "Vrai",
       "points": 1
@@ -52,7 +38,7 @@
     {
       "question": "Il n’y a travail que lorsqu’il y a transfert physique de l’énergie par contact.",
       "options": ["Vrai", "Faux"],
-      "correctAnswer": "Vrai",
+      "correctAnswer": "Faux",
       "points": 1
     },
     {

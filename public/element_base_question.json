@@ -20,7 +20,7 @@
     {
       "question": "Tout corps en mouvement est un mobile.",
       "options": ["Vrai", "Faux"],
-      "correctAnswer": "Faux",
+      "correctAnswer": "Vrai",
       "points": 1
     },
     {
@@ -49,12 +49,6 @@
     },
     {
       "question": "Une surface plane est toujours rectiligne.",
-      "options": ["Vrai", "Faux"],
-      "correctAnswer": "Faux",
-      "points": 1
-    },
-    {
-      "question": "Vitesse instantanée et vitesse moyenne sont identiques.",
       "options": ["Vrai", "Faux"],
       "correctAnswer": "Faux",
       "points": 1
