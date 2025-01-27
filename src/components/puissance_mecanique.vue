@@ -49,13 +49,17 @@
       <LoadingScreen :isLoaded="loaded" />
       <canvas></canvas>
       <!-- retour bouton -->
-    <RouterLink to="/categorie" class="fixed z-40 right-2 bottom-5 w-16 h-16">
+      <div class="fixed z-40 right-2 bottom-5 w-16 h-16" @click="actualiser">
       <img
         class="w-16 h-16 bg-blue-500 rounded-full"
         src="../assets/retour.png"
         alt=""
       />
+<<<<<<< HEAD
     </RouterLink>
+=======
+    </div>
+>>>>>>> 4e057a420f07f58f532bc8658639a27158b54778
     </main>
   </template>
   
@@ -77,7 +81,16 @@
         flou: false,
         presentation: "Japhet BAZ le leader",
         titre: "Détermination du poids d'un corps",
+<<<<<<< HEAD
         
+=======
+        questions: [
+          new Question(
+            "<<Loi>> de Newton et <<Principe>> de Newton signifien la même chose",
+            ["Vrai", "Faux"]
+          ),
+        ],
+>>>>>>> 4e057a420f07f58f532bc8658639a27158b54778
       };
     },
     mounted() {
@@ -96,6 +109,7 @@
         document.querySelector("#card").classList.add("hidden");
         this.flou = false;
       },
+<<<<<<< HEAD
       voirCalcul() {
         this.experience8._environement.voirCalcul();
       },
@@ -107,6 +121,11 @@
         store.currentPage = 0;
         store.etat = "deux";
     },
+=======
+      actualiser(){
+        location.reload();
+      }
+>>>>>>> 4e057a420f07f58f532bc8658639a27158b54778
     },
   });
   </script>

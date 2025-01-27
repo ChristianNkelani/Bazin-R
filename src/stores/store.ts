@@ -12,6 +12,7 @@ export const QcmStore = defineStore("qcms", {
       this.etat = this.etat === "un" ? "deux" : "un";
     },
     reinitialiser(){
+      location.reload();
       this.etat = 'un';
       this.currentPage = 0;
       this.card = 1;

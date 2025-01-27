@@ -88,13 +88,13 @@
       <LoadingScreen :isLoaded="loaded" />
       <canvas></canvas>
       <!-- retour bouton -->
-      <RouterLink to="/categorie" class="fixed z-40 right-2 bottom-5 w-16 h-16">
-        <img
-          class="w-16 h-16 bg-blue-500 rounded-full"
-          src="../assets/retour.png"
-          alt=""
-        />
-      </RouterLink>
+      <div class="fixed z-40 right-2 bottom-5 w-16 h-16" @click="actualiser">
+      <img
+        class="w-16 h-16 bg-blue-500 rounded-full"
+        src="../assets/retour.png"
+        alt=""
+      />
+    </div>
     </main>
   </div>
 </template>
@@ -108,6 +108,7 @@ import { QcmStore } from "@/stores/store";
 // Pour les graphiques
 import {Line} from 'vue-chartjs'
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js'
+import { Action } from "babylonjs/Actions/action";
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
 
 export default defineComponent({
@@ -198,6 +199,9 @@ export default defineComponent({
       this.currentExp = !this.currentExp;
       this.exp = this.exp == "mru"?"mruv":"mru"; 
   
+    },
+    actualiser(){
+      location.reload();
     }
   },
 });
