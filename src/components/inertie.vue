@@ -108,21 +108,13 @@
       </div>
     <LoadingScreen :isLoaded="loaded" />
     <canvas></canvas>
-<<<<<<< HEAD
-    <RouterLink to="/categorie" class="fixed z-40 right-2 bottom-5 w-16 h-16">
-=======
     <div class="fixed z-40 right-2 bottom-5 w-16 h-16" @click="actualiser">
->>>>>>> 4e057a420f07f58f532bc8658639a27158b54778
       <img
         class="w-16 h-16 bg-blue-500 rounded-full"
         src="../assets/retour.png"
         alt=""
       />
-<<<<<<< HEAD
-    </RouterLink>
-=======
     </div>
->>>>>>> 4e057a420f07f58f532bc8658639a27158b54778
   </main>
 </template>
 

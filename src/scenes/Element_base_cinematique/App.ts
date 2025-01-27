@@ -51,22 +51,10 @@ export class Experience3 {
       new Vector3(0, 3.5, -2.5),
       this.scene
     );
-<<<<<<< HEAD
     this.camera.speed = 0.5;
     this.camera.rotation._y = Math.PI / 2;
     this.camera.rotation._x = Math.PI / 14;
     this.camera.attachControl();
-    const hemiLight = new HemisphericLight(
-      "hemiLight",
-      new Vector3(0, 1, 0),
-      this.scene
-    );
-    hemiLight.intensity = 1;
-=======
-    camera.speed = 0.5;
-    camera.rotation._y = Math.PI / 2;
-    camera.rotation._x = Math.PI / 14;
-    camera.attachControl();
     // Lumière hémisphérique
         const hemiLight = new HemisphericLight("hemiLight", new Vector3(0, 1, 0), this.scene);
         hemiLight.intensity = 0.7;
@@ -81,7 +69,6 @@ export class Experience3 {
             // Lumière ponctuelle
             const pointLight = new PointLight("pointLight", new Vector3(2, 5, -1), this.scene);
             pointLight.intensity = 0.5;
->>>>>>> 4e057a420f07f58f532bc8658639a27158b54778
     return scene;
   }
 }

@@ -120,7 +120,6 @@ export default defineComponent({
       document.querySelector("#card").classList.add("hidden");
       this.flou = false;
     },
-<<<<<<< HEAD
 
     testfinal() {
       const store = QcmStore();
@@ -138,11 +137,9 @@ export default defineComponent({
     afficherMenu() {
       this.experience._environement._ui.affichageParametre();
     },
-=======
     actualiser(){
       location.reload()
     }
->>>>>>> 4e057a420f07f58f532bc8658639a27158b54778
   },
 });
 </script>

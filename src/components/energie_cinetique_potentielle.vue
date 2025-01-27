@@ -127,7 +127,6 @@ export default defineComponent({
     voirCalcul() {
       this.experience4._environement.voirCalcul();
     },
-<<<<<<< HEAD
     testfinal() {
       const store = QcmStore();
       this.voirCard();
@@ -136,11 +135,9 @@ export default defineComponent({
       store.currentPage = 0;
       store.etat = "deux";
     },
-=======
     actualiser(){
       location.reload();
     }
->>>>>>> 4e057a420f07f58f532bc8658639a27158b54778
   },
 });
 </script>

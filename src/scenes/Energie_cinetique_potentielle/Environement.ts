@@ -341,14 +341,18 @@ toRestart(){
     this.ball2.position.x = 7.2;
     this.ball2.position.z = -4.4
     this.ball2.diameter = 0.25
-    this.ball1.physicsImpostor.dispose();
+
+    if(this.ball1.physicsImpostor){
+
+        this.ball1.physicsImpostor.dispose();
+        this.ball2.physicsImpostor.dispose();
+    }
     
     
     this.ball1.position.y = this.aimants[0].position._y;
     this.ball1.position.x = 7.2;
     this.ball1.position.z = -0.7
     this.ball2.diameter = 0.25
-    this.ball2.physicsImpostor.dispose();
     this.cliquer=true;
 
     //restart first chrono
