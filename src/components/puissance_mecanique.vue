@@ -45,13 +45,13 @@
       <LoadingScreen :isLoaded="loaded" />
       <canvas></canvas>
       <!-- retour bouton -->
-    <RouterLink to="/categorie" class="fixed z-40 right-2 bottom-5 w-16 h-16">
+      <div class="fixed z-40 right-2 bottom-5 w-16 h-16" @click="actualiser">
       <img
         class="w-16 h-16 bg-blue-500 rounded-full"
         src="../assets/retour.png"
         alt=""
       />
-    <</RouterLink>
+    </div>
     </main>
   </template>
   
@@ -75,48 +75,6 @@
           new Question(
             "<<Loi>> de Newton et <<Principe>> de Newton signifien la même chose",
             ["Vrai", "Faux"]
-            // ),
-            // new Question(
-            //     'La dynamique est l\'étude de la persévérance d\'un corpso',
-            //     [
-            //         'Vrai',
-            //         'Faux',
-            //     ]
-            // ),
-            // new Question(
-            //     'La masse seule d\'un corps peut déterminer la force à exercer par un objet.',
-            //     [
-            //         'Vrai',
-            //         'Faux',
-            //     ]
-            // ),
-            // new Question(
-            //     'Lors d\'un mouvement, la masse s\'oppose au mouvement',
-            //     [
-            //         'Vrai',
-            //         'Faux',
-            //     ]
-            // ),
-            // new Question(
-            //     'Le poids et la masse sont deux grandeurs physiquement identiques.',
-            //     [
-            //         'Vrai',
-            //         'Faux',
-            //     ]
-            // ),
-            // new Question(
-            //     'La dynamique est l\'étude de la persévérance d\'un corpso',
-            //     [
-            //         'Vrai',
-            //         'Faux',
-            //     ]
-            // ),
-            // new Question(
-            //     'Comment se calcul le poid d\'un corps?',
-            //     [
-            //         'Poids = (masse pesée sur la balance) x (accélération de la pesanteur)',
-            //         'Poids = masse pesée sur la balance',
-            //     ]
           ),
         ],
       };
@@ -137,6 +95,9 @@
         document.querySelector("#card").classList.add("hidden");
         this.flou = false;
       },
+      actualiser(){
+        location.reload();
+      }
     },
   });
   </script>

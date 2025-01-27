@@ -80,14 +80,14 @@ export class UI {
     this.slider1.width = "200px";
 
     const header1 = new GUI.TextBlock();
-    header1.text = `Masse de la bille Rouge ${this.slider1.value.toFixed(1)*100} g`;
+    header1.text = `Masse ${this.slider1.value.toFixed(2)} g`;
     header1.height = "40px";
     header1.color = "white";
     panel.addControl(header1);
     
     // Mettre à jour l'étiquette lorsque la valeur change
     this.slider1.onValueChangedObservable.add((value) => {
-      header1.text = `Masse de la bille Rouge : ${value.toFixed(1)*100} g`; // Affiche un entier
+      header1.text = `Masse : ${value.toFixed(2)} g`; // Affiche un entier
     });
     panel.addControl(this.slider1);
     
@@ -100,11 +100,11 @@ export class UI {
     panel1.addControl(this.slider2);
 
     this.slider2.onValueChangedObservable.add((value) => {
-      header2.text = `Masse de la bille Blue : ${value.toFixed(1)} g`; // Affiche un entier
+      header2.text = `Masse : ${value.toFixed(2)} g`; // Affiche un entier
     });
     
     const header2 = new GUI.TextBlock();
-    header2.text = `Masse de la bille Blue : ${this.slider2.value.toFixed(1)} g`;
+    header2.text = `Masse : ${this.slider2.value.toFixed(2)} g`;
     header2.height = "40px";
     header2.color = "white";
     panel1.addControl(header2);

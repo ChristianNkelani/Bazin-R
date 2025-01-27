@@ -57,13 +57,13 @@
     <LoadingScreen :isLoaded="loaded" />
     <canvas></canvas>
     <!-- retour bouton -->
-    <RouterLink to="/categorie" class="fixed z-40 right-2 bottom-5 w-16 h-16">
+    <div class="fixed z-40 right-2 bottom-5 w-16 h-16" @click="actualiser">
       <img
         class="w-16 h-16 bg-blue-500 rounded-full"
         src="../assets/retour.png"
         alt=""
       />
-    </RouterLink>
+    </div>
   </main>
 </template>
 
@@ -124,6 +124,9 @@ export default defineComponent({
     voirCalcul() {
       this.experience4._environement.voirCalcul();
     },
+    actualiser(){
+      location.reload();
+    }
   },
 });
 </script>

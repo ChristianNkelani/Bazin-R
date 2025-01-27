@@ -1,6 +1,8 @@
 import {
     Scene, 
     Engine, 
+    DirectionalLight,
+    PointLight,
     Vector3, 
     HemisphericLight, 
     MeshBuilder, 
@@ -53,9 +55,20 @@ camera.rotation._x= Math.PI/14;
 
 // console.log(camera.position.x, camera.position.y, camera.position.z, camera.rotation.x, camera.rotation.y, camera.rotation.z)
 camera.attachControl();
-const hemiLight = new HemisphericLight("hemiLight", new Vector3(0,1,0), this.scene);
-hemiLight.intensity = 1;
-
+// Lumière hémisphérique
+                           const hemiLight = new HemisphericLight("hemiLight", new Vector3(0, 1, 0), this.scene);
+                           hemiLight.intensity = 0.7;
+                           // hemiLight.intensity = 1;
+                           
+                           // Lumière directionnelle ajustée pour éclairer les deux coins
+                           const directionalLight = new DirectionalLight("dirLight", new Vector3(-1, -2, -1), this.scene);
+                           directionalLight.position = new Vector3(0, 5, 0); // Position centrale pour éclairer les deux coins
+                           directionalLight.intensity = 0.7;
+                           directionalLight.shadowEnabled = true;
+                           
+                               // Lumière ponctuelle
+                               const pointLight = new PointLight("pointLight", new Vector3(2, 5, -1), this.scene);
+                               pointLight.intensity = 0.5;
 
 return scene;
 }
