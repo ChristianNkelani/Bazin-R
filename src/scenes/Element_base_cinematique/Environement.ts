@@ -100,7 +100,7 @@ export class Environement {
       this.ball3.position.z = 2.5;
 
       for (let i = 0; i < this.inkDrop.length; i++) {
-        this.inkDrop[i].isVisible = false ;
+        this.inkDrop[i].dispose() ;
       }
     });
   }

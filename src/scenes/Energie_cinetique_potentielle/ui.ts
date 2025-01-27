@@ -168,7 +168,7 @@ export class UI {
         clockTime.name = "clock";
         clockTime.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
         clockTime.fontSize = "48px";
-        clockTime.color = "white";
+        clockTime.color = "yellow";
         clockTime.text = "00:00";
         clockTime.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
         clockTime.top = "150px";
@@ -188,7 +188,7 @@ export class UI {
         clockTime.name = "clock";
         clockTime.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
         clockTime.fontSize = "48px";
-        clockTime.color = "white";
+        clockTime.color = "red";
         clockTime.text = "00:00";
         clockTime.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
         clockTime.top = "150px";

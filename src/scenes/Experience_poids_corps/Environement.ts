@@ -29,6 +29,8 @@ export class Environement {
   public _ui: UI;
   physicEngine: any;
   wheelFI: any;
+  line:any;
+  line1:any;
   public lines = [];
 
   constructor(
@@ -50,6 +52,8 @@ export class Environement {
       // when the game isn't paused, update the timer
 
       this._ui.updateHud();
+      this._ui.updateHud1();
+
       // console.log(this.boitiers[0].position._y);
     });
 
@@ -78,7 +82,7 @@ export class Environement {
     //verification de la position des boitiers
     this.creqteFil();
 
-    this.createLines(this.scene,0);
+    this.createLines(this.scene);
 
   }
   async importLaboratoire() {
@@ -120,7 +124,7 @@ export class Environement {
     );
     this.boitiers[0].position.y = 0.7;
     this.boitiers[0].position.x = 6.5;
-    this.boitiers[0].position.z = -0.7;
+    this.boitiers[0].position.z = -0.6;
     this.boitiers[0].material = this.changeMaterialColor(170, 255, 0);
 
     this.boitiers[1] = MeshBuilder.CreateBox(
@@ -190,11 +194,14 @@ export class Environement {
   actionButtonMenu() {
     this._ui._buttonAction[0].onPointerUpObservable.add(() => {
       if (this.cliquer == true) {
-        this.createImpulse();
+        this.createImpulse(this.scene);
         this._ui._stopTimer = false;
+        this._ui._stopTimer1 = false;
 
-
+        
         this._ui.startTimer();
+        this._ui.startTimer1();
+
         this.cliquer = false;
       }
     });
@@ -206,28 +213,39 @@ export class Environement {
     });
 
     this._ui._buttonAction[1].onPointerUpObservable.add(() => {
-      this.toRestart();
+      this.toRestart(this.scene);
     });
   }
 
-  toRestart() {
+  toRestart(scene) {
     if(this.boitiers[1].PhysicsImpostor || this.boitiers[0].physicsImpostor){
 
       //repositionate boitier
       this.boitiers[1].position.y = 0.7;
       this.boitiers[1].position.x = 7.7;
       this.boitiers[1].position.z = -0.7;
-      this.boitiers[0].physicsImpostor.dispose();
-  
+
+      
+      //lines dispose
+      
       this.boitiers[0].position.y = 0.7;
       this.boitiers[0].position.x = 6.5;
-      this.boitiers[0].position.z = -0.7;
-  
-      this.boitiers[0].rotation.x = 0;
-      this.boitiers[0].rotation.y = 0;
-      this.boitiers[0].rotation.z = 0;
+      this.boitiers[0].position.z = -0.6;
+      
       this.boitiers[1].physicsImpostor.dispose();
+      this.boitiers[0].physicsImpostor.dispose();
+      // this.boitiers[0].rotation.x = 0;
+      // this.boitiers[0].rotation.y = 0;
+      // this.boitiers[0].rotation.z = 0;
+
+      this._ui._stopTimer = true;
+      this._ui._stopTimer1 = true;
+
+
+      this.createLines(scene);
+
     }
+    
 
     //reset clocktime
     this.cliquer = true;
@@ -235,9 +253,15 @@ export class Environement {
     this._ui._mString = 0;
     this._ui.time = 0;
     this._ui._clockTime.text = "00:00";
+
+    //reset clocktime1
+    this._ui._sString1 = "00";
+    this._ui._mString1 = 0;
+    this._ui.time1 = 0;
+    this._ui._clockTime1.text = "00:00";
   }
 
-  createImpulse() {
+  createImpulse(scene) {
     this.boitiers[0].physicsImpostor = new PhysicsImpostor(
       this.boitiers[0],
       PhysicsImpostor.BoxImpostor,
@@ -261,21 +285,27 @@ export class Environement {
     let bouger1 = true;
     let bouger2 = true;
 
-    // const vitesse1 = -1;
-    let i = 0;
+
     const update = () => {
       if (bouger1) {
         // Mettre à jour la vites
         // this.lines[i-1].isVisible = false;
         this.boitiers[0].physicsImpostor.setLinearVelocity(new Vector3(0, 0, vitesse1));
-        // this.createLines(this.scene, i);
-        i++;
+        this.createLines(scene);
 
         
         // Vérifier la condition d'arrêt
         if (this.boitiers[0].position._z <= -3.8) { // Notez l'utilisation de .z au lieu de ._z
           // this.boitiers[0].dispose();
           bouger1 = false; // Arrêter le mouvement
+          this._ui._stopTimer = true;
+          this.cliquer=true;
+        }
+
+        if (this.boitiers[1].position._z <= -3.8) { // Notez l'utilisation de .z au lieu de ._z
+          // this.boitiers[0].dispose();
+          bouger2 = false; // Arrêter le mouvement
+          this._ui._stopTimer1 = true;
           this.cliquer=true;
         }
       }
@@ -541,14 +571,19 @@ export class Environement {
   }
 
   //fonction pour creer les lignes 
-  createLines(scene,  i){
+  createLines(scene){
+
+    if(this.line != null || this.line1 != null){
+      this.line.dispose();
+      this.line1.dispose();
+    }
     const points = [
       this.boitiers[1].position,
-      new  BABYLON.Vector3(7.7,0.7,-5)
+      new  BABYLON.Vector3(7.3,1,-5)
     ];
  
     //dessiner la ligne
-    const line = BABYLON.MeshBuilder.CreateLines("line",{points: points}, scene);
+    this.line = BABYLON.MeshBuilder.CreateLines("line",{points: points}, scene);
     // line.scaling = new BABYLON.Vector3(10,10,10);
 
     const lineMaterial = new BABYLON.StandardMaterial("lineMaterial", scene);
@@ -560,11 +595,11 @@ export class Environement {
 
     const points1 = [
       this.boitiers[0].position,
-      new  BABYLON.Vector3(6.5,0.7,-5)
+      new  BABYLON.Vector3(6.8,1,-5)
     ];
 
     //dessiner la ligne
-    const line1 = BABYLON.MeshBuilder.CreateLines("line",{points: points1}, scene);
+    this.line1 = BABYLON.MeshBuilder.CreateLines("line",{points: points1}, scene);
     // line.scaling = new BABYLON.Vector3(10,10,10);
 
 
@@ -574,3 +609,5 @@ export class Environement {
 
   }
 }
+
+

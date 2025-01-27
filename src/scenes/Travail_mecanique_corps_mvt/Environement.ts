@@ -32,6 +32,7 @@ export class Environement {
   public force=1;
   physicEngine:any;
   wheelFI:any;
+  line1:any;
   public bouger:any;
 
   constructor(
@@ -53,7 +54,6 @@ export class Environement {
     // when the game isn't paused, update the timer
     
         this._ui.updateHud();
-        // console.log(this.boitiers[0].position._y);
   });
 
   this.scene.enablePhysics(
@@ -69,7 +69,7 @@ export class Environement {
   this.importLaboratoire();
   this.createMateriels();
   this.createground();
-  this.createground2();
+  // this.createground2();
   this.createMotor();
 
   //action des sliders
@@ -80,7 +80,7 @@ export class Environement {
   this.actionGroupSlider();
 
   //verification de la position des boitiers
-  // this.createLines(this.scene);
+  this.createLines(this.scene);
   this.createMesures();
 
   this.createLabels();
@@ -121,7 +121,7 @@ export class Environement {
   this.boitiers = [];
   this.boitiers[0] = MeshBuilder.CreateBox("ball", {width: 0.25, height:0.25, size:0.25}, this.scene);
   this.boitiers[0].position.y = 0.7;
-  this.boitiers[0].position.x = 6.5;
+  this.boitiers[0].position.x = 6.7;
   this.boitiers[0].position.z = -0.25
   
   this.boitiers[0].material = this.changeMaterialColor(170,255,0)
@@ -186,7 +186,7 @@ export class Environement {
     if(this.cliquer == true){
            
       this.cliquer = false;
-      this.createImpulse();
+      this.createImpulse(this.scene);
       this._ui._stopTimer = false;
 
       this._ui.startTimer();
@@ -204,10 +204,10 @@ export class Environement {
 
 
   this._ui._buttonAction[1].onPointerUpObservable.add(()=>{
-    this.toRestart();
+    this.toRestart(this.scene);
   })
   }
-  toRestart(){
+  toRestart(scene){
     //repositionate boitier
     if(this.boitiers[0].physicsImpostor){
       this.boitiers[0].physicsImpostor.dispose();
@@ -223,7 +223,8 @@ export class Environement {
     this.boitiers[0].rotation.x = 0;
     this.boitiers[0].rotation.y = 0;
     this.boitiers[0].rotation.z = 0;
-
+    
+    this.createLines(this.scene);
     
     //reset clocktime
     this.cliquer=true;
@@ -236,7 +237,7 @@ export class Environement {
     this._ui.stopTimer();
   }
 
-  createImpulse(){// Initialiser le PhysicsImpostor
+  createImpulse(scene){// Initialiser le PhysicsImpostor
     this.boitiers[0].physicsImpostor = new PhysicsImpostor(
       this.boitiers[0],
       PhysicsImpostor.BoxImpostor,
@@ -251,7 +252,9 @@ export class Environement {
       if (this.bouger) {
         // Mettre à jour la vitesse
         this.boitiers[0].physicsImpostor.setLinearVelocity(new Vector3(0, 0, vitesse1));
-        
+
+        this.createLines(scene);
+
         // Vérifier la condition d'arrêt
         if (this.boitiers[0].position._z <= (-this.distance-0.3)) { // Notez l'utilisation de .z au lieu de ._z
           // this.boitiers[0].dispose();
@@ -260,7 +263,7 @@ export class Environement {
           this._ui.stopTimer();
           this.cliquer=false;
         }
-        console.log("z est", this.boitiers[0].position._z)
+        // console.log("z est", this.boitiers[0].position._z)
       }
     };
     
@@ -274,13 +277,21 @@ export class Environement {
   createMotor(){
 
     //poteau1
-    const poteau1 = MeshBuilder.CreateBox("p1",{width: 0.1, height:0.8, size: 0.1}, this.scene);
+    const poteau1 = MeshBuilder.CreateBox(
+      "p1",
+      { width: 0.1, height: 0.8, size: 0.1 },
+      this.scene
+    );
     poteau1.position.y = 1;
     poteau1.position.x = 6.7;
     poteau1.position.z = -5;
 
     //poteau2
-    const poteau2 = MeshBuilder.CreateBox("p1",{width: 0.1, height:0.8, size: 0.1}, this.scene);
+    const poteau2 = MeshBuilder.CreateBox(
+      "p1",
+      { width: 0.1, height: 0.8, size: 0.1 },
+      this.scene
+    );
     poteau2.position.y = 1;
     poteau2.position.x = 7.5;
     poteau2.position.z = -5;
@@ -388,49 +399,25 @@ export class Environement {
   }
 
   //fonction pour creer les lignes 
-  createLines(scene){
-    const points = [
-      this.boitiers[1].position,
-      new  BABYLON.Vector3(7.7,0.7,-5)
-    ];
+//fonction pour creer les lignes 
+createLines(scene){
+  if(this.line1 != null){
+    this.line1.dispose();
+  }
 
-    //dessiner la ligne
-    const line = BABYLON.MeshBuilder.CreateLines("line",{points: points}, scene);
-    // line.scaling = new BABYLON.Vector3(10,10,10);
+  const points1 = [
+    this.boitiers[0].position,
+    new  BABYLON.Vector3(6.9,1,-5)
+  ];
 
-    const lineMaterial = new BABYLON.StandardMaterial("lineMaterial", scene);
-    // lineMaterial.emissiveColor = new BABYLON.Color3(255,0,0);
+  //dessiner la ligne
+  this.line1 = BABYLON.MeshBuilder.CreateLines("line",{points: points1}, scene);
 
-    // line.material = lineMaterial;
   
 
-    const points1 = [
-      this.boitiers[0].position,
-      new  BABYLON.Vector3(6.5,0.7,-5)
-    ];
+}
 
-    //dessiner la ligne
-    const line1 = BABYLON.MeshBuilder.CreateLines("line",{points: points1}, scene);
-    // line.scaling = new BABYLON.Vector3(10,10,10);
-
-
-    const linear = BABYLON.MeshBuilder.CreateBox("box",{width:0.1, height:0.2, size:2}, scene )
-    linear.position = new BABYLON.Vector3(7.3,0.5,-4.15);
-    linear.rotation._y = Math.PI/2;
-
-  }
-
-  createFil() {
-    // Création d'un fil (cylindre)
-    var wireLength = 5; // Longueur du fil
-    var wire = MeshBuilder.CreateCylinder(
-      "wire",
-      { height: wireLength, diameter: 0.1 },
-      this.scene
-    );
-    wire.position.y = wireLength / 2; // Position initiale du fil
-    wire.rotation.x = Math.PI / 2;
-  }
+  
 
   createMesures(){
     // Create graduation lines (1 meter apart)
@@ -469,6 +456,7 @@ export class Environement {
   }
   }
 
+  
   
 
 

@@ -15,7 +15,7 @@
 
     <!-- Boutton pour la fin de la simulation -->
     <div
-      class="absolute bottom-2 right-2 bg-white py-3 px-4 bg-white rounded-full flex justify-center items-center cursor-pointer"
+      class="absolute bottom-5 right-20 bg-white py-3 px-4 bg-white rounded-full flex justify-center items-center cursor-pointer"
       @click="testfinal"
     >
       Fin de la simulation
@@ -55,6 +55,14 @@
     >
       <img src="../assets/calculer.png" class="w-8 h-8" alt="" />
     </div>
+    <!-- retour bouton -->
+    <RouterLink to="/categorie" class="fixed z-40 right-2 bottom-5 w-16 h-16">
+      <img
+        class="w-16 h-16 bg-blue-500 rounded-full"
+        src="../assets/retour.png"
+        alt=""
+      />
+    </RouterLink>
 
     <LoadingScreen :isLoaded="loaded" />
     <canvas></canvas>
