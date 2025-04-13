@@ -19,6 +19,7 @@ import * as CANNON from "cannon";
 import { UI } from "./ui";
 import { Interaction } from "./interaction";
 import * as GUI from "@babylonjs/gui/2D";
+import { Tools } from "babylonjs";
 
 export class Environement {
   scene: Scene;
@@ -53,11 +54,13 @@ export class Environement {
     //creation des materiels
     this.importLaboratoire();
     this.createMateriels();
-    this.createground2();
     this.createImpostor();
+    this.createground2();
     this.Ui();
     this.createground();
     this.newc();
+    this.createMesures();
+
 
     //action des sliders
     this.actionButtonMenu();
@@ -88,6 +91,7 @@ export class Environement {
     );
     aimant1.position.x = 7.3;
     aimant1.position.y = 2.5;
+    aimant1.isVisible = false;
     aimant1.position.z = -0.5;
 
     const aimant2 = MeshBuilder.CreateBox(
@@ -98,14 +102,15 @@ export class Environement {
     aimant2.position.x = 7.3;
     aimant2.position.y = 2.5;
     aimant2.position.z = -4.6;
+    aimant2.isVisible = false;
 
     this.ball1 = MeshBuilder.CreateSphere(
       "ball",
       { diameter: 0.25 },
       this.scene
     );
-    this.ball1.position.y = 0.8;
-    this.ball1.position.x = 7.2;
+    this.ball1.position.y = 0.79;
+    this.ball1.position.x = 6;
     this.ball1.position.z = -0.7;
     this.ball1.material = this.changeMaterialColor(170, 255, 0);
 
@@ -135,7 +140,7 @@ export class Environement {
     this.ball1.physicsImpostor = new PhysicsImpostor(
       this.ball1,
       PhysicsImpostor.BoxImpostor,
-      { mass: 0.5, restitution: 1 }
+      { mass: 0.7, restitution: 1}
     );
   } 
 
@@ -192,15 +197,15 @@ export class Environement {
 
   }
   createground2() {
-    const ground = MeshBuilder.CreateGround("ground", {width:20, height:20});
-    ground.position.y = 0.1;
+    const ground = MeshBuilder.CreateBox("ground", {size: 20,width:20, height:1,});
+    ground.position.y = 0;
     ground.position.x = 7;
     ground.position.z = -4.5;
 
     ground.physicsImpostor = new PhysicsImpostor(
       ground,
       PhysicsImpostor.BoxImpostor,
-      { mass: 0, restitution: 0.5 }
+      { mass: 0, restitution: 0.1 }
     );
     ground.isVisible = false;
 
@@ -243,7 +248,7 @@ export class Environement {
     // this.ball1.physicsImpostor.dispose();
 
     this.ball1.position.y = 0.8;
-    this.ball1.position.x = 7.2;
+    this.ball1.position.x = 6;
     this.ball1.position.z = -0.7;
 
   }
@@ -280,7 +285,7 @@ scene.onPointerDown = function () {
     const direction = wall.position.subtract(ball.position).normalize();
     const speed = 5;
     ball.physicsImpostor = new PhysicsImpostor(ball, PhysicsImpostor.SphereImpostor, {mass: 1, restitution: 1}, scene);
-    ball.physicsImpostor.setLinearVelocity(direction.scale(speed));
+    // ball.physicsImpostor.setLinearVelocity(direction.scale(speed));
 };
 
 // Ajouter la physique à la scène
@@ -291,5 +296,24 @@ scene.onPointerDown = function () {
             
   
   }
+
+  createMesures(){
+      // Create graduation lines (1 meter apart)
+      const createGraduationLines = () => {
+        for (let i = 1; i <= 1; i++) {
+            // Create a line at each meter
+            const line = MeshBuilder.CreateLines("line" + i, {
+                points: [
+                    new Vector3(i+5, 0.2, 4.5),  // start of the line
+                    new Vector3(i+5, 0.2, -0.5)    // end of the line
+                ]
+            });
+            line.rotation.y = Tools.ToRadians(0);
+  
+        }
+    };
+  
+    createGraduationLines();
+    }
 
 }

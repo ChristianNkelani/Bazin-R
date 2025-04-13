@@ -53,6 +53,10 @@ export class UI {
     );
     this.Chrono(advancedTexture);
     this.Chrono1(advancedTexture);
+
+    this.Formules();
+
+    
   }
 
   public createMenu() {
@@ -60,6 +64,9 @@ export class UI {
       "UI",
       undefined
     );
+
+    //create menu formule
+
     const container = new GUI.Container();
 
     container.background = "white";
@@ -182,6 +189,11 @@ export class UI {
     this.selectbox.left = "50px";
     this.selectbox.paddingLeft = "15px";
     this.selectbox.background = "white";
+    this.selectbox.shadowColor = "gray";
+    this.selectbox.shadowBlur = 10;
+    this.selectbox.shadowOffsetX = 5;
+    this.selectbox.shadowOffsetY = 5;
+    
     this.selectbox.top = "80px";
     this.selectbox.setPadding("5px", "5px", "10px", "5px");
 
@@ -389,4 +401,53 @@ public updateHud1(): void {
       this.selectbox.isVisible = false;
     }
   }
+
+
+  public Formules() {
+    const advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI(
+      "UI",
+      undefined
+    );
+
+    const container = new GUI.Container();
+
+    advancedTexture.addControl(container);
+
+
+    container.background = "white";
+    container.width = "310px";
+    container.height = 0.25;
+
+    container.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+    container.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+    container.top = "450px";
+    container.left = "55px";
+    container.shadowColor = "gray";
+    container.shadowBlur = 50 ;
+    container.shadowOffsetX = 5;
+    container.shadowOffsetY = 5;
+    
+    // Affichage des résultats dans l'interface utilisateur
+    const formule = new GUI.TextBlock();
+    formule.text = "Formules";
+    formule.color = "blue";
+    formule.fontSize = 25;
+    formule.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+    formule.top = "-75px";
+    container.addControl(formule);
+
+    // Affichage des résultats dans l'interface utilisateur
+    const formule1 = new GUI.TextBlock();
+    formule1.text = "h = (1/2) x g x t² \n t = √(2xh/g) \n h : hauteur de chute \n g : accélération de la pesanteur   \n t : temps de chute ";
+    formule1.color = "black";
+    formule1.fontSize = 20;
+    formule1.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+    formule1.top = "10px";
+    container.addControl(formule1);
+    // this._textMasse[0] =  texteEnergiePotentielle1;
+
+
+
+
+}
 }

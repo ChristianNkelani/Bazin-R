@@ -172,7 +172,7 @@ export class UI {
         const container2 = new GUI.Container();
     
         container2.background = "white"
-        container2.width = "300px"
+        container2.width = "365px"
         container2.height=0.3
     
         container2.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT
@@ -350,12 +350,15 @@ export class UI {
             posy += 20;
         }
 
-        this._textMasse[4].width = "230px";
+        this._textMasse[4].width = "250px";
         this._textMasse[0].text = "Force = 1 N";
         this._textMasse[1].text = "Distance  = 1 mètre";
 
-        this._textMasse[3].text = "Travail = Force x Déplacement";
+        this._textMasse[3].text = "Travail = Force x Déplacement x 𝛂 \n Où 𝛂 est l'angle de tirage";
         this._textMasse[3].top = 140;
+        this._textMasse[3].width = "300px";
+        this._textMasse[3].height = "60px";
+
         this._textMasse[0].top = 80;
         // this._textMasse[2].underline = true;
         
@@ -371,7 +374,7 @@ export class UI {
             text[i].top = posy1;
             text[i].horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
             text[i].verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
-            text[i].left = "120px";
+            // text[i].left = "120px";
             container.addControl(text[i]);
             posy1 += 25;
         }
@@ -384,11 +387,12 @@ export class UI {
 
         //application numérique
         text[4].text = "AN";
+        text[4].top = "200px"
         text[4].underline = true;
-        text[4].horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-        text[4].left = "45px";
+        text[4].horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+        // text[4].left = "45px";
 
-        this._textMasse[4].top = 190;
+        this._textMasse[4].top = 230;
 
     }
 

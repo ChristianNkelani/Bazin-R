@@ -73,6 +73,15 @@ export class UI {
     text.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
     container.addControl(text);
 
+    const mesures = new GUI.TextBlock();
+            mesures.text = "0m                          1m                          2m                          3m                          4m";
+            mesures.color = "white";
+            mesures.width = "670px"
+            mesures.left = "10px";
+            mesures.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_CENTER;
+            container.addControl(mesures);
+    
+
     // creation de la bille
     const bille = GUI.Checkbox.AddCheckBoxWithHeader("Bille ", (value) => {
       console.log("bille");

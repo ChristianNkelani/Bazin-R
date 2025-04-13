@@ -70,7 +70,7 @@ export class UI {
        textCalc.fontFamily="Montserrat Black"
        textCalc.color ="deepskyblue"
        textCalc.height="25px"
-       textCalc.top = "110px"
+       textCalc.top = "130px"
        textCalc.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP
        textCalc.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_CENTER
        
@@ -90,12 +90,12 @@ export class UI {
         container.addControl(text);
  
         const textCalc = new GUI.TextBlock();
-        textCalc.text = "Calculs"
+        textCalc.text = "Données"
         textCalc.fontSize=30
         textCalc.fontFamily="Montserrat Black"
         textCalc.color ="deepskyblue"
         textCalc.height="25px"
-        textCalc.top = "110px"
+        textCalc.top = "130px"
         textCalc.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP
         container.addControl(textCalc);
      }

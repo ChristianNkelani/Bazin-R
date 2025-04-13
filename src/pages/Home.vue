@@ -48,7 +48,7 @@ export default {
                 <p class="uppercase md:text-7xl text-4xl text-gray-500"><span class="text-blue-400">FLEXIBILITE</span></p>
                 <p class=" text-gray-50 pt-8 text-justify">Notre plateforme offre une flexibilité inégalée, adaptée à tous les niveaux et besoins d’apprentissage.Avec Bazin-R VirtLab, apprenez à votre rythme, où que vous soyez, et explorez une large gamme de concepts scientifiques grâce à des outils intuitifs et modulables. Que ce soit pour expérimenter une simulation précise, visualiser des phénomènes complexes ou approfondir vos cours, le laboratoire s'adapte à vos objectifs.</p>
                 <div class="mt-4 bg-yellow-500 lg:w-32 py-2 px-3 text-xl rounded-md text-white">
-                  <RouterLink to="/categorie">Commencer</RouterLink>
+                  <RouterLink to="/categorie">Commencer</RouterLink>  
                 </div>
             </div>
           </div>

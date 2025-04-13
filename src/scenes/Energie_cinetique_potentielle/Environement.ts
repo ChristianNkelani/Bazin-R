@@ -211,12 +211,12 @@ createSliders() {
 
 
 
-    this._ui._textMasse[2].text = "EpA = "+masse1.toFixed(2) + " x "+ g.toFixed(2) + " x "  + hauteur1.toFixed(2) + " = " + energiePotentielle2.toFixed(2) + " Joules";
-    this._ui._textMasse[0].text = "Ep = "+masse.toFixed(2) + " x "+ g.toFixed(2) + " x "  + hauteur.toFixed(2) + " = " + energiePotentielle1.toFixed(2) + " Joules";
+    // this._ui._textMasse[2].text = "EpA = "+masse1.toFixed(2) + " x "+ g.toFixed(2) + " x "  + hauteur1.toFixed(2) + " = " + energiePotentielle2.toFixed(2) + " Joules";
+    // this._ui._textMasse[0].text = "Ep = "+masse.toFixed(2) + " x "+ g.toFixed(2) + " x "  + hauteur.toFixed(2) + " = " + energiePotentielle1.toFixed(2) + " Joules";
 
     //texte pour le calcul de l energie cinetique balle jaune
-    this._ui._textMasse[1].text = "Ec4 = (1/2) x " + masse + " x " + "(" + hauteur + "/temps) ²" ;
-    this._ui._textMasse[3].text = "Ec4 = (1/2) x " + masse1+ " x " + "(" + hauteur1 + "/temps) ²" ;
+    // this._ui._textMasse[1].text = "Ec4 = (1/2) x " + masse + " x " + "(" + hauteur + "/temps) ²" ;
+    // this._ui._textMasse[3].text = "Ec4 = (1/2) x " + masse1+ " x " + "(" + hauteur1 + "/temps) ²" ;
 
 
 
@@ -229,9 +229,9 @@ createSliders() {
         this.masse = value.toFixed(2);
 
         // Calcul de l'énergie potentielle
-        this._ui._textMasse[0].text = "Ep = "+masse.toFixed(2) + " x "+ g.toFixed(2) + " x "  + hauteur.toFixed(2) + " = " + (value * hauteur * g).toFixed(2) + " Joules";
+        // this._ui._textMasse[0].text = "Ep = "+masse.toFixed(2) + " x "+ g.toFixed(2) + " x "  + hauteur.toFixed(2) + " = " + (value * hauteur * g).toFixed(2) + " Joules";
 
-        this._ui._textMasse[1].text = "Ec2 = (1/2) x " + value.toFixed(2) + " x " + "(" + this.hauteur.toFixed(2) + "/"  + "temps) ²" ;
+        // this._ui._textMasse[1].text = "Ec2 = (1/2) x " + value.toFixed(2) + " x " + "(" + this.hauteur.toFixed(2) + "/"  + "temps) ²" ;
 
     }
 
@@ -240,8 +240,8 @@ createSliders() {
         this.ball1.position.y = value;
 
         // Mise à jour de l'énergie potentielle pour ball1
-        this._ui._textMasse[0].text = "Ep = "+masse.toFixed(2) + " x "+ g.toFixed(2) + " x "  + value.toFixed(2) + " = " + (masse *g*value).toFixed(2)+ " Joules";
-        this._ui._textMasse[1].text = "Ec3 = (1/2) x " + masse.toFixed(2) + " x " + "(" + value.toFixed(2) + "/"  + "temps) ²" ;
+        // this._ui._textMasse[0].text = "Ep = "+masse.toFixed(2) + " x "+ g.toFixed(2) + " x "  + value.toFixed(2) + " = " + (masse *g*value).toFixed(2)+ " Joules";
+        // this._ui._textMasse[1].text = "Ec3 = (1/2) x " + masse.toFixed(2) + " x " + "(" + value.toFixed(2) + "/"  + "temps) ²" ;
         
         this.hauteur = value;
         hauteur = value;
@@ -252,8 +252,8 @@ createSliders() {
         this.ball2.position.y = value;
 
         // Mise à jour de l'énergie potentielle pour ball2
-        this._ui._textMasse[2].text = "Ep = "+masse1.toFixed(2) + " x "+ g.toFixed(2) + " x "  + value.toFixed(2) + " = " + (masse1 *g*value).toFixed(2)+ " Joules";
-        this._ui._textMasse[3].text = "Ec2 = (1/2) x " + masse1.toFixed(2) + " x " + "(" + value.toFixed(2) + "/"  + "temps) ²" ;
+        // this._ui._textMasse[2].text = "Ep = "+masse1.toFixed(2) + " x "+ g.toFixed(2) + " x "  + value.toFixed(2) + " = " + (masse1 *g*value).toFixed(2)+ " Joules";
+        // this._ui._textMasse[3].text = "Ec2 = (1/2) x " + masse1.toFixed(2) + " x " + "(" + value.toFixed(2) + "/"  + "temps) ²" ;
         
         hauteur1 = value;
     }
@@ -265,9 +265,9 @@ createSliders() {
         masse1 = value;
 
         // Calcul de l'énergie potentielle
-        this._ui._textMasse[2].text = "Ep = "+masse1.toFixed(2) + " x "+ g.toFixed(2) + " x "  + hauteur1.toFixed(2) + " = " + (value * hauteur1 * g).toFixed(2) + " Joules";
+        // this._ui._textMasse[2].text = "Ep = "+masse1.toFixed(2) + " x "+ g.toFixed(2) + " x "  + hauteur1.toFixed(2) + " = " + (value * hauteur1 * g).toFixed(2) + " Joules";
         
-        this._ui._textMasse[3].text = "Ec2 = (1/2) x " + value.toFixed(2) + " x " + "(" + this.hauteur1.toFixed(2) + "/"  + "temps) ²" ;
+        // this._ui._textMasse[3].text = "Ec2 = (1/2) x " + value.toFixed(2) + " x " + "(" + this.hauteur1.toFixed(2) + "/"  + "temps) ²" ;
         
     }
 
@@ -276,8 +276,8 @@ createSliders() {
         physicEngine.setGravity(new BABYLON.Vector3(0, -(value), 0));
         
         // Mise à jour de l'énergie potentielle pour les deux balles
-        this._ui._textMasse[0].text = "Ep = "+masse.toFixed(2) + " x "+ value.toFixed(2) + " x "  + hauteur.toFixed(2) + " = " + (masse * value * hauteur).toFixed(2) + " Joules";
-        this._ui._textMasse[2].text = "Ep = "+masse1.toFixed(2) + " x "+ value.toFixed(2) + " x "  + hauteur1.toFixed(2) + " = " + (masse1 *value*hauteur1).toFixed(2)+ " Joules";
+        // this._ui._textMasse[0].text = "Ep = "+masse.toFixed(2) + " x "+ value.toFixed(2) + " x "  + hauteur.toFixed(2) + " = " + (masse * value * hauteur).toFixed(2) + " Joules";
+        // this._ui._textMasse[2].text = "Ep = "+masse1.toFixed(2) + " x "+ value.toFixed(2) + " x "  + hauteur1.toFixed(2) + " = " + (masse1 *value*hauteur1).toFixed(2)+ " Joules";
     }
 
 

@@ -12,6 +12,8 @@ import {
   Vector4,
   Axis,
   Space,
+  TransformNode,
+  PointerEventTypes,
 } from "@babylonjs/core";
 
 import "@babylonjs/loaders";
@@ -20,6 +22,7 @@ import * as Ammo from "ammojs-typed";
 import * as GUI from "@babylonjs/gui/2D";
 import { UI } from "./ui";
 import { Line } from "babylonjs-gui";
+import { Color4, GlowLayer, ParticleSystem } from "babylonjs";
 
 export class Environement {
   public scene: Scene;
@@ -66,25 +69,198 @@ export class Environement {
     this.engine = engine;
 
     //creation des materiels
-    this.importLaboratoire();
-    this.createMateriels();
-    this.createground();
-    this.createground2();
-    this.createMotor();
+    // this.importLaboratoire();
+    // this.createMateriels();
+    // this.createground();
+    // this.createground2();
+    // this.createMotor();
 
     //action des sliders
     this.actionButtonMenu();
     //creategravity
-    this.createGravity();
+    // this.createGravity();
     //action slider
-    this.actionGroupSlider();
+    // this.actionGroupSlider();
 
     //verification de la position des boitiers
-    this.creqteFil();
+    // this.creqteFil();
 
-    this.createLines(this.scene);
+    // this.createLines(this.scene);
+    this.createSolarSystem(this.scene);
 
   }
+
+
+  createSolarSystem(scene){
+
+    // const scene = this.scene;
+
+     // Soleil (avec rotation et effet lumineux)
+    var sun = MeshBuilder.CreateSphere("sun", { diameter: 12 }, scene);
+    var sunMat = new StandardMaterial("sunMat");
+    sunMat.emissiveTexture = new Texture("https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Solarsystemscope_texture_8k_sun.jpg/800px-Solarsystemscope_texture_8k_sun.jpg?20201026210200", scene);
+    sunMat.emissiveColor = new Color3(1, 0.8, 0);
+    sun.material = sunMat;
+
+    // Ajout d'un effet de glow autour du Soleil
+   var glowLayer = new GlowLayer("glow", scene);
+   glowLayer.intensity = 0.8;
+
+   // Création d'un champ d'étoiles avec un système de particules
+   var starSystem = new ParticleSystem("stars", 2000, scene);
+  //  starSystem.particleTexture = new Texture("https://playground.babylonjs.com/textures/flare.png", scene);
+  //  starSystem.emitter = new Vector3(0, 0, 0); // Centre de l'émission
+  //  starSystem.minEmitBox = new Vec(-500, -500, -500);
+  //  starSystem.maxEmitBox = new Vector3(500, 500, 500);
+   starSystem.color1 = new Color4(1, 1, 1, 1);
+   starSystem.color2 = new Color4(1, 1, 1, 1);
+   starSystem.minSize = 0.1;
+   starSystem.maxSize = 0.3;
+   starSystem.minLifeTime = Number.MAX_VALUE; // Les étoiles restent en place
+   starSystem.emitRate = 0; // Pas d'émission continue
+   starSystem.manualEmitCount = 2000;
+   starSystem.start();
+   
+
+    // Données des planètes (toutes les 8) avec leurs textures, tailles, distances et vitesses d'orbite
+    var planetsData = [
+      { name: "Mercure", size: 1, distance: 8, speed: 0.02, texture: "https://upload.wikimedia.org/wikipedia/commons/2/2e/Mercury_transparent.png" },
+      { name: "Vénus", size: 1.8, distance: 12, speed: 0.015, texture: "https://upload.wikimedia.org/wikipedia/commons/8/85/Venus_globe.jpg" },
+      { name: "Terre", size: 2, distance: 16, speed: 0.01, texture: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/The_Blue_Marble_%28remastered%29.jpg/600px-The_Blue_Marble_%28remastered%29.jpg" },
+      { name: "Mars", size: 1.6, distance: 20, speed: 0.008, texture: "https://upload.wikimedia.org/wikipedia/commons/0/02/OSIRIS_Mars_true_color.jpg" },
+      { name: "Jupiter", size: 4, distance: 28, speed: 0.005, texture: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Jupiter.jpg" },
+      { name: "Saturne", size: 3.4, distance: 36, speed: 0.003, texture: "https://upload.wikimedia.org/wikipedia/commons/2/29/Saturn_True_Color.jpg" },
+      { name: "Uranus", size: 3, distance: 42, speed: 0.002, texture: "https://upload.wikimedia.org/wikipedia/commons/3/3d/Uranus2.jpg" },
+      { name: "Neptune", size: 2.8, distance: 48, speed: 0.001, texture: "https://upload.wikimedia.org/wikipedia/commons/5/56/Neptune_Full.jpg" }
+  ];
+
+  var planets = [];
+  var earthMesh = null; // Pour stocker la référence à la Terre (pour la Lune)
+
+  // Création des planètes, leurs orbites et leurs étiquettes si besoin
+  planetsData.forEach(function(data) {
+    // Création de la planète
+    var planet = MeshBuilder.CreateSphere(data.name, { diameter: data.size }, scene);
+    var material = new StandardMaterial(data.name + "Mat", scene);
+    material.diffuseTexture = new Texture(data.texture, scene);
+    planet.material = material;
+    // Position initiale sur l'axe x
+    planet.position.x = data.distance;
+    
+    // Création de l'orbite (ligne circulaire autour du Soleil)
+    var orbit = MeshBuilder.CreateLines(data.name + "Orbit", {
+        points: Array.from({ length: 361 }, function(_, i) {
+            var angle = (i * Math.PI) / 180;
+            return new Vector3(Math.cos(angle) * data.distance, 0, Math.sin(angle) * data.distance);
+        })
+    }, scene);
+    orbit.color = new Color3(0.5, 0.5, 0.5);
+    
+    planets.push({ mesh: planet, distance: data.distance, speed: data.speed, angle: Math.random() * Math.PI * 2 });
+    
+    // Sauvegarder la Terre pour ajouter la Lune
+    if (data.name === "Terre") {
+        earthMesh = planet;
+    }
+  });
+
+   // Apparution du loader
+   this.setLoaded();
+
+   // Juste apres ça montrer le card avec cette methode
+
+   this.voirCard("card");
+
+
+
+   // Ajout de la Lune autour de la Terre
+   if (earthMesh) {
+       // Création d'un pivot pour la Lune, parenté à la Terre
+       var moonPivot = new TransformNode("moonPivot", scene);
+       moonPivot.parent = earthMesh;
+       moonPivot.position = Vector3.Zero();
+       
+       var moonDistance = 3; // Distance de la Lune par rapport à la Terre
+       var moon = MeshBuilder.CreateSphere("moon", { diameter: 0.5 }, scene);
+       moon.parent = moonPivot;
+       moon.position = new Vector3(moonDistance, 0, 0);
+       
+       var moonMat = new StandardMaterial("moonMat", scene);
+       moonMat.diffuseTexture = new Texture("https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg", scene);
+       moon.material = moonMat;
+       
+       // Création de l'orbite de la Lune autour de la Terre
+       var moonOrbit = MeshBuilder.CreateLines("moonOrbit", {
+           points: Array.from({ length: 361 }, function(_, i) {
+               var angle = (i * Math.PI) / 180;
+               return new Vector3(Math.cos(angle) * moonDistance, 0, Math.sin(angle) * moonDistance);
+           })
+       }, scene);
+       moonOrbit.color = new Color3(0.7, 0.7, 0.7);
+       moonOrbit.parent = earthMesh; // Pour suivre la Terre
+       
+       // Animation de l'orbite de la Lune en faisant tourner le pivot
+       scene.onBeforeRenderObservable.add(function() {
+           moonPivot.rotation.y += 0.05;
+       });
+   }
+   
+   // Animation du Soleil et des planètes
+   scene.onBeforeRenderObservable.add(function() {
+       // Rotation du Soleil
+       sun.rotation.y += 0.005;
+       
+       // Animation de l'orbite des planètes autour du Soleil
+       planets.forEach(function(planet) {
+           planet.angle += planet.speed;
+           planet.mesh.position.x = Math.cos(planet.angle) * planet.distance;
+           planet.mesh.position.z = Math.sin(planet.angle) * planet.distance;
+       });
+   });
+
+
+  //  // Gestion du clic pour zoomer et suivre une cible
+  //  scene.onPointerObservable.add(function(pointerInfo) {
+  //   if (pointerInfo.type === PointerEventTypes.POINTERPICK) {
+  //       var pickResult = pointerInfo.pickInfo;
+  //       if (pickResult.hit && pickResult.pickedMesh) {
+  //           if (pickResult.pickedMesh.name === "sun") {
+  //               // Clic sur le Soleil : vue globale
+  //               camera.lockedTarget = null;
+  //               camera.radius = 120;
+  //           } else if (pickResult.pickedMesh.name === "moon") {
+  //               // Clic sur la Lune : zoom rapproché
+  //               camera.lockedTarget = pickResult.pickedMesh;
+  //               camera.radius = 8;
+  //           } else {
+  //               // Clic sur une planète : zoom modéré
+  //               camera.lockedTarget = pickResult.pickedMesh;
+  //               camera.radius = 15;
+  //           }
+  //       }
+  //   }
+  // });
+
+
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   async importLaboratoire() {
     const labo = await SceneLoader.ImportMeshAsync(
       "",
@@ -533,7 +709,6 @@ export class Environement {
       displayValue
     );
 }
-
 
   async createGravity() {
     // const ammo = await Ammo()

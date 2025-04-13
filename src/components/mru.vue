@@ -43,24 +43,38 @@
           />
         </svg>
       </div>
+      <div id="options" class="hidden w-96 absolute top-16 left-2 rounded-md">
+  <div class="bg-white w-full rounded-md shadow-lg p-4 flex flex-col items-center space-y-4">
+    <h2 class="text-xl text-blue-600 font-bold">Formules</h2>
 
-      <div id="options" class="hidden">
-        <div class="bg-white w-96 h-80 absolute bottom-5 left-16 rounded-md">
-          <h2 class="text-xl text-blue-600 font-bold">Parametres</h2>
+    <table class="w-full text-sm text-center border border-gray-300">
+      <thead class="bg-gray-100 text-gray-700">
+        <tr>
+          <th class="border border-gray-300 px-2 py-1"> </th>
+          <th class="border border-gray-300 px-2 py-1">vitesse</th>
+          <th class="border border-gray-300 px-2 py-1">accélération</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="border border-gray-300 font-bold px-2 py-1">m.r.u.</td>
+          <td class="border border-gray-300 px-2 py-1">v = Δx / Δt</td>
+          <td class="border border-gray-300 px-2 py-1">0</td>
+        </tr>
+        <tr>
+          <td class="border border-gray-300 font-bold px-2 py-1">m.r.u.a.</td>
+          <td class="border border-gray-300 px-2 py-1">v = a · t</td>
+          <td class="border border-gray-300 px-2 py-1">a = Δv / Δt</td>
+        </tr>
+      </tbody>
+    </table>
 
-          <div class="bg-blue-300 text-white px-3 py-2 w-52 cursor-pointer" @click="toggleGraphique()">
-            {{graphique ? "Masuqer les graphiques" : "Voir les graphiques"}}
-          </div>
-          <div class="grid grid-cols-2">
-            <div>
-              <p>vitesse de la voiture jaune</p>
-            </div>
-            <div>
-              <p>vitesse de la voiture rouge</p>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="bg-blue-300 text-white px-3 py-2 w-52 text-center cursor-pointer" @click="toggleGraphique()">
+      {{ graphique ? "Masquer les graphiques" : "Voir les graphiques" }}
+    </div>
+  </div>
+</div>
+
 
       <!-- Les graphiques -->
        <div class="bg-white absolute top-12 right-16 w-96 h-96 pb-24" v-if="graphique">

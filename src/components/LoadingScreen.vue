@@ -2,7 +2,7 @@
     <main :class="[isLoaded ? 'loaded' : '', 'loader']">
         <div id="animationContainer">
             <p>{</p>
-            <p>BAZIN VirtLab</p>
+            <p>BAZIN-R VirtLab</p>
             <P>}</P>
         </div>
         <h2>Rechargement ...</h2>

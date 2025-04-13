@@ -84,7 +84,7 @@ export class UI {
 
         this._container2.background = "white";
         this._container2.width = 0.28;
-        this._container2.height = 0.4;
+        this._container2.height = 0.3;
     
         this._container2.horizontalAlignment =
           GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
@@ -99,7 +99,7 @@ export class UI {
 
         this._container3.background = "white";
         this._container3.width = 0.28;
-        this._container3.height = 0.4;
+        this._container3.height = 0.3;
     
         this._container3.horizontalAlignment =
           GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
@@ -330,7 +330,7 @@ export class UI {
         this._textMasse[4].text = "Balle Jaune";
         this._textMasse[4].color = "black";
         this._textMasse[4].fontSize = 30;
-        this._textMasse[4].top = "-130px";
+        this._textMasse[4].top = "-90px";
         container.addControl(this._textMasse[4]);
         // this._textMasse[0] =  texteEnergiePotentielle1;
 
@@ -338,6 +338,7 @@ export class UI {
         this._textMasse[1] = texteEnergieCinetique1;
         texteEnergieCinetique1.text = `Ec1 = ${energieCinetique1.toFixed(2)} J`;
         texteEnergieCinetique1.color = "red";
+        texteEnergieCinetique1.isVisible = false;
         texteEnergieCinetique1.fontSize = 18;
         texteEnergieCinetique1.top = "130px";
         container.addControl(texteEnergieCinetique1);
@@ -349,6 +350,7 @@ export class UI {
         this._textMasse[0].color = "red";
         this._textMasse[0].fontSize = 18;
         this._textMasse[0].top = "100px";
+        this._textMasse[0].isVisible = false;
         container.addControl(this._textMasse[0]);
         // this._textMasse[0] =  texteEnergiePotentielle1;
 
@@ -358,7 +360,7 @@ export class UI {
         //formules
         const formEc = new GUI.TextBlock();
         this._textMasse[5] = formEc;
-        formEc.text = 'Ec = (1/2)xMassex(Vitesse) ² \n Or Vitesse = Distance/temps \n D\'où \n Ec = (1/2)xMassex(Distance/temps) ²';
+        formEc.text = 'Ec = (1/2)xMassex(Vitesse) ² ';
         formEc.color = 'black';
         formEc.fontSize = 18;
         formEc.top = "-50px";
@@ -416,7 +418,7 @@ export class UI {
         this._textMasse[4].text = "Balle Rouge";
         this._textMasse[4].color = "black";
         this._textMasse[4].fontSize = 30;
-        this._textMasse[4].top = "-130px";
+        this._textMasse[4].top = "-90px";
         container.addControl(this._textMasse[4]);
         // this._textMasse[0] =  texteEnergiePotentielle1;
 
@@ -425,6 +427,7 @@ export class UI {
         texteEnergieCinetique2.text = `Ec = ${energieCinetique2.toFixed(2)} J`;
         texteEnergieCinetique2.color = "red";
         texteEnergieCinetique2.fontSize = 18;
+        texteEnergieCinetique2.isVisible = false;
         texteEnergieCinetique2.top = "130px";
         container.addControl(texteEnergieCinetique2);
         
@@ -432,6 +435,7 @@ export class UI {
         this._textMasse[2] = texteEnergiePotentielle2;
         texteEnergiePotentielle2.text = `Ep = ${energiePotentielle2.toFixed(2)} J`;
         texteEnergiePotentielle2.color = "red";
+        texteEnergiePotentielle2.isVisible = false;
         texteEnergiePotentielle2.fontSize = 18;
         texteEnergiePotentielle2.top = "100px";
         container.addControl(texteEnergiePotentielle2);
@@ -441,7 +445,7 @@ export class UI {
         //formules
         const formEc = new GUI.TextBlock();
         this._textMasse[7] = formEc;
-        formEc.text = 'Ec = (1/2)xMassex(Vitesse) ² \n Or Vitesse = Distance/temps \n D\'où \n Ec = (1/2)xMassex(Distance/temps) ²';
+        formEc.text = 'Ec = (1/2)xMassex(Vitesse) ² ';
         formEc.color = 'black';
         formEc.fontSize = 18;
         formEc.top = "-50px";

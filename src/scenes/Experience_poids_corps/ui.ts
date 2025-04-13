@@ -54,14 +54,38 @@ export class UI {
   createMenuCalculs(container) {
     // creation du texte
     const text = new GUI.TextBlock();
-    text.text = "Calculs";
+    text.text = "Formules";
     text.fontSize = 30;
     text.fontFamily = "Montserrat Black";
-    text.color = "deepskyblue";
+    text.color = "black";
     text.height = "25px";
     text.top = "20px";
     text.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
     container.addControl(text);
+    // 2. Create the image
+const image = new GUI.Image("", "formulegrav1.jpg");
+
+// 3. Optionally customize it
+image.width = "400px";
+image.top = "-30px";
+image.height = "400px";
+image.stretch = GUI.Image.STRETCH_UNIFORM; // or NONE / FILL
+
+// 4. Add to the GUI
+container.addControl(image);
+      // creation du texte
+    const text1 = new GUI.TextBlock();
+    text1.text = "F : Force d'attraction \n G : Constante de Cavendish \n  m1 et m2 : Les masses en mouvement \n r : Distance séparant les deux masses";
+    text1.fontSize = 20;
+    text1.fontFamily = "Montserrat Black";
+    text1.color = "black";
+    text1.top = "130px";
+    text1.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+    container.addControl(text1);
+
+
+
+     
   }
 
   createMenuMats(container) {
@@ -184,12 +208,13 @@ export class UI {
     this._container2 = new GUI.Container();
 
     this._container2.background = "white";
-    this._container2.width = 0.25;
-    this._container2.height = 0.4;
+    this._container2.width = 0.35;
+    this._container2.height = 0.5;
 
     this._container2.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
     this._container2.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
-    this._container2.top = "350px";
+    this._container2.top = "300px";
+  
     this._container2.left = -70;
     this._container2.paddingLeft = "90px";
     this._container2.isVisible = false;
@@ -198,7 +223,7 @@ export class UI {
     container1.isVisible = false;
     this.createMenuMats(container1);
     this.createMenuCalculs(this._container2);
-    this.textMassses(this._container2);
+    ///this.textMassses(this._container2);
     this.createNewMenuMat(advancedTexture);
 
     // Code de japhet
@@ -224,6 +249,7 @@ export class UI {
     this._buttonAction[0].height = "39px";
     this._buttonAction[0].background = "white";
     this._buttonAction[0].color = "deepskyblue";
+    this._buttonAction[0].isVisible = false;
 
     panel.addControl(this._buttonAction[0]);
 
@@ -235,6 +261,8 @@ export class UI {
     this._buttonAction[1].height = "39px";
     this._buttonAction[1].background = "white";
     this._buttonAction[1].color = "deepskyblue";
+    this._buttonAction[1].isVisible = false;
+
 
     panel.addControl(this._buttonAction[1]);
 
@@ -263,6 +291,7 @@ public Chrono(advancedTexture){
   clockTime.resizeToFit = true;
   clockTime.height = "96px";
   clockTime.width = "220px";
+  clockTime.isVisible = false;
   clockTime.fontFamily = "Viga";
   advancedTexture.addControl(clockTime);
   this._clockTime = clockTime;
@@ -284,6 +313,7 @@ public Chrono1(advancedTexture){
   clockTime.height = "96px";
   clockTime.width = "220px";
   clockTime.fontFamily = "Viga";
+  clockTime.isVisible = false;
   advancedTexture.addControl(clockTime);
   this._clockTime1 = clockTime;
   

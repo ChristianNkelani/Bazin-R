@@ -9,6 +9,7 @@ import {
   PointLight,
   DirectionalLight,
   UniversalCamera,
+  Color4,
 } from "@babylonjs/core";
 import "@babylonjs/loaders";
 import { UI } from "./ui";
@@ -19,6 +20,7 @@ export class Experience3 {
   engine: Engine;
 
   private _ui: UI;
+  private camera:UniversalCamera;
   private _environement: Environement;
 
   constructor(
@@ -41,22 +43,27 @@ export class Experience3 {
 
     this.engine.runRenderLoop(() => {
       this.scene.render();
-     
+      console.log('x = ',this.camera.position._x, 'y = ', this.camera.position._y, 'z = ', this.camera.position._z);
     });
   }
 
   CreateScene(): Scene {
     const scene = new Scene(this.engine);
+    // Fond noir pour simuler l'espace
+    scene.clearColor = new Color4(0, 0, 0);
 
     const camera = new UniversalCamera(
       "camera",
-      new Vector3(0, 3, -2.5),
+      new Vector3(-32, 23, 1),
       this.scene
     );
+
     camera.speed = 0.5;
     camera.rotation._y = Math.PI / 2;
-    camera.rotation._x = Math.PI / 14;
+    camera.rotation._x = Math.PI / 5;
     camera.attachControl();
+
+    this.camera = camera;
     // camera.detachControl();
 
     // console.log(camera.position.x, camera.position.y, camera.position.z, camera.rotation.x, camera.rotation.y, camera.rotation.z)

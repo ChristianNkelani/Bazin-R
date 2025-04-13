@@ -17,11 +17,11 @@
     </div>
 
     <!-- Les boutons du bas -->
-    <div class="absolute bottom-2 left-2 w-96">
+    <div class="absolute bottom-2 left-2 w-96 ">
       <div class="flex gap-3">
         <!-- Le bouton des parametres -->
         <div
-          class="bg-white w-16 h-16 rounded-full flex justify-center items-center cursor-pointer"
+          class="bg-white w-16 h-16 rounded-full flex justify-center items-center cursor-pointer hidden"
           @click="voirParam"
         >
           <svg
@@ -45,6 +45,7 @@
           </svg>
         </div>
         <div
+          
           class="bg-white w-16 h-16 rounded-full flex justify-center items-center cursor-pointer"
           @click="voirCalcul"
         >
